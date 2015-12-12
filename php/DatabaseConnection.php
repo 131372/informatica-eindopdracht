@@ -17,8 +17,8 @@ class DatabaseConnection {
         try {
             $this->dbh = new PDO('mysql:dbname=test;host=localhost');
             $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
+        } catch (CustomExpection $cE) { // Why not use my customexception class instead.
+            $cE->printErrorMessage();
         }
     }
 
