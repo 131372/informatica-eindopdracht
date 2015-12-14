@@ -15,7 +15,8 @@
 				method: "POST",
 				data: {"gameName":$("input[name=gameName]").val(),"gameType":$("input[name=gameType]:radio:checked").val(),"hostName":$("input[name=hostName]").val()}
 			}).done(function(data) {
-				if(data=="succes"){
+                            // For some reason this error might occur when putting something around here: Warning: session_start(): Cannot send session cache limiter - headers already sent
+                                if(data=="succes"){
 					$("#createGame").css("display","none");
 					$("#username2").css("display","none");
 					$("#games").css("display","none");
@@ -33,7 +34,7 @@
 		}
 		
 		function destroyGame(){
-			if(hostName!=""){
+			if(hostName!=""){ // If you're host you destroy the game
 				$.ajax({
 					url: "destroyGame.php"
 				}).done(function(data) {
@@ -44,7 +45,7 @@
 				});
 				hostName="";
 			}
-			else{
+			else{ // If you're just someone joining in you leave the game
 				$.ajax({
 					url: "leaveGame.php"
 				}).done(function(data) {
@@ -68,12 +69,12 @@
 					games[item['id']]=item;
 					guests = item["guests"].split(",");
 					if(guests[0]!=""){
-						playerCount = guests.length+1;
+						playerCount = (guests.length)+1;
 					}
 					else{
 						playerCount = 1;
 					}
-					if(item['hostName']==hostName){
+					if(item['hostName']==hostName){ // Show playercount if you're the host
 						$("#playerCount").html(playerCount);
 					}
 					else{
@@ -90,6 +91,12 @@
 						$("#hostName"+item["id"]).html(item['hostName']);
 						$("#playerCount"+item["id"]).html(playerCount);
 					}
+                                        
+                                       if(item['hostName']==hostName){
+                                            if(playerCount >= 3){
+                                                $("#startGame").css("display","block");
+                                            }
+                                        }
 				});
 			});
 		},500);
@@ -108,6 +115,10 @@
 				$("#wait").css("display","block");
 			});
 		}
+                
+                function redirect(){
+                    window.location.replace("PATH_TO_GAME_FILE");
+                }
 		</script>
 	</head>
 	<body>
@@ -156,7 +167,8 @@
 		<div id="wait" style="display:none">
 			wacht totdat er minimaal 3 spelers zijn, nu zijn er:<span id="playerCount">1</span>
 			<button onclick="destroyGame()">verlaat spel</button>
-			<button id="startGame" style="display:none">start spel</button>
-		</div
+                        <button id="startGame" style="display:none" onclick="redirect()">start spel</button>
+                </div>
+            
 	</body>
 </html>

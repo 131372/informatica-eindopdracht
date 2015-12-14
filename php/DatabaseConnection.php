@@ -49,9 +49,9 @@ class DatabaseConnection {
 	
 	public function change($query,$binds=array()){
 		$get = $this->dbh->prepare($query);
-		print_r($binds);
+		//print_r($binds); // Why is this line here? DAMN these lines caused the error on index.php. Can they be removed?
 		foreach($binds as $key=>$value){
-			echo $key."/".$value."</br>";
+			//echo $key."/".$value."</br>"; // As well as this one?
 			$get->bindValue($key,$value,PDO::PARAM_STR); 
 		}
 		$get->execute();
