@@ -3,7 +3,11 @@
     <type>org.netbeans.modules.php.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/php-project/1">
+<<<<<<< HEAD
             <name>LiemptKaartspel</name>
+=======
+            <name>Liempt_Kaartspel</name>
+>>>>>>> 96671243837dc8d6755cec4a4ee9cbe836017885
         </data>
     </configuration>
 </project>
