@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -123,7 +126,6 @@
 	</head>
 	<body>
 		<?php
-			session_start();
 			if(isset($_SESSION['hostName'])){
 				$hostName=$_SESSION['hostName'];
 				echo "<span style='display:none' id='hostName'>$hostName</span>";
