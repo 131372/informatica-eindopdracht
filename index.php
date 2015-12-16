@@ -5,7 +5,9 @@ session_start();
 <html>
 	<head>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script>		
+		<script>	
+		//
+		
 		$(function(){
 			hostName=$("#hostName").html();
 			username=$("#username").html();
@@ -50,9 +52,11 @@ session_start();
 		
 		function destroyGame(){
 			if(hostName!=""){ // If you're host you destroy the game
+				console.log("destroy");
 				$.ajax({
 					url: "destroyGame.php"
 				}).done(function(data) {
+					console.log(data);
 					$("#createGame").css("display","block");
 					$("#username2").css("display","block");
 					$("#games").css("display","block");
@@ -61,6 +65,7 @@ session_start();
 				hostName="";
 			}
 			else{ // If you're just someone joining in you leave the game
+				console.log("join");
 				$.ajax({
 					url: "leaveGame.php"
 				}).done(function(data) {
@@ -74,13 +79,17 @@ session_start();
 			}
 		}
 		
+		gameList=[];
+		
 		storage = setInterval(function(){
 			$.ajax({
 				url: "callDatabase.php"
 			}).done(function(data) {
+				console.log("reload");
 				data = jQuery.parseJSON(data);
-				games={};
+				currentGameList=[];
 				jQuery.each(data, function(index, item) {
+					currentGameList.push(item["id"]);
 					games[item['id']]=item;
 					guests = item["guests"].split(",");
 					if(guests[0]!=""){
@@ -91,13 +100,13 @@ session_start();
 					}
 					if(item['hostName']==hostName){ // Show playercount if you're the host
 						$("#playerCount").html(playerCount);
-						playerHTML="";
+							playerHTML="";
 						for(i=0;i<playerCount-1;i++){
-							playerHTML+=guests[i]+"<button onclick='kick("+"'"+guests[i]+"'"+")'>kick</button></br>";		//why doesn't it work?? :(
+							playerHTML+=guests[i]+"<button onclick='kick(\""+guests[i]+"\")'>kick</button></br>";		//why doesn't it work?? :(
 						}
-						$("#players").html("spelers:</br>jij</br>"+playerHTML);
+						$("#players").html("spelers:</br>"+item['hostName']+"</br>"+playerHTML);
 					}
-					else{
+					else if(gameId==item['id']){
 						guestList=item['guests'].split(",");
 						if(jQuery.inArray(username,guestList)!=-1){
 							$("#playerCount").html(playerCount);
@@ -107,9 +116,27 @@ session_start();
 							}
 							$("#players").html("spelers:</br>"+item['hostName']+"</br>"+playerHTML);
 						}
+						else{
+							alert("je bent gekicked");
+							//still need to add ajax to remove sessions
+							hostName="";
+							username="";
+							gameId="";
+							$("#createGame").css("display","block");
+							$("#username2").css("display","block");
+							$("#games").css("display","block");
+							$("#wait").css("display","none");
+						}
 					}
 					if($("#gameInstance"+item["id"]).length==0){
-						$("#games").append($("<div id='gameInstance"+item['id']+"'>").append("<span id='gameName"+item['id']+"'>"+item['gameName']+"</span></br><span id='hostName"+item['id']+"'>"+item['hostName']+"</span></br><span id='playerCount"+item['id']+"'>"+playerCount+"</span></br><button onclick='join("+item['id']+")'>join</button></br></br>"));
+						$("#games").append($("<div id='gameInstance"+item['id']+"'>")
+						.append("<span id='gameName"+item['id']+"'>"+item['gameName']
+						+"</span></br><span id='hostName"+item['id']+"'>"+item['hostName']
+						+"</span></br><span id='playerCount"+item['id']+"'>"+playerCount
+						+"</span></br><button onclick='join("+item['id']+")'>join</button></br></br>"));
+						if($.inArray(item["id"],gameList)==-1){
+							gameList.push(item["id"]);
+						}
 					}
 					else{
 						$("#gameName"+item["id"]).html(item['gameName']);
@@ -117,11 +144,17 @@ session_start();
 						$("#playerCount"+item["id"]).html(playerCount);
 					}
                                         
-                                       if(item['hostName']==hostName){
-                                            if(playerCount >= 3){
-                                                $("#startGame").css("display","block");
-                                            }
-                                        }
+                    if(item['hostName']==hostName){
+                        if(playerCount >= 3){
+                            $("#startGame").css("display","block");
+                        }
+                    }
+				});
+				console.log(currentGameList+"/"+gameList);
+				$.each(gameList,function(key, value){
+					if($.inArray(value,currentGameList)==-1){
+						$("#gameInstance"+value).remove();
+					}
 				});
 			});
 		},500);
@@ -134,10 +167,15 @@ session_start();
 				data:{"username":username,"gameId":id}
 			}).done(function(data) {
 				console.log(data);
-				$("#createGame").css("display","none");
-				$("#username2").css("display","none");
-				$("#games").css("display","none");
-				$("#wait").css("display","block");
+				if(data=="fail"){
+					alert("gebruikersnaam is al in gebruik");
+				}
+				else{
+					$("#createGame").css("display","none");
+					$("#username2").css("display","none");
+					$("#games").css("display","none");
+					$("#wait").css("display","block");
+				}
 			});
 		}
 				
@@ -201,7 +239,6 @@ session_start();
             <button id="startGame" style="display:none" onclick="redirect()">start spel</button>
 			<div id="players">
 				spelers:</br>
-				jij</br>
 			</div>
         </div>
             

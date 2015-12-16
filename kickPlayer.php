@@ -15,9 +15,14 @@ else{
 		}
 	}
 	$guests=array_values($guests);
-	$guestList=$guests[0];
-	for($i=1;$i<count($guests);$i++){
-		$guestList.=",".$guests[$i];
+	if(count($guests)==0){
+		$guestList="";
+	}
+	else{
+		$guestList=$guests[0];
+		for($i=1;$i<count($guests);$i++){
+			$guestList.=",".$guests[$i];
+		}
 	}
 }
 $db->change("UPDATE games SET guests=:guests WHERE id=:id",array(":id"=>$_POST['gameId'],":guests"=>$guestList));
