@@ -6,63 +6,31 @@
 
 /**
  * 
- * @param {string} particle
+ * @param {string} particle u, d, c, s, t, b
  * @param {bool} anti
- * @param {string} colour 
- * @returns {undefined}
+ * @param {string} colour B, R, G
+ * @returns {createQuark.createCardsAnonym$2|createQuark.createCardsAnonym$0|createQuark.createCardsAnonym$1|createQuark.createCardsAnonym$3|createQuark.createCardsAnonym$4|createQuark.createCardsAnonym$5}
  */
 function createQuark(particle, anti, colour){
     switch(particle){
         case 'u': 
-            this.createUp(anti, colour);
+            return {particle: "u", generation: 1, anti: anti, colour: colour, mass: 5, charge: 0.667, order: 0};
             break;
         case 'd': 
-            this.createDown(anti, colour);
+            return {particle: "d", generation: 1, anti: anti, colour: colour, mass: 10, charge: -0.333, order: 0};
             break;
         case 'c':
+            return {particle: "c", generation: 2, anti: anti, colour: colour, mass: 1, charge: 0.667, order: 0};
             break;
         case 's':
+            return {particle: "s", generation: 2, anti: anti, colour: colour, mass: 200, charge: -0.333, order: 0};
             break; 
         case 't':
+            return {particle: "t", generation: 3, anti: anti, colour: colour, mass: 175, charge: 0.667, order: 0};
             break;
         case 'b':
+            return {particle: "b", generation: 3, anti: anti, colour: colour, mass: 4, charge: -0.333, order: 0};
             break;
         default: 
-    }
-    
-    /**
-     * 
-     * @param {type} anti
-     * @param {type} colour
-     * @returns {createQuark.createUp.up}
-     */
-    this.createUp = function(anti, colour){
-        var up = {particle: "u", generation: 1, anti: anti, colour: colour, mass: 5, charge: 0.667};
-        return up;
-    };
-    
-    this.createDown = function(anti, colour){
-        var down = {particle: "d", generation: 1, anti: anti, colour: colour, mass: 10, charge: -0.333};
-        return down;
-    }
-    
-    this.createCharm = function(anti, colour){
-        var charm = {particle: "c", generation: 2, anti: anti, colour: colour, mass: 1, charge: 0.667};
-        return charm;
-    }
-    
-    this.createStrange = function(anti, colour){
-        var strange = {particle: "s", generation: 2, anti: anti, colour: colour, mass: 200, charge: -0.333};
-        return strange;
-    }
-    
-    this.createTau = function(anti, colour){
-        var Tau = {particle: "t", generation: 3, anti: anti, colour: colour, mass: 175, charge: 0.667};
-        return Tau;
-    }
-    
-    this.createBottom = function(anti, colour){
-        var Tau = {particle: "b", generation: 3, anti: anti, colour: colour, mass: 175, charge: 0.667};
-        return Tau;
     }
 }

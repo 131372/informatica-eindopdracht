@@ -4,10 +4,17 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/php-project/1">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <name>Liempt_Kaartspel</name>
 =======
             <name>informatica-eindopdracht</name>
 >>>>>>> 9fd32211da8483a87970374808db21bf35c54ce3
+=======
+            <name>LiemptKaartspel</name>
+=======
+            <name>Liempt_Kaartspel</name>
+>>>>>>> 96671243837dc8d6755cec4a4ee9cbe836017885
+>>>>>>> f7f25de6f2d9135de650823fc5b491b65aac307c
         </data>
     </configuration>
 </project>

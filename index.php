@@ -9,7 +9,19 @@ session_start();
 		$(function(){
 			hostName=$("#hostName").html();
 			username=$("#username").html();
-			gameName=$("#gameId").html();
+			gameId=$("#gameId").html();
+			if(hostName!=""){
+				$("#createGame").css("display","none");
+				$("#username2").css("display","none");
+				$("#games").css("display","none");
+				$("#wait").css("display","block");
+			}
+			else if(username!=""){
+				$("#createGame").css("display","none");
+				$("#username2").css("display","none");
+				$("#games").css("display","none");
+				$("#wait").css("display","block");
+			}
 		});
 		
 		function createGame(){
@@ -79,11 +91,21 @@ session_start();
 					}
 					if(item['hostName']==hostName){ // Show playercount if you're the host
 						$("#playerCount").html(playerCount);
+						playerHTML="";
+						for(i=0;i<playerCount-1;i++){
+							playerHTML+=guests[i]+"<button onclick='kick("+"'"+guests[i]+"'"+")'>kick</button></br>";		//why doesn't it work?? :(
+						}
+						$("#players").html("spelers:</br>jij</br>"+playerHTML);
 					}
 					else{
 						guestList=item['guests'].split(",");
 						if(jQuery.inArray(username,guestList)!=-1){
 							$("#playerCount").html(playerCount);
+							playerHTML="";
+							for(i=0;i<playerCount-1;i++){
+								playerHTML+=guests[i]+"</br>"
+							}
+							$("#players").html("spelers:</br>"+item['hostName']+"</br>"+playerHTML);
 						}
 					}
 					if($("#gameInstance"+item["id"]).length==0){
@@ -118,10 +140,17 @@ session_start();
 				$("#wait").css("display","block");
 			});
 		}
-                
-                function redirect(){
-                    window.location.replace("PATH_TO_GAME_FILE");
-                }
+				
+		function kick(player){
+			console.log(player);
+			$.ajax({
+				url: "kickPlayer.php",
+				method:"POST",
+				data:{"player":player,"gameId":gameId}
+			}).done(function(data) {
+				console.log(data);
+			});
+		}
 		</script>
 	</head>
 	<body>
@@ -142,10 +171,10 @@ session_start();
 			}
 			if(isset($_SESSION['gameId'])){
 				$gameId=$_SESSION['gameId'];
-				echo "<span id='gameId'>$gameId</span>";
+				echo "<span id='gameId' style='display:none'>$gameId</span>";
 			}
 			else{
-				echo "<span id='gameId'></span>";
+				echo "<span id='gameId' style='display:none'></span>";
 			}
 		?>	
 		<div id="username2">
@@ -169,8 +198,12 @@ session_start();
 		<div id="wait" style="display:none">
 			wacht totdat er minimaal 3 spelers zijn, nu zijn er:<span id="playerCount">1</span>
 			<button onclick="destroyGame()">verlaat spel</button>
-                        <button id="startGame" style="display:none" onclick="redirect()">start spel</button>
-                </div>
+            <button id="startGame" style="display:none" onclick="redirect()">start spel</button>
+			<div id="players">
+				spelers:</br>
+				jij</br>
+			</div>
+        </div>
             
 	</body>
 </html>
