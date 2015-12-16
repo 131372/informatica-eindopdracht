@@ -13,9 +13,14 @@ foreach($result as $key=>$guest){
 	}
 }
 $result=array_values($result);
-$guests=$result[0];
-for($i=1;$i<count($result);$i++){
-	$guests.=",".$result[$i];
+if(count($result)>0){
+	$guests=$result[0];
+	for($i=1;$i<count($result);$i++){
+		$guests.=",".$result[$i];
+	}
+}
+else{
+	$guests="";
 }
 $db->change("UPDATE games SET guests=:guests WHERE id=:id",array(":id"=>$_SESSION['gameId'],":guests"=>$guests));
 
