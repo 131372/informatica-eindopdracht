@@ -10,20 +10,14 @@ session_start();
 		
 		$(function(){
 			hostName=$("#hostName").html();
-			username=$("#username").html();
-			gameId=$("#gameId").html();
-			if(hostName!=""){
+			username=$("#username").html();			//get the host or username (can be empty if none exist)
+			gameId=$("#gameId").html();				//get the game ID	(can be empty if none exist)
+			if(hostName!="" || username!=""){
 				$("#createGame").css("display","none");
 				$("#username2").css("display","none");
 				$("#games").css("display","none");
 				$("#wait").css("display","block");
-			}
-			else if(username!=""){
-				$("#createGame").css("display","none");
-				$("#username2").css("display","none");
-				$("#games").css("display","none");
-				$("#wait").css("display","block");
-			}
+			}					//if the user is currently a host or a guest show the proper interface
 		});
 		
 		function createGame(){
@@ -31,136 +25,127 @@ session_start();
 				url: "startGame.php",
 				method: "POST",
 				data: {"gameName":$("input[name=gameName]").val(),"gameType":$("input[name=gameType]:radio:checked").val(),"hostName":$("input[name=hostName]").val()}
-			}).done(function(data) {
-                            // For some reason this error might occur when putting something around here: Warning: session_start(): Cannot send session cache limiter - headers already sent
-                                if(data=="succes"){
+			}).done(function(data) {			//after putting the new game in the database...
+                if(data=="succes"){
 					$("#createGame").css("display","none");
 					$("#username2").css("display","none");
 					$("#games").css("display","none");
 					$("#wait").css("display","block");
-				}
+				}				//hide and show the proper interfaces
 				else if(data=="gameName"){
 					alert("spelnaam is al in gebruik");
 				}
 				else if(data=="hostName"){
 					alert("gebruikersnaam is al in gebruik");
-				}
-				hostName=$("input[name=hostName]").val();
-				username=$("input[name=username]").val();
+				}					//show proper error messages if necessary
+				hostName=$("input[name=username]").val();			//store the host name
 			});
 		}
 		
-		function destroyGame(){
-			if(hostName!=""){ // If you're host you destroy the game
-				console.log("destroy");
+		function destroyGame(){			//destroy the game you're hosting or leave the game in which you are a guest
+			if(hostName!=""){
 				$.ajax({
 					url: "destroyGame.php"
-				}).done(function(data) {
-					console.log(data);
+				}).done(function(data) {			//after deleting the game in the database...
 					$("#createGame").css("display","block");
 					$("#username2").css("display","block");
 					$("#games").css("display","block");
 					$("#wait").css("display","none");
-				});
-				hostName="";
+				});				//show and hide the proper interfaces
+				hostName="";				//remove the stored host name
 			}
-			else{ // If you're just someone joining in you leave the game
-				console.log("join");
+			else{
 				$.ajax({
 					url: "leaveGame.php"
-				}).done(function(data) {
-					console.log(data);
+				}).done(function(data) {			//after leaving the game in the database...
 					$("#createGame").css("display","block");
 					$("#username2").css("display","block");
 					$("#games").css("display","block");
 					$("#wait").css("display","none");
-				});
-				username="";
+				});					//show and hide the proper interfaces
+				username="";		//remove the stored username
 			}
 		}
 		
-		gameList=[];
+		gameList=[];				//used to store all the games visually so as to be able to delete them if they get removed from the database
 		
 		storage = setInterval(function(){
 			$.ajax({
 				url: "callDatabase.php"
-			}).done(function(data) {
-				console.log("reload");
-				data = jQuery.parseJSON(data);
-				currentGameList=[];
+			}).done(function(data) {			//after receiving all games from the database...
+				data = jQuery.parseJSON(data);		//decode the data
+				currentGameList=[];					//used to store all games currently in the database so as to be able to remove all games that are no longer in the database
 				jQuery.each(data, function(index, item) {
-					currentGameList.push(item["id"]);
-					games[item['id']]=item;
+					currentGameList.push(item["id"]);				//add this game to all games currently in the database
 					guests = item["guests"].split(",");
 					if(guests[0]!=""){
 						playerCount = (guests.length)+1;
 					}
 					else{
 						playerCount = 1;
-					}
-					if(item['hostName']==hostName){ // Show playercount if you're the host
-						$("#playerCount").html(playerCount);
-							playerHTML="";
+					}					//determine how many players are in the game (including the host)
+					if(item['hostName']==hostName){ //if you're the host...
+						$("#playerCount").html(playerCount);				//show player count
+						playerHTML="";
 						for(i=0;i<playerCount-1;i++){
-							playerHTML+=guests[i]+"<button onclick='kick(\""+guests[i]+"\")'>kick</button></br>";		//why doesn't it work?? :(
+							playerHTML+=guests[i]+"<button onclick='kick(\""+guests[i]+"\")'>kick</button></br>";		
 						}
-						$("#players").html("spelers:</br>"+item['hostName']+"</br>"+playerHTML);
+						$("#players").html("spelers:</br>"+item['hostName']+"</br>"+playerHTML);			//show all players and add a kick button to each one of them
 					}
-					else if(gameId==item['id']){
+					else if(gameId==item['id']){				//if the user is a guest
 						guestList=item['guests'].split(",");
-						if(jQuery.inArray(username,guestList)!=-1){
-							$("#playerCount").html(playerCount);
+						if(jQuery.inArray(username,guestList)!=-1){			//if the user has not been kicked from the game...
+							$("#playerCount").html(playerCount);			//show the player count
 							playerHTML="";
 							for(i=0;i<playerCount-1;i++){
 								playerHTML+=guests[i]+"</br>"
 							}
-							$("#players").html("spelers:</br>"+item['hostName']+"</br>"+playerHTML);
+							$("#players").html("spelers:</br>"+item['hostName']+"</br>"+playerHTML);				//show all players
 						}
-						else{
+						else{				//if the user has been kicked
 							alert("je bent gekicked");
 							//still need to add ajax to remove sessions
 							hostName="";
 							username="";
-							gameId="";
+							gameId="";				//reset stored data
 							$("#createGame").css("display","block");
 							$("#username2").css("display","block");
 							$("#games").css("display","block");
-							$("#wait").css("display","none");
+							$("#wait").css("display","none");				//show and hide all the proper interfaces
 						}
 					}
-					if($("#gameInstance"+item["id"]).length==0){
+					if($("#gameInstance"+item["id"]).length==0){			//if the game is not yet visually present...
 						$("#games").append($("<div id='gameInstance"+item['id']+"'>")
 						.append("<span id='gameName"+item['id']+"'>"+item['gameName']
 						+"</span></br><span id='hostName"+item['id']+"'>"+item['hostName']
 						+"</span></br><span id='playerCount"+item['id']+"'>"+playerCount
-						+"</span></br><button onclick='join("+item['id']+")'>join</button></br></br>"));
+						+"</span></br><button onclick='join("+item['id']+")'>join</button></br></br>"));		//create the game in the lobby
 						if($.inArray(item["id"],gameList)==-1){
 							gameList.push(item["id"]);
-						}
+						}				//add the game to all games that were visually present at some point if it isn't there already
 					}
 					else{
 						$("#gameName"+item["id"]).html(item['gameName']);
 						$("#hostName"+item["id"]).html(item['hostName']);
 						$("#playerCount"+item["id"]).html(playerCount);
-					}
-                                        
+					}					//update the game information                  
                     if(item['hostName']==hostName){
                         if(playerCount >= 3){
                             $("#startGame").css("display","block");
                         }
-                    }
+                    }				//display start game button if enough players are present
 				});
-				console.log(currentGameList+"/"+gameList);
 				$.each(gameList,function(key, value){
 					if($.inArray(value,currentGameList)==-1){
 						$("#gameInstance"+value).remove();
+						gameList.splice(key,1);
 					}
-				});
+				});				//for each game that was created at some point remove it visually and remove it from memory (second part is untested)
 			});
 		},500);
 		
 		function join(id){
-			username=$("input[name=hostName]").val();
+			username=$("input[name=username]").val();
 			$.ajax({
 				url: "joinGame.php",
 				method:"POST",
@@ -216,7 +201,7 @@ session_start();
 			}
 		?>	
 		<div id="username2">
-			gebruikersnaam:<input type="text" name="hostName" required></input></br></br>
+			gebruikersnaam:<input type="text" name="username" required></input></br></br>
 		</div>
 		
 		<div id="createGame">
