@@ -8,7 +8,7 @@
  * 
  * @param {string} name u, d, c, s, t, b
  * @param {bool} anti
- * @param {string} colour B, R, G
+ * @param {string} colour b, r, g
  * @returns {CreateQuark.card}
  */
 function CreateQuark(name, anti, colour){
@@ -33,6 +33,9 @@ function CreateQuark(name, anti, colour){
             break;
         default: 
     }
+	if(anti){
+		card['charge']=-card['charge'];
+	}
     return card;
 }
 
