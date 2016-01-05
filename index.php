@@ -6,12 +6,11 @@ session_start();
 	<head>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="js/cardInteraction.js"></script>
-		<script src="js/createDecks.js"></script>
 		<script src="js/playCombination.js"></script>
-		<script src="js/randomDeck.js"></script>
+		<script src="js/turnProcessing.js"></script>
 		<script>	
-		//
-		console.log(createDeck1());
+		deck=createDeck1();
+		console.log(randomDeck(deck));
 		
 		$(function(){
 			hostName=$("#hostName").html();
