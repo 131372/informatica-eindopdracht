@@ -5,8 +5,13 @@ session_start();
 <html>
 	<head>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="js/cardInteraction.js"></script>
+		<script src="js/createDecks.js"></script>
+		<script src="js/playCombination.js"></script>
+		<script src="js/randomDeck.js"></script>
 		<script>	
 		//
+		console.log(createDeck1());
 		
 		$(function(){
 			hostName=$("#hostName").html();
