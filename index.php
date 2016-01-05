@@ -24,21 +24,23 @@ session_start();
 			$.ajax({
 				url: "startGame.php",
 				method: "POST",
-				data: {"gameName":$("input[name=gameName]").val(),"gameType":$("input[name=gameType]:radio:checked").val(),"hostName":$("input[name=hostName]").val()}
+				data: {"gameName":$("input[name=gameName]").val(),"gameType":$("input[name=gameType]:radio:checked").val(),"hostName":$("input[name=username]").val()}
 			}).done(function(data) {			//after putting the new game in the database...
-                if(data=="succes"){
-					$("#createGame").css("display","none");
-					$("#username2").css("display","none");
-					$("#games").css("display","none");
-					$("#wait").css("display","block");
-				}				//hide and show the proper interfaces
-				else if(data=="gameName"){
+				if(data=="gameName"){
 					alert("spelnaam is al in gebruik");
 				}
 				else if(data=="hostName"){
 					alert("gebruikersnaam is al in gebruik");
 				}					//show proper error messages if necessary
-				hostName=$("input[name=username]").val();			//store the host name
+				else{
+					$("#createGame").css("display","none");
+					$("#username2").css("display","none");
+					$("#games").css("display","none");
+					$("#wait").css("display","block");				//hide and show the proper interfaces
+					hostName=$("input[name=username]").val();			
+					gameId=data;							//store the host name and the game id
+				}
+				
 			});
 		}
 		
@@ -63,7 +65,8 @@ session_start();
 					$("#games").css("display","block");
 					$("#wait").css("display","none");
 				});					//show and hide the proper interfaces
-				username="";		//remove the stored username
+				username="";		
+				gameId="";				//remove the stored username and gameId
 			}
 		}
 		
@@ -93,8 +96,7 @@ session_start();
 						$("#players").html("spelers:</br>"+item['hostName']+"</br>"+playerHTML);			//show all players and add a kick button to each one of them
 					}
 					else if(gameId==item['id']){				//if the user is a guest
-						guestList=item['guests'].split(",");
-						if(jQuery.inArray(username,guestList)!=-1){			//if the user has not been kicked from the game...
+						if(jQuery.inArray(username,guests)!=-1){			//if the user has not been kicked from the game...
 							$("#playerCount").html(playerCount);			//show the player count
 							playerHTML="";
 							for(i=0;i<playerCount-1;i++){
@@ -104,7 +106,11 @@ session_start();
 						}
 						else{				//if the user has been kicked
 							alert("je bent gekicked");
-							//still need to add ajax to remove sessions
+							$.ajax({
+								url: "kick.php"
+							}).done(function(data){
+							
+							});//still need to add ajax to remove sessions
 							hostName="";
 							username="";
 							gameId="";				//reset stored data
@@ -151,11 +157,11 @@ session_start();
 				method:"POST",
 				data:{"username":username,"gameId":id}
 			}).done(function(data) {
-				console.log(data);
 				if(data=="fail"){
 					alert("gebruikersnaam is al in gebruik");
 				}
 				else{
+					gameId=data;
 					$("#createGame").css("display","none");
 					$("#username2").css("display","none");
 					$("#games").css("display","none");
@@ -165,7 +171,7 @@ session_start();
 		}
 				
 		function kick(player){
-			console.log(player);
+			console.log(gameId);
 			$.ajax({
 				url: "kickPlayer.php",
 				method:"POST",

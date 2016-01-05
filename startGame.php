@@ -17,6 +17,6 @@ else{
 	$_SESSION['hostName']=$_POST['hostName'];
 	$result = $db->get("SELECT * FROM games WHERE hostName=:hostName",array(":hostName"=>$_POST['hostName']));
 	$_SESSION['gameId']=$result[0]['id'];
-	echo "succes";//JSON_encode(array("status"=>"succes"));
+	echo $_SESSION['gameId'];
 }
 ?>
