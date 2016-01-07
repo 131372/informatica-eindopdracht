@@ -13,6 +13,11 @@ try {
 		guests VARCHAR(255),
 		gameType VARCHAR(255)
 	)");
+	$dbh->exec("CREATE TABLE gamedata(
+		id INT(255) AUTO_INCREMENT PRIMARY KEY,
+		gameId VARCHAR(255),
+		gamedata TEXT
+	)");
 } catch (PDOException $e) {
     echo $e->getMessage();
 }

@@ -9,8 +9,22 @@ session_start();
 		<script src="js/playCombination.js"></script>
 		<script src="js/turnProcessing.js"></script>
 		<script>	
-		deck=createDeck1();
-		console.log(randomDeck(deck));
+		
+		gameInProgress=false;
+		
+		$(function(){
+			storage=setInterval(function(){
+				if(gameInProgress){
+					if(gameObject['turn']==gameObject['player']){
+						$.ajax({
+							url: "getGameState.php"
+						}).done(function(data){
+							gameObject=JSON.parse(data);
+						});
+					}
+				}
+			},1000);
+		});
 		
 		$(function(){
 			hostName=$("#hostName").html();
@@ -43,6 +57,7 @@ session_start();
 					$("#wait").css("display","block");				//hide and show the proper interfaces
 					hostName=$("input[name=username]").val();			
 					gameId=data;							//store the host name and the game id
+					gameInProgress=true;					//!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				}
 				
 			});

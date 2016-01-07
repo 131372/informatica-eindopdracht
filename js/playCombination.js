@@ -1,4 +1,4 @@
-function playCombination(cards){
+function allowCombination(cards){
 	if(cards.length!=2 && cards.length!=3){
 		return "incorrect_amount_of_cards";
 	}				//no combinations can be played which are not either 2 or 3 cards
@@ -34,3 +34,27 @@ function playCombination(cards){
 		return "colours_dont_cancel";
 	}
 }
+
+function playCombination(combination,currentPlayerHand,currentPlayerCombinations){
+	switch(allowCombination(combination)){
+		case "allowed":
+			//code to update UI
+			currentPlayerCombinations.push(combination);
+			return array(currentPlayerHand,currentPlayerCombinations);
+			break;
+		case "incorrect_amount_of_cards":
+			//code to update UI
+			$.each(combination, function(index, card){
+				currentPlayerHand.push(card);
+			});
+			return array(currentPlayerHand,currentPlayerCombinations);
+			break;
+		case "colours_dont_cancel":
+			//code to update UI
+			$.each(combination, function(index, card){
+				currentPlayerHand.push(card);
+			});
+			return array(currentPlayerHand,currentPlayerCombinations);
+			break;
+	}
+}					//function is to be used when pressing the play combination button. the current player's hand should be set to the first value of the returned array, while the current player's combination should be set to the second value
