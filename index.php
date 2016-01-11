@@ -10,18 +10,19 @@ session_start();
 		<script src="js/turnProcessing.js"></script>
 		<script>	
 		
-		gameInProgress=false;
+		gameInProgress=true;
 		
 		$(function(){
 			storage=setInterval(function(){
 				if(gameInProgress){
-					if(gameObject['turn']==gameObject['player']){
+					//if(gameObject['turn']==gameObject['player']){
 						$.ajax({
 							url: "getGameState.php"
 						}).done(function(data){
-							gameObject=JSON.parse(data);
+							console.log(data);
+							//gameObject=JSON.parse(data);
 						});
-					}
+					//}
 				}
 			},1000);
 		});
@@ -37,6 +38,18 @@ session_start();
 				$("#wait").css("display","block");
 			}					//if the user is currently a host or a guest show the proper interface
 		});
+		
+		function uploadGameData(gamedata){
+			$.ajax({
+				url: "uploadGameState.php",
+				method: "POST",
+				data: {"gameObject":gamedata}
+			}).done(function(data) {
+				console.log(data);
+			});
+		}
+		
+		uploadGameData("c");
 		
 		function createGame(){
 			$.ajax({
@@ -198,6 +211,10 @@ session_start();
 			}).done(function(data) {
 				console.log(data);
 			});
+		}
+		
+		function endTurn(){
+			gameObject['currentPlayer']++;
 		}
 		</script>
 	</head>

@@ -1,0 +1,1 @@
+<?phpsession_start();require_once "php/DatabaseConnection.php";$db = new DatabaseConnection();$db->change("INSERT INTO gamedata (gameId,gamedata) VALUES (:gameId,:gamedata)",array(":gameId"=>$_SESSION['gameId'],"gamedata"=>$_POST['gameObject']));?>
