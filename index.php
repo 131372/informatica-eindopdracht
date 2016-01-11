@@ -11,6 +11,10 @@ session_start();
 		<script>	
 		
 		gameInProgress=true;
+		gameObject={
+			"currentPlayer":1,
+			"playerAmount":-1
+		};
 		
 		$(function(){
 			storage=setInterval(function(){
@@ -48,8 +52,6 @@ session_start();
 				console.log(data);
 			});
 		}
-		
-		uploadGameData("c");
 		
 		function createGame(){
 			$.ajax({
@@ -214,7 +216,13 @@ session_start();
 		}
 		
 		function endTurn(){
-			gameObject['currentPlayer']++;
+			if(gameObject['currentPlayer']!=gameObject['playerAmount']){
+				gameObject['currentPlayer']++;
+			}
+			else{
+				gameObject['currentPlayer']=1;
+			}
+			//code to update UI
 		}
 		</script>
 	</head>
