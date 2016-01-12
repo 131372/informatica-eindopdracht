@@ -12,9 +12,19 @@ session_start();
 		
 		gameInProgress=true;
 		gameObject={
-			"currentPlayer":1,
-			"playerAmount":-1
+			currentPlayer:2,
+			playerAmount:-1,
+			combinations:{},
+			players:{1:"host",2:"guest1",3:"guest2"}
 		};
+		
+		function isTurn(){
+			name=gameObject['players'][gameObject['currentPlayer']];
+			if(name==username || name==hostName){
+				return true;
+			}
+			return false;
+		}
 		
 		$(function(){
 			storage=setInterval(function(){
