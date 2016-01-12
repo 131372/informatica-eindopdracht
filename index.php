@@ -4,6 +4,7 @@ session_start();
 <!DOCTYPE HTML>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="cssinterface.css">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="js/cardInteraction.js"></script>
 		<script src="js/playCombination.js"></script>
@@ -286,6 +287,75 @@ session_start();
 				spelers:</br>
 			</div>
         </div>
-            
+		<div id="mainGame" style="display:none">	
+			<div id="Leave" >
+
+			<button id="Leave" onclick="myFunction()">Leave</p>
+
+			<script>
+				//function myFunction() {
+				//document.getElementById("Leave").innerHTML = "LEAVE!";
+				//}
+			</script>
+
+			</div> 
+
+			<div id="Help" >
+			<p>Help</p>
+			</div> 
+
+			<div id="TurnOrder" >
+			<p>Turn order</p>
+			</div> 
+
+			<div id="Deck" >
+			<p>Deck</p>
+			</div> 
+
+			<div id="Combination" >
+			<p>Your combinations:</p>
+			</div> 
+
+			<div id="Cards" >
+			<p>Current cards played for combination</p>
+			</div> 
+
+			<div id="Hand" ></div> 
+
+			<div id="Hint" >
+			<p>Hint?</p>
+			</div> 
+
+			<div id="Combinationsoff" >
+			<p>Combinations off:</p>
+			</div> 
+
+			<div id="Player2" ></div> 
+
+			<div id="Player3" ></div> 
+
+			<div id="Player4" ></div> 
+
+			<div id="Player5" ></div> 
+
+			<div id="Player6" ></div> 
+
+			<div id="Clear" >
+			<p>Clear field</p>
+			</div> 
+
+			<div id="Play" >
+			<p>Play combination</p>
+			</div> 
+
+			<div id="Undo" >
+			<p>Undo steal</p>
+			</div> 
+
+			<div id="End" >
+			<p>End turn</p>
+			</div>
+		</div>
+		
 	</body>
 </html>
