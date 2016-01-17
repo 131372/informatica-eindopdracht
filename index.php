@@ -132,7 +132,7 @@ session_start();
 					else{
 						playerCount = 1;
 					}					//determine how many players are in the game (including the host)
-					if(item['hostName']==hostName){ //if you're the host...
+					if(item['hostName']==hostName){ //if you're the host... of some game.
 						$("#playerCount").html(playerCount);				//show player count
 						playerHTML="";
 						for(i=0;i<playerCount-1;i++){
@@ -165,7 +165,7 @@ session_start();
 							$("#wait").css("display","none");				//show and hide all the proper interfaces
 						}
 					}
-					if($("#gameInstance"+item["id"]).length==0){			//if the game is not yet visually present...
+					if($("#gameInstance"+item["id"]).length==0){			//if the game (option to select) is not yet visually present...
 						$("#games").append($("<div id='gameInstance"+item['id']+"'>")
 						.append("<span id='gameName"+item['id']+"'>"+item['gameName']
 						+"</span></br><span id='hostName"+item['id']+"'>"+item['hostName']
@@ -176,10 +176,10 @@ session_start();
 						}				//add the game to all games that were visually present at some point if it isn't there already
 					}
 					else{
-						$("#gameName"+item["id"]).html(item['gameName']);
+						$("#gameName"+item["id"]).html(item['gameName']); 
 						$("#hostName"+item["id"]).html(item['hostName']);
 						$("#playerCount"+item["id"]).html(playerCount);
-					}					//update the game information                  
+//					}					//update the game information     , why no item['id'] in the update?             
                     if(item['hostName']==hostName){
                         if(playerCount >= 3){
                             $("#startGame").css("display","block");
