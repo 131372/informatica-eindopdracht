@@ -21,3 +21,18 @@ function updateTurnOrder(){
 	}
 	$("#TurnOrder").html($html);
 }
+
+function cardGraphic (card){
+    var graphicName = card['particle'] + card['name'] + card['anti'] + card['colour'];
+    return {graphic: graphicName + ".svg", id: graphicName};
+}
+
+function updateUnfinishedCombination(cardsInUnfinished){
+    var path = "images/";
+    $("#Cards").empty();
+    $("#Cards").append("<p>Current cards played for combination</p></br>");
+    for(var i = 0; i < cardsInUnfinished.length; i++){
+        var cardGraphic = cardGraphic(cardsInUnfinished[i]);
+        $("#Cards").append("<img id='" + cardGraphic['graphic'] +"' " + "class='TBD' " + "src='" + path + cardGraphic[0] + "' " + ">");
+    } 
+}
