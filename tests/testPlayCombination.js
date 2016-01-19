@@ -7,15 +7,26 @@
 describe('playCombination', function () {
     
     it('returns cards in currentHand when there are not enough cards', function () {
-        $combination=Array("1");
-        $newArray = Array(Array("1","2","3","4"), Array());
-        expect(playCombination($combination, $currentHand, $currentCombinations)).toMatch($newArray);
+        var combination = Array("1");
+        var newArr = Array(Array("1"), []);
+        var currentHand = [];
+        var currentCombinations = [];
+        var r = playCombination(combination, currentHand, currentCombinations);
+        console.log(r, newArr);
+        expect(r.length).toBe(2);
+        expect(r[0]).toEqual(newArr[0]);
+        expect(r[1]).toEqual(newArr[1]);
     });
     
     it('returns cards in currentHand when there are too much cards', function () {
-        $combination=array("1","2","3","4");  
-        $newArray = array(array("1","2","3","4"), array());
-        expect(playCombination($combination, $currentHand, $currentCombinations)).toMatch($newArray);
+        var combination = Array("1","2","3","4");  
+        var newArr = [["1","2","3","4"], []];
+        var currentHand = [];
+        var currentCombinations = [];
+        var r = playCombination(combination, currentHand, currentCombinations);
+        expect(r.length).toBe(2);
+        expect(r[0]).toEqual(newArr[0]);
+        expect(r[1]).toEqual(newArr[1]);
     });
     
     it('returns cards when the colours dont match', function () {

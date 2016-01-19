@@ -1,10 +1,11 @@
 function checkForGameEnd(deck,hands){
-	if(deck.length==0){
+	var emptyHand = false;
+        if(deck.length==0){
 		return true;
 	}
 	$.each(hands, function(index, value){
 		if(value.length==0){
-			emptyHand=true;
+			emptyHand = true;
 		}
 	});
 	if(emptyHand){
