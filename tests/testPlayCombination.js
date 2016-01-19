@@ -30,7 +30,10 @@ describe('playCombination', function () {
     });
     
     it('returns cards when the colours dont match', function () {
-        //expect().toEqual(3);
+        var combination = Array("1","2","3","4");  
+        var currentHand = [];
+        var currentCombinations = [];
+        var r = playCombination(combination, currentHand, currentCombinations);
     });
     
     it('plays combination in case of allowed', function () {
