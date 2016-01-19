@@ -8,36 +8,87 @@ describe('playCombination', function () {
     
     it('returns cards in currentHand when there are not enough cards', function () {
         var combination = Array("1");
-        var newArr = Array(Array("1"), []);
         var currentHand = [];
         var currentCombinations = [];
-        var r = playCombination(combination, currentHand, currentCombinations);
-        console.log(r, newArr);
-        expect(r.length).toBe(2);
-        expect(r[0]).toEqual(newArr[0]);
-        expect(r[1]).toEqual(newArr[1]);
+        var s = playCombination(combination, currentHand, currentCombinations);
+        
+        var newArray = Array(Array("1"),[]);
+        console.log(s, newArray);
+        expect(s.length).toBe(2);
+        expect(s[0]).toEqual(newArray[0]);
+        expect(s[1]).toEqual(newArray[1]);
     });
     
     it('returns cards in currentHand when there are too much cards', function () {
         var combination = Array("1","2","3","4");  
-        var newArr = [["1","2","3","4"], []];
         var currentHand = [];
         var currentCombinations = [];
-        var r = playCombination(combination, currentHand, currentCombinations);
-        expect(r.length).toBe(2);
-        expect(r[0]).toEqual(newArr[0]);
-        expect(r[1]).toEqual(newArr[1]);
+        var s = playCombination(combination, currentHand, currentCombinations);
+        
+        var newArray = Array(Array("1","2","3","4"),[]);
+        expect(s.length).toBe(2);
+        expect(s[0]).toEqual(newArray[0]);
+        expect(s[1]).toEqual(newArray[1]);
     });
     
-    it('returns cards when the colours dont match', function () {
-        var combination = Array("1","2","3","4");  
+    it('returns cards when the colours dont match in case of a baryon', function () {
+        var card1 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "blue", mass: 5, charge: 0.667, order: 0};
+        var card2 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "blue", mass: 5, charge: 0.667, order: 0};
+        var card3 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "blue", mass: 5, charge: 0.667, order: 0};
+        var combination = Array(card1, card2, card3);  
         var currentHand = [];
         var currentCombinations = [];
-        var r = playCombination(combination, currentHand, currentCombinations);
+        var s = playCombination(combination, currentHand, currentCombinations);
+        
+        var newArray = Array(Array(card1, card2, card3),[]);
+        console.log(s, newArray);
+        expect(s[0]).toEqual(newArray[0]);
+        expect(s[1]).toEqual(newArray[1]);
     });
     
-    it('plays combination in case of allowed', function () {
-        //expect().toEqual(3);
+    it('returns cards when the colours dont match in case of a meson', function () {
+        var card1 = {name: "u", particle: "quark", generation: 1, anti: true, colour: "red", mass: 5, charge: -0.667, order: 0};
+        var card2 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "blue", mass: 5, charge: 0.667, order: 0};
+        var combination = Array(card1, card2);  
+        var currentHand = [];
+        var currentCombinations = [];
+        var s = playCombination(combination, currentHand, currentCombinations);
+        
+        var newArray = Array(Array(card1, card2),[]);
+        console.log(s, newArray);
+        expect(s[0]).toEqual(newArray[0]);
+        expect(s[1]).toEqual(newArray[1]);
+    });
+    
+    it('plays combination in case of allowed in case of a baryon', function () {
+        var card1 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "blue", mass: 5, charge: 0.667, order: 0};
+        var card2 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "red", mass: 5, charge: 0.667, order: 0};
+        var card3 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "green", mass: 5, charge: 0.667, order: 0};
+        var combination = Array(card1, card2, card3);  
+        var currentHand = [];
+        var currentCombinations = [];
+        var s = playCombination(combination, currentHand, currentCombinations);
+        
+        var newArray = Array([],Array(Array(card1, card2, card3)));
+        console.log(s, newArray);
+        expect(s[0]).toEqual(newArray[0]);
+        expect(s[1]).toEqual(newArray[1]);
+        
+    });
+    
+     it('plays combination in case of allowed in case of a meson', function () {
+        var card1 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "blue", mass: 5, charge: 0.667, order: 0};
+        var card2 = {name: "u", particle: "quark", generation: 1, anti: true, colour: "blue", mass: 5, charge: -0.667, order: 0};
+        var combination = Array(card1, card2);  
+        var currentHand = [];
+        var currentCombinations = [];
+        var s = playCombination(combination, currentHand, currentCombinations);
+        
+        var newArray = Array([],Array(Array(card1, card2)));
+        console.log(s, newArray);
+        expect(s[0]).toEqual(newArray[0]);
+        expect(s[1]).toEqual(newArray[1]);
+        
     });
     
 });

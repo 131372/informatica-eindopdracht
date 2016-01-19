@@ -2,7 +2,7 @@ function allowCombination(cards){
 	if(cards.length!=2 && cards.length!=3){
 		return "incorrect_amount_of_cards";
 	}				//no combinations can be played which are not either 2 or 3 cards
-	colours={r:0,g:0,b:0};
+	colours={red:0,green:0,blue:0};
 	//annihilate2=false;
 	$.each(cards, function(index, card){
 		/*annihilate=false;
@@ -27,7 +27,7 @@ function allowCombination(cards){
 		return "particles_would_annihilate";
 	}*/
 	//after I created the checking for annihilation part, I realised it is actually allowed to play such combinations, weird as it may be
-	if(colours['r']==colours['g'] && colours['g']==colours['b']){
+	if(colours['red']==colours['green'] && colours['green']==colours['blue']){
 		return "allowed";
 	}
 	else{
