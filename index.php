@@ -320,7 +320,7 @@ session_start();
 			</div> 
 
 			<div id="Cards" >
-			<p>Current cards played for combination</p>
+                            <p>Current cards played for combination</p> </br>
 			</div> 
 
 			<div id="Hand" ></div> 
