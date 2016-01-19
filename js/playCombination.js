@@ -40,21 +40,21 @@ function playCombination(combination,currentPlayerHand,currentPlayerCombinations
 		case "allowed":
 			//code to update UI
 			currentPlayerCombinations.push(combination);
-			return array(currentPlayerHand,currentPlayerCombinations);
+			return Array(currentPlayerHand,currentPlayerCombinations);
 			break;
 		case "incorrect_amount_of_cards":
 			//code to update UI
 			$.each(combination, function(index, card){
 				currentPlayerHand.push(card);
 			});
-			return array(currentPlayerHand,currentPlayerCombinations);
+			return Array(currentPlayerHand,currentPlayerCombinations);
 			break;
 		case "colours_dont_cancel":
 			//code to update UI
 			$.each(combination, function(index, card){
 				currentPlayerHand.push(card);
 			});
-			return array(currentPlayerHand,currentPlayerCombinations);
+			return Array(currentPlayerHand,currentPlayerCombinations);
 			break;
 	}
-}					//function is to be used when pressing the play combination button. the current player's hand should be set to the first value of the returned array, while the current player's combination should be set to the second value
+}					//function is to be used when pressing the play combination button. the current player's hand should be set to the first value of the returned Array, while the current player's combination should be set to the second value
