@@ -28,7 +28,7 @@ function allowCombination(cards){
 	}*/
 	//after I created the checking for annihilation part, I realised it is actually allowed to play such combinations, weird as it may be
 	if(colours['r']==colours['g'] && colours['g']==colours['b']){
-		return "alllowed";
+		return "allowed";
 	}
 	else{
 		return "colours_dont_cancel";
