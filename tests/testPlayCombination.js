@@ -7,8 +7,8 @@
 describe('playCombination', function () {
     
     it('returns cards in currentHand when there are not enough cards', function () {
-        $combination=array("1");
-        $newArray = array(array("1","2","3","4"), array());
+        $combination=Array("1");
+        $newArray = Array(Array("1","2","3","4"), Array());
         expect(playCombination($combination, $currentHand, $currentCombinations)).toMatch($newArray);
     });
     
