@@ -127,8 +127,10 @@ function createDeck1(){
 }
 
 function randomDeck(deck) {
-    order = 0;
-    orderNrs = [];
+    var result = [];
+    var order = 0;
+    var orderNr ;
+    var orderNrs = [];
     var something = false; //help met het bedenken van een goede naam
     var anotherthing = false; //help met het bedenken van een goede naam
 
@@ -152,11 +154,11 @@ function randomDeck(deck) {
 
     });
 
-    randomDeck = deck.sort(function (a, b) {              // dit heb ik van internet, kan iemand dit even testen
+    result = deck.sort(function (a, b) {              // dit heb ik van internet, kan iemand dit even testen
         return (a.order < b.order ? -1 : 1);
     });
     
-    return randomDeck; // dit is de random deck
+    return result; // dit is de random deck
 }
 
 

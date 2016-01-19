@@ -17,7 +17,23 @@ beforeEach(function () {
           };
         }
       };
-    }
+    },
+     deckEquals: function () {
+      return {
+        compare: function (actual, expected) {
+          var a = actual;
+          var e = expected
+          var r = true;
+          r = a.count == e.count;
+          $.each(a, function(i, v) {
+              r &= v == e[i]
+          });
+          return {
+            pass:r
+          };
+        }
+      };
+    },
   });
 });
 describe("cardInteraction", function() {
@@ -62,19 +78,23 @@ describe("deck Handling", function() {
         expect(deck.length).toBe(6);
     });
      
-    /*
-    it("should have be random", function() {
+    
+    it("should be random indeed", function() {
         // make copy of deck
         var cDeck = [];
         $.each(deck, function(i, v) {
             cDeck.push(v)
-        })    
+        });
+        console.log(cDeck)
+        expect(deck).deckEquals(deck); 
+        expect(deck).deckEquals(cDeck); 
         for(i = 1; i < 30; i++) {
            randomDeck(deck);
         }
         expect(deck.length).toBe(6);
-        expect(deck).not.toBeEqual(cDeck);        
+        expect(deck).not.deckEquals(cDeck);        
     });
+    
     it("should be able to draw a card", function() {
         randomDeck(deck);
         var originalLength = deck.length;
@@ -83,8 +103,7 @@ describe("deck Handling", function() {
         expect(r[1].length).toBe(originalLength - 1)
         
     })
-    */
-   
+    
 });
 describe("initial deck 1", function() {
     var d ;
