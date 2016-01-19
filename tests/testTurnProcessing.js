@@ -26,4 +26,37 @@ describe('checkForGameEnd', function () {
     });
 });
 
+describe ('checkForProtonNeutronGameEnd', function(){
+    it ('ends the game when the combination forms a proton', function (){
+        var card1 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "blue", mass: 5, charge: 0.667, order: 0};
+        var card2 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "red", mass: 5, charge: 0.667, order: 0};
+        var card3 = {name: "d", particle: "quark", generation: 1, anti: false, colour: "green", mass: 10, charge: -0.333, order: 0};
+        var combinations = Array(Array(card1, card2, card3)); 
+        var s = checkForProtonNeutronGameEnd(combinations);
+        console.log(s);
+        expect(s).toBeTruthy();     
+    });
+    
+    it ('ends the game when the combination forms a neutron', function (){
+        var card1 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "blue", mass: 5, charge: 0.667, order: 0};
+        var card2 = {name: "d", particle: "quark", generation: 1, anti: false, colour: "red", mass: 10, charge: -0.333, order: 0};
+        var card3 = {name: "d", particle: "quark", generation: 1, anti: false, colour: "green", mass: 10, charge: -0.333, order: 0};
+        var combinations = Array(Array(card1, card2, card3)); 
+        var s = checkForProtonNeutronGameEnd(combinations);
+        console.log(s);
+        expect(s).toBeTruthy();     
+    });
+    
+    it ('doesnt end the game when neither a proton or a neutron is formed', function (){
+        var card1 = {name: "u", particle: "quark", generation: 1, anti: false, colour: "blue", mass: 5, charge: 0.667, order: 0};
+        var card2 = {name: "s", particle: "quark", generation: 2, anti: false, colour: "red", mass: 200, charge: -0.333, order: 0};
+        var card3 = {name: "d", particle: "quark", generation: 1, anti: false, colour: "green", mass: 10, charge: -0.333, order: 0};
+        var combinations = Array(Array(card1, card2, card3)); 
+        var s = checkForProtonNeutronGameEnd(combinations);
+        console.log(s);
+        expect(s).toBeFalsy();     
+    });
+    
+    });
+
 
