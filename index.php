@@ -12,7 +12,7 @@ session_start();
 		<script src="js/updateUI.js"></script>
 		<script>	
 		
-		gameInProgress=true;
+		gameInProgress=false;
 		gameObject={
 			currentPlayer:2,
 			playerAmount:3,
@@ -182,7 +182,7 @@ session_start();
 						$("#gameName"+item["id"]).html(item['gameName']); 
 						$("#hostName"+item["id"]).html(item['hostName']);
 						$("#playerCount"+item["id"]).html(playerCount);
-//					}					//update the game information     , why no item['id'] in the update?             
+					}					//update the game information     , why no item['id'] in the update?             
                     if(item['hostName']==hostName){
                         if(playerCount >= 3){
                             $("#startGame").css("display","block");
