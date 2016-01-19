@@ -38,6 +38,7 @@ function allowCombination(cards){
 function playCombination(combination,currentPlayerHand,currentPlayerCombinations){
 	switch(allowCombination(combination)){
 		case "allowed":
+<<<<<<< HEAD
 			//code to update UI
 			currentPlayerCombinations.push(combination);
 			return Array(currentPlayerHand,currentPlayerCombinations);
@@ -55,6 +56,27 @@ function playCombination(combination,currentPlayerHand,currentPlayerCombinations
 				currentPlayerHand.push(card);
 			});
 			return Array(currentPlayerHand,currentPlayerCombinations);
+=======
+			gameObject['combinations'][currentPlayer].push(combination);
+			updateHand();
+			updateCombination();
+			//currentPlayerCombinations.push(combination);
+			//return array(currentPlayerHand,currentPlayerCombinations);
+			break;
+		case "incorrect_amount_of_cards":
+			//code to update UI
+			//$.each(combination, function(index, card){
+			//	currentPlayerHand.push(card);
+			//});
+			//return array(currentPlayerHand,currentPlayerCombinations);
+			break;
+		case "colours_dont_cancel":
+			//code to update UI
+			//$.each(combination, function(index, card){
+			//	currentPlayerHand.push(card);
+			//});
+			//return array(currentPlayerHand,currentPlayerCombinations);
+>>>>>>> a311e6a78354799feff815a5cc94eb39df4eec3a
 			break;
 	}
 }					//function is to be used when pressing the play combination button. the current player's hand should be set to the first value of the returned Array, while the current player's combination should be set to the second value

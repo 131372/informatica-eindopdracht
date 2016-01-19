@@ -9,14 +9,17 @@ session_start();
 		<script src="js/cardInteraction.js"></script>
 		<script src="js/playCombination.js"></script>
 		<script src="js/turnProcessing.js"></script>
+		<script src="js/updateUI.js"></script>
 		<script>	
 		
 		gameInProgress=true;
 		gameObject={
 			currentPlayer:2,
-			playerAmount:-1,
+			playerAmount:3,
 			combinations:{},
-			players:{1:"host",2:"guest1",3:"guest2"}
+			players:{1:"host",2:"guest1",3:"guest2"},
+			hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
+			points:{1:10,2:15,3:13}
 		};
 		
 		function isTurn(){
