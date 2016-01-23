@@ -17,11 +17,11 @@ session_start();
 			currentPlayer:2,
 			playerAmount:3,
 			combinations:{},
-			players:{1:"host",2:"guest1",3:"guest2"},
+			players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
 			hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
 			points:{1:10,2:15,3:13}
 		};
-		
+		console.log(gameObject["players"]);
 		function isTurn(){
 			name=gameObject['players'][gameObject['currentPlayer']];
 			if(name==username || name==hostName){
@@ -29,6 +29,18 @@ session_start();
 			}
 			return false;
 		}
+                
+                (function(){
+                    $.ajax({
+                        url: "getOngoingGame.php"
+                    }).done(function(data){
+                        console.log(data);
+                        if(data == true){
+                            gameInProgress=true;
+                            displayActiveGame();
+                        }
+                    });
+                })();
 		
 		$(function(){
 			storage=setInterval(function(){
@@ -238,6 +250,29 @@ session_start();
 			}
 			//code to update UI
 		}
+                
+                function displayActiveGame(){
+                    $("#wait").css("display","none");
+                    $("#createGame").css("display","none");
+                    $("#username2").css("display","none");
+                    $("#games").css("display","none"); // did I forget any of them?
+                    $("#mainGame").css("display","block");
+                }
+                
+                function startGame(){
+                    gameInProgress=true;
+                    $("#startGame").css("display","none");
+                    $.ajax({
+                        url: "gameStart.php"
+                    }).done(function(){
+                        gameObject["players"]["1"] = hostName; 
+                        for(var i = 0; i < guests.length; i++){
+                            gameObject["players"][String(i+2)] = guests[0];
+                        }
+                    });
+                    displayActiveGame();
+                }
+                
 		</script>
 	</head>
 	<body>
@@ -285,7 +320,7 @@ session_start();
 		<div id="wait" style="display:none">
 			wacht totdat er minimaal 3 spelers zijn, nu zijn er:<span id="playerCount">1</span>
 			<button onclick="destroyGame()">verlaat spel</button>
-            <button id="startGame" style="display:none" onclick="redirect()">start spel</button>
+            <button id="startGame" style="display:none" onclick="startGame()">start spel</button>
 			<div id="players">
 				spelers:</br>
 			</div>

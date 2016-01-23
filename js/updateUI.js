@@ -12,7 +12,7 @@ function updateUIAppendCards(cards, combination, element, height, width, message
             var cardGraphic = cardGraphic(cards[i][0]); 
             cardGraphic["id"] = ""; // recognize the combination by id.
             for(var j = 0; j < cards[i].length; j++){
-                if(j == 0){
+                if(j === 0){
                     cardGraphic["id"] += cards[i][0]['particle'] + cards[i][0]['name'] + cards[i][0]['anti'] + cards[i][0]['colour']; // cards represented in the same way as the pictures.
                 } else {
                     cardGraphic["id"] += "," + cards[i][0]['particle'] + cards[i][0]['name'] + cards[i][0]['anti'] + cards[i][0]['colour']; // comma seperate the entities.
