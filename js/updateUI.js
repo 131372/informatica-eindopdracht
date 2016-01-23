@@ -1,5 +1,14 @@
-function updateHand(){
-	
+function updateUIAppendCards(cards, element, message, htmlclass, idPrefix){ // latter three are optional
+    htmlclass = (typeof htmlclass === 'undefined') ? "" : htmlclass; 
+    message = (typeof message === 'undefined') ? "" : message; // not sure if I should control message here for certain cases.
+    idPrefix = (typeof idPrefix === 'undefined') ? "" : idPrefix;
+    var path = "images/";
+    $(element).empty();
+    $(element).append("<p>" + message + "</p></br>");
+    for(var i = 0; i < cards.length; i++){
+        var cardGraphic = cardGraphic(cards[i]);
+        $(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + "class='" + htmlclass +  "' " + "src='" + path + cardGraphic[0] + "' " + ">");
+    } 
 }
 
 function updateCombination(){
@@ -25,14 +34,4 @@ function updateTurnOrder(){
 function cardGraphic (card){
     var graphicName = card['particle'] + card['name'] + card['anti'] + card['colour'];
     return {graphic: graphicName + ".svg", id: graphicName};
-}
-
-function updateUnfinishedCombination(cardsInUnfinished){
-    var path = "images/";
-    $("#Cards").empty();
-    $("#Cards").append("<p>Current cards played for combination</p></br>");
-    for(var i = 0; i < cardsInUnfinished.length; i++){
-        var cardGraphic = cardGraphic(cardsInUnfinished[i]);
-        $("#Cards").append("<img id='" + cardGraphic['graphic'] +"' " + "class='TBD' " + "src='" + path + cardGraphic[0] + "' " + ">");
-    } 
 }
