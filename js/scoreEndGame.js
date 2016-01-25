@@ -1,15 +1,9 @@
 function scoreEndGame(deck, hands, currentPlayerCombinations){
-        var username = "Salma";
-        //var username = $_SESSION['username'];
-    
     if (checkForGameEnd(deck, hands)){
-        var score = score + 3;
-        return score;
-        
+        gameObject["points"][gameObject.currentplayer] += 3;  
     }
    
     if (checkForProtonNeutronGameEnd(currentPlayerCombinations)){
-        var score = score + 3;
-        return score;
+        gameObject["points"][gameObject.currentplayer] += 3; 
     }
 }
