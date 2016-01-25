@@ -1,7 +1,7 @@
 function updateUIAppendCards(cards, combination, element, height, width, message, htmlclass, idPrefix){ // latter three are optional, if combination read cards as combinations
     htmlclass = (typeof htmlclass === 'undefined') ? "" : htmlclass; 
     message = (typeof message === 'undefined') ? "" : message; // not sure if I should control message here for certain cases.
-    idPrefix = (typeof idPrefix === 'undefined') ? $(element).not('#') : idPrefix; // should write a test for this
+    idPrefix = ""//(typeof idPrefix === 'undefined') ? $(element).not('#') : idPrefix; // should write a test for this
     height = height + ""; // should write a test for this.
     width = width + "";
     var path = "images/";
@@ -19,11 +19,11 @@ function updateUIAppendCards(cards, combination, element, height, width, message
                 }
             }
         } else {
-            var cardGraphic = cardGraphic(cards[i]);
+            var cardGraphic = cardGraphic2(cards[i]);
         }
         $(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
                 "class='" + htmlclass +  "' " + 
-                "src='" + path + cardGraphic[0] + "' " + 
+                "src='" + path + cardGraphic['graphic'] + "' " + 
                 "height='" + height + "' " + 
                 "width='" + width + "' " + 
                 ">");
@@ -46,7 +46,7 @@ function updateTurnOrder(){
 	$("#TurnOrder").html($html);
 }
 
-function cardGraphic (card){
-    var graphicName = card['particle'] + card['name'] + card['anti'] + card['colour'];
+function cardGraphic2(card){
+    var graphicName = card['name'] + String(card['anti']) + card['colour'];
     return {graphic: graphicName + ".svg", id: graphicName};
 }
