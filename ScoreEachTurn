@@ -122,6 +122,7 @@ function scoreWaargenomenHadron (playerCombinations){
 	}
 	
 	
+	//+1 score per kaart
 	   $.each(playerCombinations, function(key, player){
 		score[key]=0;
 		$.each(player, function(unused, combination){
