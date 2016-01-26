@@ -21,7 +21,7 @@ session_start();
 			hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
 			points:{1:10,2:15,3:13}
 		};
-		console.log(gameObject["players"]);
+		//console.log(gameObject["players"]);
 		function isTurn(){
 			name=gameObject['players'][gameObject['currentPlayer']];
 			if(name==username || name==hostName){
@@ -248,7 +248,7 @@ session_start();
 			else{
 				gameObject['currentPlayer']=1;
 			}
-			//code to update UI
+			updateTurnOrder();
 		}
                 
                 function displayActiveGame(){
@@ -272,7 +272,9 @@ session_start();
                     });
                     displayActiveGame();
                 }
-                
+				$(function(){
+					updateUIAppendCards([{name:"d",anti:false,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:false,colour:"b"}],false,"#Hand",100,100,"");
+				});
 		</script>
 	</head>
 	<body>
@@ -325,7 +327,7 @@ session_start();
 				spelers:</br>
 			</div>
         </div>
-		<div id="mainGame" style="display:none">	
+		<div id="mainGame" style="display:block">	
 			<div id="Leave" >
 
 			<button id="Leave" onclick="myFunction()">Leave</p>
