@@ -8,15 +8,7 @@
 			hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
 			points:{1:10,2:15,3:13}
 		};
-		//console.log(gameObject["players"]);
-		function isTurn(){
-			name=gameObject['players'][gameObject['currentPlayer']];
-			if(name==username || name==hostName){
-				return true;
-			}
-			return false;
-		}
-                
+		
                 (function(){
                     $.ajax({
                         url: "getOngoingGame.php"

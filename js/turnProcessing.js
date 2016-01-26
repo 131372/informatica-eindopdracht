@@ -1,3 +1,16 @@
+function isTurn() {
+    console.log(gameObject["players"]);
+    console.log(gameObject['currentPlayer']);
+    console.log(gameObject['players'][gameObject['currentPlayer']]);
+
+    name = gameObject['players'][gameObject['currentPlayer']];
+    console.log(name, username, hostName);
+    if (name == username || name == hostName) {
+        return true;
+    }
+    return false;
+}
+
 function checkForGameEnd(deck, hands) {
     var emptyHand = false;
     if (deck.length == 0) {
