@@ -21,14 +21,31 @@ function updateUIAppendCards(cards, combination, element, height, width, message
         } else {
             var cardGraphic = cardGraphic2(cards[i]);
         }
-        $(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
+		if(element="#Hand"){
+			handCardAppend();
+		}
+		else{
+			$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
                 "class='" + htmlclass +  "' " + 
                 "src='" + path + cardGraphic['graphic'] + "' " + 
                 "height='" + height + "' " + 
                 "width='" + width + "' " + 
-                ">");
+                ">"
+			);
+		}							//not finished yet, need an if statement for each specific element I believe
     } 
 }
+
+function handCardAppend(){
+	$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
+		"class='" + htmlclass +  "' " + 
+		"src='" + path + cardGraphic['graphic'] + "' " + 
+		"height='" + height + "' " + 
+		"width='" + width + "' " + 
+		"draggable='true' ondragstart='dragStart("+i+")'" +
+		">"
+	);
+};
 
 function updateTurnOrder(){
 	$html="Beurten<br>";
