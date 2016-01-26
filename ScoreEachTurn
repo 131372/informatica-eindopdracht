@@ -1,0 +1,80 @@
+Enter file contents herewaargenomenHadronen = Array({countU:3, countC:0, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0}, 
+{countU:2, countC:1, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0}, 
+{countU:1, countC:2, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:3, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:2, countC:0, countD:1, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:1, countC:1, countD:1, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:2, countC:0, countD:0, countB:0, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:1, countC:1, countD:0, countB:0, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:2, countD:1, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:2, countD:0, countB:0, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:1, countC:0, countD:2, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:1, countC:0, countD:1, countB:0, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:1, countC:0, countD:1, countB:1, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:1, countC:0, countD:0, countB:0, countS:2, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:1, countC:0, countD:0, countB:1, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:1, countD:2, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:1, countD:1, countB:0, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:0, countB:0, countS:2, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:3, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:2, countB:0, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:1, countB:0, countS:2, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:1, countC:0, countD:0, countB:1, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:0, countB:0, countS:3, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:1, countC:0, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:1, countAntiB:0, countAntiS:0},
+{countU:1, countC:0, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:1},
+{countU:1, countC:0, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:1, countAntiS:0},
+{countU:0, countC:1, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:1, countAntiB:0, countAntiS:0},
+{countU:0, countC:1, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:1},
+{countU:0, countC:1, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:1, countAntiS:0},
+{countU:1, countC:0, countD:0, countB:0, countS:0, countAntiU: 1, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:1, countD:0, countB:0, countS:0, countAntiU: 1, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:1, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:1, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:1, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:1, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:1, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:1},
+{countU:0, countC:0, countD:1, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:1, countAntiS:0},
+{countU:0, countC:0, countD:0, countB:0, countS:1, countAntiU: 0, countAntiC:0, countAntiD:1, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:0, countB:0, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:1},
+{countU:0, countC:0, countD:0, countB:0, countS:1, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:1, countAntiS:0},
+{countU:0, countC:0, countD:1, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:1, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:0, countB:1, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:1},
+{countU:0, countC:0, countD:0, countB:1, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:1, countAntiS:0},
+{countU:0, countC:0, countD:1, countB:0, countS:0, countAntiU: 1, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:0, countB:0, countS:1, countAntiU: 1, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:0, countB:1, countS:0, countAntiU: 1, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:1, countB:0, countS:0, countAntiU: 0, countAntiC:1, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:0, countB:0, countS:1, countAntiU: 0, countAntiC:1, countAntiD:0, countAntiB:0, countAntiS:0},
+{countU:0, countC:0, countD:0, countB:1, countS:0, countAntiU: 0, countAntiC:1, countAntiD:0, countAntiB:0, countAntiS:0},
+)
+
+
+keys = Array("countU" , "countC", "countD", "countB", "countS", "countAntiU", "countAntiC", "countAntiD", "countAntiB", "countAntiS")
+
+
+function scoreWaargenomenHadron (cards, keys, waargenomenHadronen){
+	$.each(cards, function(keys, value){
+		$.each(value, function(keys, value){
+			$.each(value, function(keys, value){
+				switch(value.name) {
+					case'u':
+						countU++;
+						break;
+					case'c':
+						countC++;
+						break;
+					case'd':
+						countD++;
+						break;	
+					case'b':
+						countB++;
+						break;
+					case's':
+						countS++;
+						break;		
+				}
+			}
+		}
+	}
+	
+
+}
