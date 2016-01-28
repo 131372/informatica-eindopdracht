@@ -91,11 +91,11 @@ session_start();
 			<p>Your combinations:</p>
 			</div> 
 
-			<div id="Cards" ondragover="allowDrop(event)" ondrop="drop(event)">
+			<div id="Cards" ondragover="allowDrop(event)" ondrop="dropInCards(event)">
                             <p>Current cards played for combination</p> </br>
 			</div> 
 
-			<div id="Hand" ></div> 
+			<div id="Hand" ondragover="allowDrop(event)" ondrop="dropInHand(event)"></div> 
 
 			<div id="Hint" >
 			<p>Hint?</p>

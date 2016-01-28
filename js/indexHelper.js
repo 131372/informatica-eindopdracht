@@ -1,42 +1,41 @@
 
-<<<<<<< HEAD
-		gameInProgress=false;
-		gameObject={
-			currentPlayer:2,
-			playerAmount:3,
-			combinations:{},
-			players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
-			hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
-			points:{1:10,2:15,3:13}
-		};
-		
-                (function(){
-                    $.ajax({
-                        url: "getOngoingGame.php"
-                    }).done(function(data){
-                        console.log(data);
-                        if(data == true){
-                            gameInProgress=true;
-                            displayActiveGame();
-                        }
-                    });
-                })();
-		
-		$(function(){
-			storage=setInterval(function(){
-				if(gameInProgress){
-					//if(gameObject['turn']==gameObject['player']){
-						$.ajax({
-							url: "getGameState.php"
-						}).done(function(data){
-							console.log(data);
-							//gameObject=JSON.parse(data);
-						});
-					//}
-				}
-			},1000);
-		});
-=======
+gameInProgress=false;
+gameObject={
+	currentPlayer:2,
+	playerAmount:3,
+	combinations:{},
+	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
+	hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
+	points:{1:10,2:15,3:13}
+};
+
+(function(){
+	$.ajax({
+		url: "getOngoingGame.php"
+	}).done(function(data){
+		console.log(data);
+		if(data == true){
+			gameInProgress=true;
+			displayActiveGame();
+		}
+	});
+})();
+
+$(function(){
+	storage=setInterval(function(){
+		if(gameInProgress){
+			//if(gameObject['turn']==gameObject['player']){
+				$.ajax({
+					url: "getGameState.php"
+				}).done(function(data){
+					console.log(data);
+					//gameObject=JSON.parse(data);
+				});
+			//}
+		}
+	},1000);
+});
+
 gameInProgress=false;
 gameObject={
 	currentPlayer:2,
@@ -55,7 +54,6 @@ function isTurn(){
 	}
 	return false;
 }
->>>>>>> 48f5684e1b25a16db02aadab2d6801b9352d2f7a
 		
 		(function(){
 			$.ajax({
@@ -300,22 +298,44 @@ function startGame(){
 	displayActiveGame();
 }
 $(function(){
-	console.log("hoi");
 	updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
 });
 
-function drop(ev){
-	ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-	gameObject['currentCombinationCards'].push(gameObject['hands'][gameObject['currentPlayer']][data]);
-	gameObject['hands'][gameObject['currentPlayer']].splice(data, 1);
-	console.log(gameObject['hands'][gameObject['currentPlayer']]);
-	console.log(gameObject['currentCombinationCards']);
-	updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
+fromCards=false;
+fromHand=false;
+
+function dropInCards(ev){
+	if(fromHand){
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		gameObject['currentCombinationCards'].push(gameObject['hands'][gameObject['currentPlayer']][data]);
+		gameObject['hands'][gameObject['currentPlayer']].splice(data, 1);
+		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
+		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
+	}
 }
 
-function dragStart(ev,cardNumber){
+function dropInHand(ev){
+	if(fromCards){
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		gameObject['hands'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards'][data]);
+		gameObject['currentCombinationCards'].splice(data, 1);
+		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
+		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
+	}
+}
+
+function dragStartHand(ev,cardNumber){
 	ev.dataTransfer.setData("text", cardNumber);
+	fromHand=true;
+	fromCards=false;
+}
+
+function dragStartCards(ev,cardNumber){
+	ev.dataTransfer.setData("text", cardNumber);
+	fromCards=true;
+	fromHand=false;
 }
 
 function allowDrop(ev){

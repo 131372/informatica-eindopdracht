@@ -21,8 +21,11 @@ function updateUIAppendCards(cards, combination, element, height, width, message
         } else {
             var cardGraphic = cardGraphic2(cards[i]);
         }
-		if(element="#Hand"){
+		if(element=="#Hand"){
 			handCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
+		}
+		else if(element=="#Cards"){
+			cardsCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
 		}
 		else{
 			$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
@@ -42,7 +45,18 @@ function handCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i){
 		"src='" + path + cardGraphic['graphic'] + "' " + 
 		"height='" + height + "' " + 
 		"width='" + width + "' " + 
-		"draggable='true' ondragstart='dragStart(event,"+i+")'" +
+		"draggable='true' ondragstart='dragStartHand(event,"+i+")'" +
+		">"
+	);
+};
+
+function cardsCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i){
+	$("#Cards").append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
+		"class='" + htmlclass +  "' " + 
+		"src='" + path + cardGraphic['graphic'] + "' " + 
+		"height='" + height + "' " + 
+		"width='" + width + "' " + 
+		"draggable='true' ondragstart='dragStartCards(event,"+i+")'" +
 		">"
 	);
 };
@@ -65,5 +79,5 @@ function updateTurnOrder(){
 
 function cardGraphic2(card){
     var graphicName = card['name'] + String(card['anti']) + card['colour'];
-    return {graphic: graphicName + ".svg", id: graphicName};
+    return {graphic: graphicName + ".png", id: graphicName};
 }
