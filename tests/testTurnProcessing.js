@@ -4,6 +4,19 @@
  * and open the template in the editor.
  */
 
+describe('isTurn', function () {
+   
+    it('checks if it is the players turn', function () {
+        var username = "guest1";
+        var hostName = "host";
+        gameObject={
+            currentPlayer:2,
+            players:{1:"host",2:"guest1",3:"guest2"}// moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers. 
+        };   
+        expect(isTurn()).toBeTruthy();
+    });
+});
+
 describe('checkForGameEnd', function () {
     it('ends the game when deck is empty', function () {
         var fullHands = Array(Array("1","2"));

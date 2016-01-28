@@ -1,4 +1,42 @@
 
+<<<<<<< HEAD
+		gameInProgress=false;
+		gameObject={
+			currentPlayer:2,
+			playerAmount:3,
+			combinations:{},
+			players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
+			hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
+			points:{1:10,2:15,3:13}
+		};
+		
+                (function(){
+                    $.ajax({
+                        url: "getOngoingGame.php"
+                    }).done(function(data){
+                        console.log(data);
+                        if(data == true){
+                            gameInProgress=true;
+                            displayActiveGame();
+                        }
+                    });
+                })();
+		
+		$(function(){
+			storage=setInterval(function(){
+				if(gameInProgress){
+					//if(gameObject['turn']==gameObject['player']){
+						$.ajax({
+							url: "getGameState.php"
+						}).done(function(data){
+							console.log(data);
+							//gameObject=JSON.parse(data);
+						});
+					//}
+				}
+			},1000);
+		});
+=======
 gameInProgress=false;
 gameObject={
 	currentPlayer:2,
@@ -17,6 +55,7 @@ function isTurn(){
 	}
 	return false;
 }
+>>>>>>> 48f5684e1b25a16db02aadab2d6801b9352d2f7a
 		
 		(function(){
 			$.ajax({
