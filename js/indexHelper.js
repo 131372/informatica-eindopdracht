@@ -5,8 +5,9 @@ gameObject={
 	playerAmount:3,
 	combinations:{},
 	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
-	hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
-	points:{1:10,2:15,3:13}
+	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:false,colour:"b"}],3:{1:1,2:2}},
+	points:{1:10,2:15,3:13},
+	currentCombinationCards:[]
 };
 //console.log(gameObject["players"]);
 function isTurn(){
@@ -260,16 +261,25 @@ function startGame(){
 	displayActiveGame();
 }
 $(function(){
-	updateUIAppendCards([{name:"d",anti:false,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:false,colour:"b"}],false,"#Hand",100,100,"");
+	console.log("hoi");
+	updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
 });
 
-function drop(){
+function drop(ev){
 	ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
+	gameObject['currentCombinationCards'].push(gameObject['hands'][gameObject['currentPlayer']][data]);
+	gameObject['hands'][gameObject['currentPlayer']].splice(data, 1);
+	console.log(gameObject['hands'][gameObject['currentPlayer']]);
+	console.log(gameObject['currentCombinationCards']);
+	updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
 }
 
-function dragStart(cardNumber){
-	console.log(cardNumber);
+function dragStart(ev,cardNumber){
+	ev.dataTransfer.setData("text", cardNumber);
 }
 
-updateUIAppendCards();
+function allowDrop(ev){
+	ev.preventDefault();
+}
+//updateUIAppendCards();

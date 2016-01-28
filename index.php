@@ -10,6 +10,7 @@ session_start();
 		<script src="js/playCombination.js"></script>
 		<script src="js/turnProcessing.js"></script>
 		<script src="js/updateUI.js"></script>
+		<script src="js/indexHelper.js"></script>
 	</head>
 	<body>
 		<?php
@@ -90,7 +91,7 @@ session_start();
 			<p>Your combinations:</p>
 			</div> 
 
-			<div id="Cards" ondragover="ev.preventDefault()" ondrop="drop()">
+			<div id="Cards" ondragover="allowDrop(event)" ondrop="drop(event)">
                             <p>Current cards played for combination</p> </br>
 			</div> 
 

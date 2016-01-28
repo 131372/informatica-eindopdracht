@@ -1,5 +1,5 @@
 function updateUIAppendCards(cards, combination, element, height, width, message, htmlclass, idPrefix){ // latter three are optional, if combination read cards as combinations
-    htmlclass = (typeof htmlclass === 'undefined') ? "" : htmlclass; 
+	htmlclass = (typeof htmlclass === 'undefined') ? "" : htmlclass; 
     message = (typeof message === 'undefined') ? "" : message; // not sure if I should control message here for certain cases.
     idPrefix = ""//(typeof idPrefix === 'undefined') ? $(element).not('#') : idPrefix; // should write a test for this
     height = height + ""; // should write a test for this.
@@ -22,7 +22,7 @@ function updateUIAppendCards(cards, combination, element, height, width, message
             var cardGraphic = cardGraphic2(cards[i]);
         }
 		if(element="#Hand"){
-			handCardAppend();
+			handCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
 		}
 		else{
 			$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
@@ -36,13 +36,13 @@ function updateUIAppendCards(cards, combination, element, height, width, message
     } 
 }
 
-function handCardAppend(){
-	$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
+function handCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i){
+	$("#Hand").append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
 		"class='" + htmlclass +  "' " + 
 		"src='" + path + cardGraphic['graphic'] + "' " + 
 		"height='" + height + "' " + 
 		"width='" + width + "' " + 
-		"draggable='true' ondragstart='dragStart("+i+")'" +
+		"draggable='true' ondragstart='dragStart(event,"+i+")'" +
 		">"
 	);
 };
