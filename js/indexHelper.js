@@ -1,4 +1,4 @@
-
+/*
 gameInProgress=false;
 gameObject={
 	currentPlayer:2,
@@ -7,7 +7,7 @@ gameObject={
 	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
 	hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
 	points:{1:10,2:15,3:13}
-};
+};*/
 
 (function(){
 	$.ajax({
@@ -38,11 +38,12 @@ $(function(){
 
 gameInProgress=false;
 gameObject={
+	userPlayerNumber:2,
 	currentPlayer:2,
 	playerAmount:3,
-	combinations:{},
+	combinations:{1:[],2:[],3:[]},
 	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
-	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:false,colour:"b"}],3:{1:1,2:2}},
+	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
 	points:{1:10,2:15,3:13},
 	currentCombinationCards:[]
 };
@@ -306,6 +307,8 @@ fromHand=false;
 
 function dropInCards(ev){
 	if(fromHand){
+		fromCards=false;
+		fromHand=false;
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
 		gameObject['currentCombinationCards'].push(gameObject['hands'][gameObject['currentPlayer']][data]);
@@ -317,6 +320,8 @@ function dropInCards(ev){
 
 function dropInHand(ev){
 	if(fromCards){
+		fromCards=false;
+		fromHand=false;
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
 		gameObject['hands'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards'][data]);
@@ -340,5 +345,18 @@ function dragStartCards(ev,cardNumber){
 
 function allowDrop(ev){
 	ev.preventDefault();
+}
+
+showingOwnCombination=false;
+
+function toggleShowOwnCombination(i){
+	if(showingOwnCombination){
+		showingOwnCombination=false;
+		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
+	}
+	else{
+		showingOwnCombination=true;
+		updateUIAppendCards(gameObject['combinations'][gameObject['userPlayerNumber']][i],false,"#Cards2",100,100,"Combination:");
+	}
 }
 //updateUIAppendCards();

@@ -120,7 +120,8 @@ session_start();
 			</div> 
 
 			<div id="Play" >
-			<p>Play combination</p>
+			<!--<p>Play combination</p>-->
+			<button onclick="playCombination()">speel combinatie</button>
 			</div> 
 
 			<div id="Undo" >

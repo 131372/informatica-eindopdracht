@@ -2,7 +2,7 @@ function allowCombination(cards){
 	if(cards.length!=2 && cards.length!=3){
 		return "incorrect_amount_of_cards";
 	}				//no combinations can be played which are not either 2 or 3 cards
-	colours={red:0,green:0,blue:0};
+	colours={r:0,g:0,b:0};
 	//annihilate2=false;
 	$.each(cards, function(index, card){
 		/*annihilate=false;
@@ -27,7 +27,7 @@ function allowCombination(cards){
 		return "particles_would_annihilate";
 	}*/
 	//after I created the checking for annihilation part, I realised it is actually allowed to play such combinations, weird as it may be
-	if(colours['red']==colours['green'] && colours['green']==colours['blue']){
+	if(colours['r']==colours['g'] && colours['g']==colours['b']){
 		return "allowed";
 	}
 	else{
@@ -35,29 +35,34 @@ function allowCombination(cards){
 	}
 }
 
-function playCombination(combination,currentPlayerHand,currentPlayerCombinations){
-	switch(allowCombination(combination)){
+function playCombination(){
+	switch(allowCombination(gameObject['currentCombinationCards'])){
 		case "allowed":
-
+			gameObject['combinations'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards']);
+			gameObject['currentCombinationCards']=[];
+			updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
+			updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]],true,"#Combination",100,100,"Your combinations:");
 			//code to update UI
-			currentPlayerCombinations.push(combination);
-			return Array(currentPlayerHand,currentPlayerCombinations);
+			//currentPlayerCombinations.push(combination);
+			//return Array(currentPlayerHand,currentPlayerCombinations);
 			break;
 		case "incorrect_amount_of_cards":
 			//code to update UI
-			$.each(combination, function(index, card){
-				currentPlayerHand.push(card);
-			});
-			return Array(currentPlayerHand,currentPlayerCombinations);
+			//$.each(combination, function(index, card){
+			//	currentPlayerHand.push(card);
+			//});
+			//return Array(currentPlayerHand,currentPlayerCombinations);
+			alert("incorrect amount of cards");
 			break;
 		case "colours_dont_cancel":
 			//code to update UI
-			$.each(combination, function(index, card){
-				currentPlayerHand.push(card);
-			});
-			return Array(currentPlayerHand,currentPlayerCombinations);
+			//$.each(combination, function(index, card){
+			//	currentPlayerHand.push(card);
+			//});
+			//return Array(currentPlayerHand,currentPlayerCombinations);
+			alert("colours dont cancel");
 /*
-			gameObject['combinations'][currentPlayer].push(combination);
+			
 			updateHand();
 			updateCombination();
 			//currentPlayerCombinations.push(combination);

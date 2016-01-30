@@ -5,11 +5,19 @@ function updateUIAppendCards(cards, combination, element, height, width, message
     height = height + ""; // should write a test for this.
     width = width + "";
     var path = "images/";
-    $(element).empty();
-    $(element).append("<p>" + message + "</p></br>");
+	if(element=="#Cards2"){
+		element="#Cards";
+		$(element).empty();
+		$(element).append("<p>" + message + "</p></br>");
+		element="#Cards2";
+	}
+	else{
+		$(element).empty();
+		$(element).append("<p>" + message + "</p></br>");
+	}
     for(var i = 0; i < cards.length; i++){
         if(combination){
-            var cardGraphic = cardGraphic(cards[i][0]); 
+            var cardGraphic = cardGraphic2(cards[i][0]); 
             cardGraphic["id"] = ""; // recognize the combination by id.
             for(var j = 0; j < cards[i].length; j++){
                 if(j === 0){
@@ -26,6 +34,20 @@ function updateUIAppendCards(cards, combination, element, height, width, message
 		}
 		else if(element=="#Cards"){
 			cardsCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
+		}
+		else if(element=="#Cards2"){
+			element="#Cards";
+			$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
+                "class='" + htmlclass +  "' " + 
+                "src='" + path + cardGraphic['graphic'] + "' " + 
+                "height='" + height + "' " + 
+                "width='" + width + "' " + 
+                ">"
+			);
+			element="#Cards2";
+		}
+		else if(element=="#Combination"){
+			combinationCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
 		}
 		else{
 			$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
@@ -60,6 +82,17 @@ function cardsCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i){
 		">"
 	);
 };
+
+function combinationCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i){
+	$("#Combination").append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
+		"class='" + htmlclass +  "' " + 
+		"src='" + path + cardGraphic['graphic'] + "' " + 
+		"height='" + height + "' " + 
+		"width='" + width + "' " + 
+		"onclick='toggleShowOwnCombination("+i+")'" +
+		">"
+	);
+}
 
 function updateTurnOrder(){
 	$html="Beurten<br>";
