@@ -1,10 +1,8 @@
 <?php
 session_start();
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+require_once "php/DatabaseConnection.php";
+
+$db = new DatabaseConnection();
 
 if(isset($_SESSION['gameInProgress'])){
     if($_SESSION['gameInProgress']){
@@ -13,6 +11,6 @@ if(isset($_SESSION['gameInProgress'])){
         echo false;
     }
 } else {
-    // check in db
-    echo false;
+    $result = $db->get("SELECT * FROM gamedata WHERE gameid=:gameId", array(":gameId" => $_POST['gameId']));
+    echo $results[0][gamadata];
 }
