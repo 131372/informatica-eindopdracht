@@ -45,7 +45,8 @@ gameObject={
 	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
 	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
 	points:{1:10,2:15,3:13},
-	currentCombinationCards:[]
+	currentCombinationCards:[],
+	currentlyShowingCombinationsOf:{1:2,2:1,3:1}
 };
 //console.log(gameObject["players"]);
 function isTurn(){
@@ -348,6 +349,7 @@ function allowDrop(ev){
 }
 
 showingOwnCombination=false;
+showingCombination=false;
 
 function toggleShowOwnCombination(i){
 	if(showingOwnCombination){
@@ -357,6 +359,22 @@ function toggleShowOwnCombination(i){
 	else{
 		showingOwnCombination=true;
 		updateUIAppendCards(gameObject['combinations'][gameObject['userPlayerNumber']][i],false,"#Cards2",100,100,"Combination:");
+	}
+}
+
+function showCombinations(player){
+	updateUIAppendCards(gameObject['combinations'][player],true,"#OtherCombinations",100,100,"Player "+player+"'s combinations:");
+	gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]=player;
+}
+
+function toggleShowCombination(combination){
+	if(showingCombination){
+		showingCombination=false;
+		//updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf']['userPlayerNumber']][combination],false,"#Combination",100,100,"Combination");
+	}
+	else{
+		showingCombination=true;
+		//updateUIAppendCards(gameObject['combinations'][gameObject["userPlayerNumber"]],true,"#Combination",100,100,"Your combinations:");
 	}
 }
 //updateUIAppendCards();

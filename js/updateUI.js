@@ -49,6 +49,9 @@ function updateUIAppendCards(cards, combination, element, height, width, message
 		else if(element=="#Combination"){
 			combinationCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
 		}
+		else if(element=="#OtherCombinations"){
+			otherCombinationsCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
+		}
 		else{
 			$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
                 "class='" + htmlclass +  "' " + 
@@ -90,6 +93,17 @@ function combinationCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,
 		"height='" + height + "' " + 
 		"width='" + width + "' " + 
 		"onclick='toggleShowOwnCombination("+i+")'" +
+		">"
+	);
+}
+
+function otherCombinationsCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i){
+	$("#OtherCombinations").append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
+		"class='" + htmlclass +  "' " + 
+		"src='" + path + cardGraphic['graphic'] + "' " + 
+		"height='" + height + "' " + 
+		"width='" + width + "' " + 
+		"onclick='toggleShowCombination("+i+")'" +
 		">"
 	);
 }

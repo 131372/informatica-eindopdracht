@@ -102,18 +102,12 @@ session_start();
 			</div> 
 
 			<div id="Combinationsoff" >
-			<p>Combinations off:</p>
+			<button onclick="showCombinations(1)">show combination of player 1</button>
+			<button onclick="showCombinations(2)">show combination of player 2</button>
+			<button onclick="showCombinations(3)">show combination of player 3</button>
 			</div> 
 
-			<div id="Player2" ></div> 
-
-			<div id="Player3" ></div> 
-
-			<div id="Player4" ></div> 
-
-			<div id="Player5" ></div> 
-
-			<div id="Player6" ></div> 
+			<div id="OtherCombinations"></div>
 
 			<div id="Clear" >
 			<p>Clear field</p>
