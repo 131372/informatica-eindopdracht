@@ -10,7 +10,8 @@ gameObject={
 };*/
 
 (function(){
-	$.ajax({
+    findStart = setInterval(function(){
+        $.ajax({
 		url: "getOngoingGame.php"
 	}).done(function(data){
 		console.log(data);
@@ -19,6 +20,8 @@ gameObject={
 			displayActiveGame();
 		}
 	});
+    }, 1000);
+	
 })();
 
 $(function(){
@@ -45,8 +48,10 @@ gameObject={
 	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
 	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
 	points:{1:10,2:15,3:13},
-	currentCombinationCards:[]
+	currentCombinationCards:[],
+        gameInProgress: false
 };
+
 //console.log(gameObject["players"]);
 function isTurn(){
 	name=gameObject['players'][gameObject['currentPlayer']];
@@ -289,6 +294,7 @@ function startGame(){
 	gameInProgress=true;
 	$("#startGame").css("display","none");
 	$.ajax({
+            // send data
 		url: "gameStart.php"
 	}).done(function(){
 		gameObject["players"]["1"] = hostName; 
@@ -296,6 +302,7 @@ function startGame(){
 			gameObject["players"][String(i+2)] = guests[0];
 		}
 	});
+        gameObject['gameInProgress'] = true;
 	displayActiveGame();
 }
 $(function(){
