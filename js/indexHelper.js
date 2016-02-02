@@ -10,7 +10,8 @@ gameObject={
 };*/
 
 (function(){
-	$.ajax({
+    findStart = setInterval(function(){
+        $.ajax({
 		url: "getOngoingGame.php"
 	}).done(function(data){
 		console.log(data);
@@ -19,6 +20,8 @@ gameObject={
 			displayActiveGame();
 		}
 	});
+    }, 1000);
+	
 })();
 
 $(function(){
@@ -46,8 +49,13 @@ gameObject={
 	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
 	points:{1:10,2:15,3:13},
 	currentCombinationCards:[],
+<<<<<<< HEAD
 	currentlyShowingCombinationsOf:{1:2,2:1,3:1}
+=======
+        gameInProgress: false
+>>>>>>> ed832ee50174ed9333d1e1f2bd7f2d640c4d539c
 };
+
 //console.log(gameObject["players"]);
 function isTurn(){
 	name=gameObject['players'][gameObject['currentPlayer']];
@@ -290,6 +298,7 @@ function startGame(){
 	gameInProgress=true;
 	$("#startGame").css("display","none");
 	$.ajax({
+            // send data
 		url: "gameStart.php"
 	}).done(function(){
 		gameObject["players"]["1"] = hostName; 
@@ -297,6 +306,7 @@ function startGame(){
 			gameObject["players"][String(i+2)] = guests[0];
 		}
 	});
+        gameObject['gameInProgress'] = true;
 	displayActiveGame();
 }
 $(function(){

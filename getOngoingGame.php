@@ -13,5 +13,6 @@ if(isset($_SESSION['gameInProgress'])){
         echo false;
     }
 } else {
+    // check in db
     echo false;
 }

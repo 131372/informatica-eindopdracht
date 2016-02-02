@@ -52,7 +52,7 @@ function playCombination(){
 			//	currentPlayerHand.push(card);
 			//});
 			//return Array(currentPlayerHand,currentPlayerCombinations);
-			alert("incorrect amount of cards");
+			alert("There is an incorrect amount of cards. Next time, try to create a meson or baryon.");
 			break;
 		case "colours_dont_cancel":
 			//code to update UI
@@ -60,7 +60,7 @@ function playCombination(){
 			//	currentPlayerHand.push(card);
 			//});
 			//return Array(currentPlayerHand,currentPlayerCombinations);
-			alert("colours dont cancel");
+			alert("The color charge has to be zero. Next time, try to think about that.");
 /*
 			
 			updateHand();
