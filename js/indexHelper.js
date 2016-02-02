@@ -8,27 +8,22 @@ gameObject={
 	hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
 	points:{1:10,2:15,3:13}
 };*/
+gameInProgress=false;
+gameObject={
+	userPlayerNumber:2,
+	currentPlayer:2,
+	playerAmount:3,
+	combinations:{1:[],2:[],3:[]},
+	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
+	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
+	points:{1:10,2:15,3:13},
+	currentCombinationCards:[],
+	currentlyShowingCombinationsOf:{1:2,2:1,3:1},
+    gameInProgress: false
+};
 
 (function(){
-    if(!gameInProgress){
-    findStart = setInterval(function(){
-        $.ajax({
-		url: "getOngoingGame.php",
-                method:"POST",
-		data:{"gameId":gameId}
-	}).done(function(data){
-		console.log(data);
-                if(data == true){ // (1)
-                gameInProgress=true;
-                displayActiveGame();
-                } else if(data == false){ // might remove (1) and this one.
-                    gameInProgress=false;
-                } else {
-                    //gameObject = JSON.parse(data);
-                }
-	});
-    }, 1000);
-    }
+   
 })();
 
 $(function(){
@@ -46,23 +41,6 @@ $(function(){
 	},1000);
 });
 
-gameInProgress=false;
-gameObject={
-	userPlayerNumber:2,
-	currentPlayer:2,
-	playerAmount:3,
-	combinations:{1:[],2:[],3:[]},
-	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
-	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
-	points:{1:10,2:15,3:13},
-	currentCombinationCards:[],
-<<<<<<< HEAD
-	currentlyShowingCombinationsOf:{1:2,2:1,3:1}
-=======
-        gameInProgress: false
->>>>>>> ed832ee50174ed9333d1e1f2bd7f2d640c4d539c
-};
-
 //console.log(gameObject["players"]);
 function isTurn(){
 	name=gameObject['players'][gameObject['currentPlayer']];
@@ -71,18 +49,6 @@ function isTurn(){
 	}
 	return false;
 }
-		
-		(function(){
-			$.ajax({
-				url: "getOngoingGame.php"
-			}).done(function(data){
-				console.log(data);
-				if(data == true){
-					gameInProgress=true;
-					displayActiveGame();
-				}
-			});
-		})();
 
 $(function(){
 	storage=setInterval(function(){
@@ -109,6 +75,25 @@ $(function(){
 		$("#games").css("display","none");
 		$("#wait").css("display","block");
 	}					//if the user is currently a host or a guest show the proper interface
+	if(!gameInProgress){
+		findStart = setInterval(function(){
+			$.ajax({
+				url: "getOngoingGame.php",
+				method:"POST",
+				data:{"gameId":gameId}
+			}).done(function(data){
+				console.log(data);
+				if(data == true){ // (1)
+					gameInProgress=true;
+					displayActiveGame();
+				} else if(data == false){ // might remove (1) and this one.
+					gameInProgress=false;
+				} else {
+							//gameObject = JSON.parse(data);
+				}
+			});
+		}, 1000);
+    }
 });
 
 function uploadGameData(gamedata){
@@ -140,7 +125,6 @@ function createGame(){
 			$("#wait").css("display","block");				//hide and show the proper interfaces
 			hostName=$("input[name=username]").val();			
 			gameId=data;							//store the host name and the game id
-			gameInProgress=true;					//!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		}
 		
 	});
