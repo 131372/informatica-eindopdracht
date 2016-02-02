@@ -19,6 +19,7 @@ gameObject={
 	points:{1:10,2:15,3:13},
 	currentCombinationCards:[],
 	currentlyShowingCombinationsOf:{1:2,2:1,3:1},
+	currentlyShowingCombinationKey:{1:-1,2:-1,3:-1},
     gameInProgress: false
 };
 
@@ -82,7 +83,7 @@ $(function(){
 				method:"POST",
 				data:{"gameId":gameId}
 			}).done(function(data){
-				console.log(data);
+				//console.log(data);
 				if(data == true){ // (1)
 					gameInProgress=true;
 					displayActiveGame();
@@ -308,11 +309,14 @@ $(function(){
 
 fromCards=false;
 fromHand=false;
+fromCombination=false;
+stealAllowed=true;
 
 function dropInCards(ev){
 	if(fromHand){
 		fromCards=false;
 		fromHand=false;
+		fromCombination=false;
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
 		gameObject['currentCombinationCards'].push(gameObject['hands'][gameObject['currentPlayer']][data]);
@@ -320,12 +324,29 @@ function dropInCards(ev){
 		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
 		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
 	}
+	else if(fromCombination && stealAllowed){
+		stealAllowed=false;
+		fromCards=false;
+		fromHand=false;
+		fromCombination=false;
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][data]);
+		$.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]],function(index, value){
+			if(index!=data){
+				gameObject['hands'][gameObject['currentPlayer']].push(value);
+			}
+		});
+		gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]].splice(gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']],1);
+		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
+	}
 }
 
 function dropInHand(ev){
 	if(fromCards){
 		fromCards=false;
 		fromHand=false;
+		fromCombination=false;
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
 		gameObject['hands'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards'][data]);
@@ -339,12 +360,21 @@ function dragStartHand(ev,cardNumber){
 	ev.dataTransfer.setData("text", cardNumber);
 	fromHand=true;
 	fromCards=false;
+	fromCombination=false;
 }
 
 function dragStartCards(ev,cardNumber){
 	ev.dataTransfer.setData("text", cardNumber);
 	fromCards=true;
 	fromHand=false;
+	fromCombination=false;
+}
+
+function dragStartCombination(ev, cardNumber){
+	ev.dataTransfer.setData("text", cardNumber);
+	fromCards=false;
+	fromHand=false;
+	fromCombination=true;
 }
 
 function allowDrop(ev){
@@ -373,11 +403,13 @@ function showCombinations(player){
 function toggleShowCombination(combination){
 	if(showingCombination){
 		showingCombination=false;
-		//updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf']['userPlayerNumber']][combination],false,"#Combination",100,100,"Combination");
+		updateUIAppendCards(gameObject['combinations'][gameObject["userPlayerNumber"]],true,"#Combination",100,100,"Your combinations:");
+		gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=-1;
 	}
 	else{
 		showingCombination=true;
-		//updateUIAppendCards(gameObject['combinations'][gameObject["userPlayerNumber"]],true,"#Combination",100,100,"Your combinations:");
+		gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=combination;
+		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][combination],false,"#Combination2",100,100,"Combination:");
 	}
 }
 //updateUIAppendCards();
