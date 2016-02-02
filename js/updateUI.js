@@ -11,6 +11,12 @@ function updateUIAppendCards(cards, combination, element, height, width, message
 		$(element).append("<p>" + message + "</p></br>");
 		element="#Cards2";
 	}
+	if(element=="#Combination2"){
+		element="#Combination";
+		$(element).empty();
+		$(element).append("<p>" + message + "</p></br>");
+		element="#Combination2";
+	}
 	else{
 		$(element).empty();
 		$(element).append("<p>" + message + "</p></br>");
@@ -48,6 +54,19 @@ function updateUIAppendCards(cards, combination, element, height, width, message
 		}
 		else if(element=="#Combination"){
 			combinationCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
+		}
+		else if(element=="#Combination2"){
+			element="#Combination";
+			$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
+                "class='" + htmlclass +  "' " + 
+                "src='" + path + cardGraphic['graphic'] + "' " + 
+                "height='" + height + "' " + 
+                "width='" + width + "' " + 
+				"draggable='true'"+
+				"ondragstart='dragStartCombination(event,"+i+")'" +
+                ">"
+			);
+			element="#Combination2";
 		}
 		else if(element=="#OtherCombinations"){
 			otherCombinationsCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
