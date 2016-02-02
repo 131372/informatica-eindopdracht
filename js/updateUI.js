@@ -128,3 +128,10 @@ function cardGraphic2(card){
     var graphicName = card['name'] + String(card['anti']) + card['colour'];
     return {graphic: graphicName + ".png", id: graphicName};
 }
+
+function updateDeck(cards, height, width, deck){
+    var deckCount = deck.length;
+    var message = "Deck</br> \n\
+                   Cards remaining: " + deckCount;
+    updateUIAppendCards(cards, false, "#Deck", height, width, message);
+}
