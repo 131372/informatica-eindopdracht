@@ -18,13 +18,31 @@ gameObject = {
     hands: {1: {1: 1, 2: 2}, 2: [{name: "d", anti: false, colour: "g"}, {name: "u", anti: false, colour: "r"}, {name: "c", anti: false, colour: "b"}, {name: "d", anti: true, colour: "g"}, {name: "u", anti: true, colour: "r"}, {name: "c", anti: true, colour: "b"}], 3: {1: 1, 2: 2}},
     points: {1: 10, 2: 15, 3: 13},
     currentCombinationCards: [],
-    currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1},
-    gameInProgress: false
+    currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1}}
+/*gameInProgress=false;
+gameObject={
+	currentPlayer:2,
+	playerAmount:3,
+	combinations:{},
+	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
+	hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
+	points:{1:10,2:15,3:13}
 };
+//gameInProgress=false;
+gameObject={
+	userPlayerNumber:2,
+	currentPlayer:2,
+	playerAmount:3,
+	combinations:{1:[],2:[],3:[]},
+	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
+	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
+	points:{1:10,2:15,3:13},
+	currentCombinationCards:[],
+	currentlyShowingCombinationsOf:{1:2,2:1,3:1},
+	currentlyShowingCombinationKey:{1:-1,2:-1,3:-1},
+    gameInProgress: false
+};*/
 
-(function () {
-
-})();
 
 $(function () {
     storage = setInterval(function () {
@@ -65,6 +83,7 @@ $(function () {
     }, 1000);
 });
 
+
 console.log("")
 
 $(function () {
@@ -98,6 +117,36 @@ $(function () {
                 }
             });
         }, 1000);
+        }})
+$(function(){
+	hostName=$("#hostName").html();
+	username=$("#username").html();			//get the host or username (can be empty if none exist)
+	gameId=$("#gameId").html();				//get the game ID	(can be empty if none exist)
+	if(hostName!="" || username!=""){
+		$("#createGame").css("display","none");
+		$("#username2").css("display","none");
+		$("#games").css("display","none");
+		$("#wait").css("display","block");
+	}					//if the user is currently a host or a guest show the proper interface
+	if(!gameInProgress){
+		findStart = setInterval(function(){
+			$.ajax({
+				url: "getOngoingGame.php",
+				method:"POST",
+				data:{"gameId":gameId}
+			}).done(function(data){
+				//console.log(data);
+				if(data == true){ // (1)
+					gameInProgress=true;
+					displayActiveGame();
+				} else if(data == false){ // might remove (1) and this one.
+					gameInProgress=false;
+				} else {
+							//gameObject = JSON.parse(data);
+				}
+			});
+		}, 1000);
+
     }
 });
 
@@ -311,6 +360,7 @@ $(function () {
     updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
 });
 
+
 fromCards = false;
 fromHand = false;
 
@@ -350,6 +400,76 @@ function dragStartCards(ev, cardNumber) {
     ev.dataTransfer.setData("text", cardNumber);
     fromCards = true;
     fromHand = false;
+
+fromCards=false;
+fromHand=false;
+fromCombination=false;
+stealAllowed=true;
+}
+
+function dropInCards(ev){
+	if(fromHand){
+		fromCards=false;
+		fromHand=false;
+		fromCombination=false;
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		gameObject['currentCombinationCards'].push(gameObject['hands'][gameObject['currentPlayer']][data]);
+		gameObject['hands'][gameObject['currentPlayer']].splice(data, 1);
+		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
+		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
+	}
+	else if(fromCombination && stealAllowed){
+		stealAllowed=false;
+		fromCards=false;
+		fromHand=false;
+		fromCombination=false;
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][data]);
+		$.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]],function(index, value){
+			if(index!=data){
+				gameObject['hands'][gameObject['currentPlayer']].push(value);
+			}
+		});
+		gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]].splice(gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']],1);
+		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
+	}
+}
+
+function dropInHand(ev){
+	if(fromCards){
+		fromCards=false;
+		fromHand=false;
+		fromCombination=false;
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		gameObject['hands'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards'][data]);
+		gameObject['currentCombinationCards'].splice(data, 1);
+		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
+		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
+	}
+}
+
+function dragStartHand(ev,cardNumber){
+	ev.dataTransfer.setData("text", cardNumber);
+	fromHand=true;
+	fromCards=false;
+	fromCombination=false;
+}
+
+function dragStartCards(ev,cardNumber){
+	ev.dataTransfer.setData("text", cardNumber);
+	fromCards=true;
+	fromHand=false;
+	fromCombination=false;
+}
+
+function dragStartCombination(ev, cardNumber){
+	ev.dataTransfer.setData("text", cardNumber);
+	fromCards=false;
+	fromHand=false;
+	fromCombination=true;
 }
 
 function allowDrop(ev) {
@@ -375,6 +495,7 @@ function showCombinations(player) {
     gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']] = player;
 }
 
+
 function toggleShowCombination(combination) {
     if (showingCombination) {
         showingCombination = false;
@@ -383,6 +504,18 @@ function toggleShowCombination(combination) {
     else {
         showingCombination = true;
         //updateUIAppendCards(gameObject['combinations'][gameObject["userPlayerNumber"]],true,"#Combination",100,100,"Your combinations:");
-    }
+    }}
+
+function toggleShowCombination(combination){
+	if(showingCombination){
+		showingCombination=false;
+		updateUIAppendCards(gameObject['combinations'][gameObject["userPlayerNumber"]],true,"#Combination",100,100,"Your combinations:");
+		gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=-1;
+	}
+	else{
+		showingCombination=true;
+		gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=combination;
+		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][combination],false,"#Combination2",100,100,"Combination:");
+	}
 }
 //updateUIAppendCards();

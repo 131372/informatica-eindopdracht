@@ -1,5 +1,5 @@
-function scoreWaargenomenHadron (playerCombinations){
-	keys = Array("countU" , "countC", "countD", "countB", "countS", "countAntiU", "countAntiC", "countAntiD", "countAntiB", "countAntiS")
+function scoreEachTurn(){
+	keys = Array("countU" , "countC", "countD", "countB", "countS", "countAntiU", "countAntiC", "countAntiD", "countAntiB", "countAntiS");
 	waargenomenHadronen = Array({countU:3, countC:0, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0}, 
 	{countU:2, countC:1, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0}, 
 	{countU:1, countC:2, countD:0, countB:0, countS:0, countAntiU: 0, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
@@ -46,12 +46,12 @@ function scoreWaargenomenHadron (playerCombinations){
 	{countU:0, countC:0, countD:0, countB:1, countS:0, countAntiU: 1, countAntiC:0, countAntiD:0, countAntiB:0, countAntiS:0},
 	{countU:0, countC:0, countD:1, countB:0, countS:0, countAntiU: 0, countAntiC:1, countAntiD:0, countAntiB:0, countAntiS:0},
 	{countU:0, countC:0, countD:0, countB:0, countS:1, countAntiU: 0, countAntiC:1, countAntiD:0, countAntiB:0, countAntiS:0},
-	{countU:0, countC:0, countD:0, countB:1, countS:0, countAntiU: 0, countAntiC:1, countAntiD:0, countAntiB:0, countAntiS:0},
-	)
+	{countU:0, countC:0, countD:0, countB:1, countS:0, countAntiU: 0, countAntiC:1, countAntiD:0, countAntiB:0, countAntiS:0}
+	);
 	score=[];
-	$.each(playerCombinations, function(key, player){
-		score[key]=0;
-		$.each(player, function(unused, combination){
+	$.each(gameObject.combinations, function(player, combinations){
+		score[player]=0;
+		$.each(combinations, function(unused, combination){
 			$.each(combination, function(unused, card){
 				Ucount=0;
 				Ccount=0;
@@ -63,7 +63,7 @@ function scoreWaargenomenHadron (playerCombinations){
 				antiDcount=0;
 				antiScount=0;
 				antiBcount=0;
-				if (!anti){
+				if (!card.anti){
 					switch(card.name) {
 						case'u':
 							Ucount++;
@@ -102,37 +102,37 @@ function scoreWaargenomenHadron (playerCombinations){
 					}
 				}
 				counts={countU:Ucount,countD:Dcount,countC:Ccount,countS:Scount,countB:Bcount, countAntiU:antiUcount, countAntiC:antiCcount, countAntiB:antiBcount, countAntiD:antiDcount, countAntiS:antiScount};
-				$.each(waargenomenHadronen ,function(unused, waargenomenHadron){
+				$.each(waargenomenHadronen,function(unused, waargenomenHadron){
 					equal = true; 
 					$.each(keys, function(unused, key){
-						if(waargenomenHadron[key]!= counts[key]){
+						if(waargenomenHadron[key]!== counts[key]){
 							equal = false;
 						}
 					
 					});
 					
 					if (equal){
-						score[keys]++;
+						score[player]++;
 					}
 					
 				});
-			}
+			});
 			
-		}
-	}
+		});
+	});
 	
 	
 	//+1 score per kaart
-	   $.each(playerCombinations, function(key, player){
-		score[key]=0;
-		$.each(player, function(unused, combination){
-			$.each(combination, function(unused, card){
-				$.each(card, combination)
-					score[keys]++
-        }
-    }
-	
-	return score;
-	
-
-}
+    $.each(gameObject.combinations, function (player, combinations) {
+        $.each(combinations, function (unused, combination) {
+            $.each(combination, function (unused, card) {
+                score[player]++;
+            });
+        });
+    });
+    
+    $.each(score, function(player, points){
+        gameObject.points[player] += points;
+    });
+   
+};

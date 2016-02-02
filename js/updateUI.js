@@ -11,6 +11,12 @@ function updateUIAppendCards(cards, combination, element, height, width, message
 		$(element).append("<p>" + message + "</p></br>");
 		element="#Cards2";
 	}
+	if(element=="#Combination2"){
+		element="#Combination";
+		$(element).empty();
+		$(element).append("<p>" + message + "</p></br>");
+		element="#Combination2";
+	}
 	else{
 		$(element).empty();
 		$(element).append("<p>" + message + "</p></br>");
@@ -48,6 +54,19 @@ function updateUIAppendCards(cards, combination, element, height, width, message
 		}
 		else if(element=="#Combination"){
 			combinationCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
+		}
+		else if(element=="#Combination2"){
+			element="#Combination";
+			$(element).append("<img id='" + idPrefix + cardGraphic['graphic'] +"' " + 
+                "class='" + htmlclass +  "' " + 
+                "src='" + path + cardGraphic['graphic'] + "' " + 
+                "height='" + height + "' " + 
+                "width='" + width + "' " + 
+				"draggable='true'"+
+				"ondragstart='dragStartCombination(event,"+i+")'" +
+                ">"
+			);
+			element="#Combination2";
 		}
 		else if(element=="#OtherCombinations"){
 			otherCombinationsCardAppend(idPrefix,cardGraphic,htmlclass,path,height,width,i);
@@ -127,4 +146,11 @@ function updateTurnOrder(){
 function cardGraphic2(card){
     var graphicName = card['name'] + String(card['anti']) + card['colour'];
     return {graphic: graphicName + ".png", id: graphicName};
+}
+
+function updateDeck(cards, height, width, deck){
+    var deckCount = deck.length;
+    var message = "Deck</br> \n\
+                   Cards remaining: " + deckCount;
+    updateUIAppendCards(cards, false, "#Deck", height, width, message);
 }
