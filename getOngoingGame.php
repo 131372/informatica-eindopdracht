@@ -4,7 +4,7 @@ require_once "php/DatabaseConnection.php";
 
 $db = new DatabaseConnection();
 
-print_r($_POST);
+//print_r($_POST);
 
 if(isset($_SESSION['gameInProgress'])){
     if($_SESSION['gameInProgress']){
