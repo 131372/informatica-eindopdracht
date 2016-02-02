@@ -10,18 +10,25 @@ gameObject={
 };*/
 
 (function(){
+    if(!gameInProgress){
     findStart = setInterval(function(){
         $.ajax({
-		url: "getOngoingGame.php"
+		url: "getOngoingGame.php",
+                method:"POST",
+		data:{"gameId":gameId}
 	}).done(function(data){
 		console.log(data);
-		if(data == true){
-			gameInProgress=true;
-			displayActiveGame();
-		}
+                if(data == true){ // (1)
+                gameInProgress=true;
+                displayActiveGame();
+                } else if(data == false){ // might remove (1) and this one.
+                    gameInProgress=false;
+                } else {
+                    //gameObject = JSON.parse(data);
+                }
 	});
     }, 1000);
-	
+    }
 })();
 
 $(function(){
@@ -295,18 +302,20 @@ function displayActiveGame(){
 }
 
 function startGame(){
-	gameInProgress=true;
+	gameInProgress=true; // same variable as used in create game/room though?
 	$("#startGame").css("display","none");
+        gameObject['gameInProgress'] = true;
 	$.ajax({
             // send data
-		url: "gameStart.php"
+		url: "gameStart.php",
+                method:"POST",
+		data:{"gameObject":gameObject,"gameId":gameId} // parse necesary?
 	}).done(function(){
 		gameObject["players"]["1"] = hostName; 
 		for(var i = 0; i < guests.length; i++){
 			gameObject["players"][String(i+2)] = guests[0];
 		}
 	});
-        gameObject['gameInProgress'] = true;
 	displayActiveGame();
 }
 $(function(){
