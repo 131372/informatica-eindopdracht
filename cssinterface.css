@@ -8,6 +8,16 @@
     width: 10%;
     height: 7%;
 } 
+#Buycard {
+    text-align:center;
+    border: 2px solid black;
+   
+    position: absolute;
+    top: 74%;
+    left: 0;
+    width: 9.75%;
+    height: 22%;
+}
 #Leave {
 	text-align:center;
 	border: 2px solid black;
