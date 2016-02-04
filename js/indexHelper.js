@@ -18,7 +18,9 @@ gameObject = {
     hands: {1: {1: 1, 2: 2}, 2: [{name: "d", anti: false, colour: "g"}, {name: "u", anti: false, colour: "r"}, {name: "c", anti: false, colour: "b"}, {name: "d", anti: true, colour: "g"}, {name: "u", anti: true, colour: "r"}, {name: "c", anti: true, colour: "b"}], 3: {1: 1, 2: 2}},
     points: {1: 10, 2: 15, 3: 13},
     currentCombinationCards: [],
-    currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1}}
+    currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1},
+	currentlyShowingCombinationKey:{1:-1,2:-1,3:-1}
+};
 /*gameInProgress=false;
 gameObject={
 	currentPlayer:2,
@@ -84,8 +86,6 @@ $(function () {
 });
 
 
-console.log("")
-
 $(function () {
     hostName = $("#hostName").html();
     username = $("#username").html();			//get the host or username (can be empty if none exist)
@@ -96,7 +96,7 @@ $(function () {
         $("#games").css("display", "none");
         $("#wait").css("display", "block");
     } //if the user is currently a host or a guest show the proper interface
-    if (!gameInProgress && gameId=="") {
+    if (!gameInProgress && gameId!="") {
         findStart = setInterval(function () {
             $.ajax({
                 url: "getOngoingGame.php",
@@ -400,12 +400,12 @@ function dragStartCards(ev, cardNumber) {
     ev.dataTransfer.setData("text", cardNumber);
     fromCards = true;
     fromHand = false;
+}
 
 fromCards=false;
 fromHand=false;
 fromCombination=false;
 stealAllowed=true;
-}
 
 function dropInCards(ev){
 	if(fromHand){
@@ -426,14 +426,17 @@ function dropInCards(ev){
 		fromCombination=false;
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
-		gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][data]);
-		$.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]],function(index, value){
+		gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]][data]);
+		$.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]],function(index, value){
 			if(index!=data){
 				gameObject['hands'][gameObject['currentPlayer']].push(value);
 			}
 		});
 		gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]].splice(gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']],1);
 		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
+		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
+		updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]],true,"#Combination",100,100,"Your combinations:");
+		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']] + "'s combinations:");
 	}
 }
 
