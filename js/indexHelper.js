@@ -511,9 +511,15 @@ function toggleShowCombination(combination) {
 
 function toggleShowCombination(combination){
 	if(showingCombination){
-		showingCombination=false;
-		updateUIAppendCards(gameObject['combinations'][gameObject["userPlayerNumber"]],true,"#Combination",100,100,"Your combinations:");
-		gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=-1;
+		if(gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]==combination){
+			showingCombination=false;
+			updateUIAppendCards(gameObject['combinations'][gameObject["userPlayerNumber"]],true,"#Combination",100,100,"Your combinations:");
+			gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=-1;
+		}
+		else{
+			gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=combination;
+			updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][combination],false,"#Combination2",100,100,"Combination:");
+		}
 	}
 	else{
 		showingCombination=true;
