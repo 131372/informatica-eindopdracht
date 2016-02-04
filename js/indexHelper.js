@@ -420,11 +420,15 @@ function dropInCards(ev){
 		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
 	}
 	else if(fromCombination && stealAllowed){
+		ev.preventDefault();
 		stealAllowed=false;
 		fromCards=false;
 		fromHand=false;
 		fromCombination=false;
-		ev.preventDefault();
+		stealMemory={};
+		$.extend(stealMemory,gameObject);
+		console.log(gameObject);
+		console.log(stealMemory);
 		var data = ev.dataTransfer.getData("text");
 		gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]][data]);
 		$.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]],function(index, value){
@@ -525,6 +529,14 @@ function toggleShowCombination(combination){
 		showingCombination=true;
 		gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=combination;
 		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][combination],false,"#Combination2",100,100,"Combination:");
+	}
+}
+
+function undoSteal(){
+	console.log(stealMemory);
+	if(stealMemory!=""){
+		gameObject=stealMemory;
+		stealMemory="";
 	}
 }
 //updateUIAppendCards();

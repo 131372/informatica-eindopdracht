@@ -119,7 +119,7 @@ session_start();
 			</div> 
 
 			<div id="Undo" >
-			<p>Undo steal</p>
+			<button onclick="undoSteal()">undo steal</button>
 			</div> 
 
 			<div id="End" >
