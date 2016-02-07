@@ -49,3 +49,17 @@ function checkForProtonNeutronGameEnd(currentPlayerCombinations) {
     }
     return false;
 }
+
+/**
+ * creates a new deck and shuffles it. Deals the cards to the players
+ * @returns {undefined}
+ */
+function newGameStart(){
+    // remove stuff
+    var deck1 = createDeck1();
+    randomDeck(deck1);
+    deck = deck1;
+    dealCards(deck, gameObject.playerAmount);
+    // reset turnorder
+    
+}
