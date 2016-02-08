@@ -358,7 +358,10 @@ session_start();
                             <p>Current cards played for combination</p> </br>
 			</div> 
 
-			<div id="Hand" ></div> 
+			<div id="Hand" >
+			<img src="drawsvg.svg" alt="Kiwi standing on oval">
+
+			</div> 
 
 			<div id="Hint" >
 			<p>Hint?</p>
