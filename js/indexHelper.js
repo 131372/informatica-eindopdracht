@@ -487,13 +487,17 @@ showingOwnCombination = false;
 showingCombination = false;
 
 function toggleShowOwnCombination(i) {
-    if (showingOwnCombination) {
+	console.log(showingOwnCombination);
+	console.log(i);
+	console.log(showingOwnCombination!=i);
+    if (showingOwnCombination===false || showingOwnCombination!==i && showingOwnCombination!==false) {
+		console.log("?");
+		showingOwnCombination = i;
+        updateUIAppendCards(gameObject['combinations'][gameObject['userPlayerNumber']][i], false, "#Cards2", 100, 100, "Combination:");
+    }
+    else{
         showingOwnCombination = false;
         updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-    }
-    else {
-        showingOwnCombination = true;
-        updateUIAppendCards(gameObject['combinations'][gameObject['userPlayerNumber']][i], false, "#Cards2", 100, 100, "Combination:");
     }
 }
 
