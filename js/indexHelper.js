@@ -308,6 +308,26 @@ function join(id) {
             $("#wait").css("display", "block");
         }
     });
+    findStart = setInterval(function () {
+        $.ajax({
+            url: "getOngoingGame.php",
+            method: "POST",
+            data: {"gameId": gameId}
+        }).done(function (data) {
+            console.log(data);
+            if (data == 1) { // (1)
+                gameInProgress = true;
+                displayActiveGame();
+            } else if (data == 0) { // might remove (1) and this one.
+                gameInProgress = false;
+            } else {
+                gameObject = JSON.parse(data);
+                if(gameObject['gameInProgress']){
+                    displayActiveGame();
+                }
+            }
+        });
+    }, 1000);
 }
 
 function kick(player) {
@@ -348,7 +368,8 @@ function startGame() {
         url: "gameStart.php",
         method: "POST",
         data: {"gameObject": gameObject, "gameId": gameId} // parse necesary?
-    }).done(function () {
+    }).done(function (data) {
+        console.log(data);
         gameObject["players"]["1"] = hostName;
         for (var i = 0; i < guests.length; i++) {
             gameObject["players"][String(i + 2)] = guests[0];
