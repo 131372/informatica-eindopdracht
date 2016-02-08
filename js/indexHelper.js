@@ -426,7 +426,7 @@ function dropInCards(ev){
 		fromHand=false;
 		fromCombination=false;
 		stealMemory={};
-		$.extend(stealMemory,gameObject);
+		$.extend(true,stealMemory,gameObject);
 		console.log(gameObject);
 		console.log(stealMemory);
 		var data = ev.dataTransfer.getData("text");
@@ -535,8 +535,12 @@ function toggleShowCombination(combination){
 function undoSteal(){
 	console.log(stealMemory);
 	if(stealMemory!=""){
+		stealAllowed=true;
 		gameObject=stealMemory;
 		stealMemory="";
+		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
+		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
+		updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]],true,"#Combination",100,100,"Your combinations:");
+		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']] + "'s combinations:");
 	}
 }
-//updateUIAppendCards();
