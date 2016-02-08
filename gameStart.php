@@ -10,4 +10,4 @@ $db = new DatabaseConnection();
 
 $_SESSION['gameInProgress'] = true;
 
-$db->change("UPDATE gamedata SET gamedata=:gamedata WHERE gameid=:gameId", array(":gamedata"=>$_POST['gameObject'], ":gameId"=>$_POST['gameId']));
+$db->change("INSERT INTO gamedata (gamedata,gameId) VALUES (:gamedata,:gameId)", array(":gamedata"=>  json_encode($_POST['gameObject']), ":gameId"=>$_POST['gameId']));
