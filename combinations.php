@@ -12,13 +12,14 @@ and open the template in the editor.
         // put your code here
         ?>
         <style>
-            #listclick {
+            /*#listclick {
                 width: 40px;
                 height: 40px;
                 left: 20px;
                 top: 20px;
                 border: solid;
             }
+            */
             #list {
                 width: 980px;
                 height: 500px;
@@ -37,7 +38,8 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-        <div name="listclick" id="listclick">Click for list of possible combinations</div>
+        <button id="listclick">List of possible combinations</button>
+        <!--<div name="listclick" id="listclick">Click for list of possible combinations</div>-->
         <div name="list" id="list" style="display:none">
             The seen hadrons and mesons have a symbol.
             <br>
