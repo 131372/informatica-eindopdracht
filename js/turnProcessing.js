@@ -1,3 +1,16 @@
+function isTurn() {
+    console.log(gameObject["players"]);
+    console.log(gameObject['currentPlayer']);
+    console.log(gameObject['players'][gameObject['currentPlayer']]);
+
+    name = gameObject['players'][gameObject['currentPlayer']];
+    console.log(name, username, hostName);
+    if (name == username || name == hostName) {
+        return true;
+    }
+    return false;
+}
+
 function checkForGameEnd(deck, hands) {
     var emptyHand = false;
     if (deck.length == 0) {
@@ -35,4 +48,18 @@ function checkForProtonNeutronGameEnd(currentPlayerCombinations) {
         return true;
     }
     return false;
+}
+
+/**
+ * creates a new deck and shuffles it. Deals the cards to the players
+ * @returns {undefined}
+ */
+function newGameStart(){
+    // remove stuff
+    var deck1 = createDeck1();
+    randomDeck(deck1);
+    deck = deck1;
+    dealCards(deck, gameObject.playerAmount);
+    // reset turnorder
+    
 }

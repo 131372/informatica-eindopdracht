@@ -65,12 +65,12 @@ describe("deck Handling", function() {
     var deck = [];
     beforeEach(function() {
         deck = [];        
-	deck.push(createQuark("u",false,"red"));
-	deck.push(createQuark("u",false,"red"));
-	deck.push(createQuark("u",false,"green"));
-	deck.push(createQuark("u",false,"green"));
-	deck.push(createQuark("u",false,"blue"));
-	deck.push(createQuark("d",false,"red"));
+	deck.push(createQuark("u",false,"r"));
+	deck.push(createQuark("u",false,"r"));
+	deck.push(createQuark("u",false,"g"));
+	deck.push(createQuark("u",false,"g"));
+	deck.push(createQuark("u",false,"b"));
+	deck.push(createQuark("d",false,"r"));
     });
     it("should have same size after random", function() {
         expect(deck.length).toBe(6);
