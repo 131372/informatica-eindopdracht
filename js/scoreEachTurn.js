@@ -155,10 +155,8 @@ function scoreEachTurn(){
             });
         });
     });
-    console.log(score);
     $.each(score, function(player, points){
 		console.log(player+"/"+points);
         gameObject.points[player] = points;
     });
-   console.log(gameObject['points']);
 };

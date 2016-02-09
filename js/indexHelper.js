@@ -458,6 +458,8 @@ function dropInCards(ev){
 			}
 		});
 		gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]].splice(gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']],1);
+		scoreEachTurn();
+		updateTurnOrder();
 		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
 		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
 		updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]],true,"#Combination",100,100,"Your combinations:");
