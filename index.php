@@ -123,7 +123,7 @@ session_start();
             <div id="End" >
                 <p>End turn</p>
             </div>
-            <div id="divlist"
+            <div id="divlist">
                 <button style="position:absolute" onclick="listOfCombinations()" id="listclick">List of possible combinations</button>
                 <div name="list" id="list" style="display:none">
                     The seen hadrons and mesons have a symbol.
