@@ -74,29 +74,29 @@ session_start();
             </div> 
 
             <div id="Help" >
-                <p>Help</p>
+                <p><b>Help</b></p>
             </div> 
 
             <div id="TurnOrder" >
-                <p>Turn order</p>
+                <p><b>Turn order</b></p>
             </div> 
 
             <div id="Deck" >
-                <p>Deck</p>
+                <p><b>Deck</b></p>
             </div> 
 
             <div id="Combination" >
-                <p>Your combinations:</p>
+                <p><b>Your combinations:</b></p>
             </div> 
 
             <div id="Cards" ondragover="allowDrop(event)" ondrop="dropInCards(event)">
-                <p>Current cards played for combination</p> </br>
+                <p><b>Current cards played for combination</b></p> </br>
             </div> 
 
             <div id="Hand" ondragover="allowDrop(event)" ondrop="dropInHand(event)"></div> 
 
             <div id="Hint" >
-                <p>Hint?</p>
+                <p><b>Hint?</b></p>
             </div> 
 
             <div id="Combinationsoff" >
@@ -108,30 +108,30 @@ session_start();
             <div id="OtherCombinations"></div>
 
             <div id="Clear" >
-                <p>Clear field</p>
+                <p><b>Clear field</b></p>
             </div> 
 
             <div id="Play" >
             <!--<p>Play combination</p>-->
-                <button onclick="playCombination()">speel combinatie</button>
+                <button onclick="playCombination()"><b>speel combinatie</b></button>
             </div> 
 
             <div id="Undo" >
-                <button onclick="undoSteal()">undo steal</button>
+                <button onclick="undoSteal()"><b>undo steal</b></button>
             </div> 
 
             <div id="End" >
-                <p>End turn</p>
+                <p><b>End turn</b></p>
             </div>
             
             <div id="divlist">
-                <button style="position:absolute" onclick="listOfCombinations()" id="listclick">List of possible combinations</button>
+                <button style="position:absolute" onclick="listOfCombinations()" id="listclick"><b>List of possible combinations</b></button>
                 <div id="list" style="display:none">
                     The seen baryons and mesons have a symbol. The list of anti-baryons is symmetric to the list of seen baryons. <br>
-                    Each quark is replaced with it's anti-version, the charge is reversed. 
+                    Then, each quark is replaced with it's anti-version and the charge is reversed. 
                     <br>
-                    <img src="images/Screenshot lijst baryonen.png" alt=""/>
-                    <img src="images/Screenshot waargenomen mesonen.png" alt=""/>
+                    <img src="images/Lijst met waargenomen baryonen goed.png" alt=""/>
+                    <img src="images/Lijst met waargenomen mesonen goed.png" alt=""/>
             </div>
             </div>
         </div>
