@@ -37,6 +37,41 @@ session_start();
         <div id="username2">
             gebruikersnaam:<input type="text" name="username" required></input></br></br>
         </div>
+<<<<<<< HEAD
+=======
+		<div id="mainGame" style="display:block">
+			<div id="Leave" >
+
+			<button id="Leave" onclick="myFunction()">Leave</p>
+
+			<script>
+				//function myFunction() {
+				//document.getElementById("Leave").innerHTML = "LEAVE!";
+				//}
+			</script>
+
+			</div> 
+
+			<div id="Help" >
+			<p>Help</p>
+			</div> 
+
+			<div id="TurnOrder" >
+			<p>Turn order</p>
+			</div> 
+
+			<div id="Deck" >
+			<p>Deck</p>
+			</div> 
+
+			<div id="Combination" >
+			<p>Your combinations:</p>
+			</div> 
+
+			<div id="Cards" ondragover="allowDrop(event)" ondrop="dropInCards(event)">
+                            <p>Current cards played for combination</p> </br>
+			</div> 
+>>>>>>> 0e86356a2a8dfd961788b9b07fe29fdbdb6f3a3d
 
         <div id="createGame">
             spelnaam:<input type="text" name="gameName" required></input></br>

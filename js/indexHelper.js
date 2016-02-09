@@ -308,6 +308,26 @@ function join(id) {
             $("#wait").css("display", "block");
         }
     });
+    findStart = setInterval(function () {
+        $.ajax({
+            url: "getOngoingGame.php",
+            method: "POST",
+            data: {"gameId": gameId}
+        }).done(function (data) {
+            console.log(data);
+            if (data == 1) { // (1)
+                gameInProgress = true;
+                displayActiveGame();
+            } else if (data == 0) { // might remove (1) and this one.
+                gameInProgress = false;
+            } else {
+                gameObject = JSON.parse(data);
+                if(gameObject['gameInProgress']){
+                    displayActiveGame();
+                }
+            }
+        });
+    }, 1000);
 }
 
 function kick(player) {
@@ -348,7 +368,8 @@ function startGame() {
         url: "gameStart.php",
         method: "POST",
         data: {"gameObject": gameObject, "gameId": gameId} // parse necesary?
-    }).done(function () {
+    }).done(function (data) {
+        console.log(data);
         gameObject["players"]["1"] = hostName;
         for (var i = 0; i < guests.length; i++) {
             gameObject["players"][String(i + 2)] = guests[0];
@@ -487,13 +508,17 @@ showingOwnCombination = false;
 showingCombination = false;
 
 function toggleShowOwnCombination(i) {
-    if (showingOwnCombination) {
+	console.log(showingOwnCombination);
+	console.log(i);
+	console.log(showingOwnCombination!=i);
+    if (showingOwnCombination===false || showingOwnCombination!==i && showingOwnCombination!==false) {
+		console.log("?");
+		showingOwnCombination = i;
+        updateUIAppendCards(gameObject['combinations'][gameObject['userPlayerNumber']][i], false, "#Cards2", 100, 100, "Combination:");
+    }
+    else{
         showingOwnCombination = false;
         updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-    }
-    else {
-        showingOwnCombination = true;
-        updateUIAppendCards(gameObject['combinations'][gameObject['userPlayerNumber']][i], false, "#Cards2", 100, 100, "Combination:");
     }
 }
 
