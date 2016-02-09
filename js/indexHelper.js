@@ -16,7 +16,7 @@ gameObject = {
     combinations: {1: [], 2: [], 3: []},
     players: {1: "host", 2: "guest1", 3: "guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
     hands: {1: {1: 1, 2: 2}, 2: [{name: "d", anti: false, colour: "g"}, {name: "u", anti: false, colour: "r"}, {name: "c", anti: false, colour: "b"}, {name: "d", anti: true, colour: "g"}, {name: "u", anti: true, colour: "r"}, {name: "c", anti: true, colour: "b"}], 3: {1: 1, 2: 2}},
-    points: {1: 10, 2: 15, 3: 13},
+    points: {1: 0, 2: 0, 3: 0},
     currentCombinationCards: [],
     currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1},
 	currentlyShowingCombinationKey:{1:-1,2:-1,3:-1}

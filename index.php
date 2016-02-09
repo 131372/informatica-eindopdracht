@@ -12,6 +12,7 @@ session_start();
         <script src="js/updateUI.js"></script>
         <script src="js/indexHelper.js"></script>
         <script src="js/listofcombination.js"></script>
+		<script src="js/scoreEachTurn.js"></script>
     </head>
     <body>
         <?php
@@ -123,7 +124,7 @@ session_start();
             <div id="End" >
                 <p>End turn</p>
             </div>
-            <div id="divlist">
+            <div id="divlist" style="z-index:100;position:absolute">
                 <button style="position:absolute" onclick="listOfCombinations()" id="listclick">List of possible combinations</button>
                 <div name="list" id="list" style="display:none">
                     The seen hadrons and mesons have a symbol.
