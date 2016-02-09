@@ -12,6 +12,7 @@ session_start();
         <script src="js/updateUI.js"></script>
         <script src="js/indexHelper.js"></script>
         <script src="js/listofcombination.js"></script>
+		<script src="js/scoreEachTurn.js"></script>
     </head>
     <body>
         <?php
@@ -133,9 +134,8 @@ session_start();
                     <img src="images/Lijst met waargenomen baryonen goed.png" alt=""/>
                     <img src="images/Lijst met waargenomen mesonen goed.png" alt=""/>
             </div>
+
             </div>
         </div>
-    </div>
-
 </body>
 </html>
