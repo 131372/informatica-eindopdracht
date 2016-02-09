@@ -145,7 +145,7 @@ function updateTurnOrder(){
 
 function cardGraphic2(card){
     var graphicName = card['name'] + String(card['anti']) + card['colour'];
-    return {graphic: graphicName + ".png", id: graphicName};
+    return {graphic: graphicName + ".svg", id: graphicName};
 }
 
 function updateDeck(cards, height, width, deck){
