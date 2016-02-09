@@ -40,6 +40,8 @@ function playCombination(){
 		case "allowed":
 			gameObject['combinations'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards']);
 			gameObject['currentCombinationCards']=[];
+			scoreEachTurn();
+			updateTurnOrder();
 			updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
 			updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]],true,"#Combination",100,100,"Your combinations:");
 			//code to update UI
