@@ -8,9 +8,10 @@
  hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
  points:{1:10,2:15,3:13}
  };*/
-gameInProgress = false;
+gameInProgress = false; //iedereen moet een nummer krijgen voor turnorder, deck aanmaken, kaarten uitdelen, playerAmount
+userPlayerNumber = 2;
 gameObject = {
-    userPlayerNumber: 2,
+    playerNumberSet: false,
     currentPlayer: 2,
     playerAmount: 3,
     combinations: {1: [], 2: [], 3: []},
@@ -19,7 +20,8 @@ gameObject = {
     points: {1: 10, 2: 15, 3: 13},
     currentCombinationCards: [],
     currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1},
-	currentlyShowingCombinationKey:{1:-1,2:-1,3:-1}
+    currentlyShowingCombinationKey:{1:-1,2:-1,3:-1},
+    deck: []  
 };
 /*gameInProgress=false;
 gameObject={
@@ -211,6 +213,7 @@ function destroyGame() {			//destroy the game you're hosting or leave the game i
 }
 
 gameList = [];				//used to store all the games visually so as to be able to delete them if they get removed from the database
+guests = [];
 
 storage = setInterval(function () {
     $.ajax({
@@ -221,6 +224,7 @@ storage = setInterval(function () {
         jQuery.each(data, function (index, item) {
             currentGameList.push(item["id"]);				//add this game to all games currently in the database
             guests = item["guests"].split(",");
+            
             if (guests[0] != "") {
                 playerCount = (guests.length) + 1;
             }
@@ -288,7 +292,7 @@ storage = setInterval(function () {
             }
         });				//for each game that was created at some point remove it visually and remove it from memory (second part is untested)
     });
-}, 500);
+}, 50); // due to global variable guests and playerCount
 
 function join(id) {
     username = $("input[name=username]").val();
@@ -372,11 +376,17 @@ function startGame() {
         console.log(data);
         gameObject["players"]["1"] = hostName;
         for (var i = 0; i < guests.length; i++) {
-            gameObject["players"][String(i + 2)] = guests[0];
+            gameObject["players"][String(i + 2)] = guests[i];
         }
     });
     displayActiveGame();
+    gameObject['deck'] = randomDeck(createDeck1());
+    gameObject.currentPlayer = 1;
+    gameObject['playerAmount'] = (guests.length) + 1;
+    
+    uploadGameData(gameObject);
 }
+
 $(function () {
     updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
 });
