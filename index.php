@@ -123,14 +123,16 @@ session_start();
             <div id="End" >
                 <p>End turn</p>
             </div>
+            
             <div id="divlist">
                 <button style="position:absolute" onclick="listOfCombinations()" id="listclick">List of possible combinations</button>
-                <div name="list" id="list" style="display:none">
-                    The seen hadrons and mesons have a symbol.
+                <div id="list" style="display:none">
+                    The seen baryons and mesons have a symbol. The list of anti-baryons is symmetric to the list of seen baryons. <br>
+                    Each quark is replaced with it's anti-version, the charge is reversed. 
                     <br>
                     <img src="images/Screenshot lijst baryonen.png" alt=""/>
                     <img src="images/Screenshot waargenomen mesonen.png" alt=""/>
-                </div>
+            </div>
             </div>
         </div>
     </div>
