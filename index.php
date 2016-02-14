@@ -61,7 +61,7 @@ session_start();
                 spelers:</br>
             </div>
         </div>
-        <div id="mainGame" style="display:block">
+        <div id="mainGame" style="display:none">
             <div id="Leave" >
 
                 <button id="Leave" onclick="myFunction()">Leave</p>

@@ -9,6 +9,7 @@
  points:{1:10,2:15,3:13}
  };*/
 gameInProgress = false; //iedereen moet een nummer krijgen voor turnorder, deck aanmaken, kaarten uitdelen, playerAmount
+realGameInProgress = false;
 userPlayerNumber = 2;
 gameObject = {
     playerNumberSet: false,
@@ -98,7 +99,7 @@ $(function () {
         $("#games").css("display", "none");
         $("#wait").css("display", "block");
     } //if the user is currently a host or a guest show the proper interface
-    if (!gameInProgress && gameId!="") {
+    if (!realGameInProgress && gameId!="") {
         findStart = setInterval(function () {
             $.ajax({
                 url: "getOngoingGame.php",
@@ -107,11 +108,14 @@ $(function () {
             }).done(function (data) {
                 console.log(data);
                 if (data == 1) { // (1)
-                    gameInProgress = true;
+                    console.log('hi');
+                    realGameInProgress = true;
                     displayActiveGame();
                 } else if (data == 0) { // might remove (1) and this one.
-                    gameInProgress = false;
+                    realGameInProgress = false;
                 } else {
+                    console.log('gameojbjejekej');
+                    realGameInProgress = true;
                     gameObject = JSON.parse(data);
                     if(gameObject['gameInProgress']){
                         displayActiveGame();
@@ -130,26 +134,6 @@ $(function(){
 		$("#games").css("display","none");
 		$("#wait").css("display","block");
 	}					//if the user is currently a host or a guest show the proper interface
-	if(!gameInProgress){
-		findStart = setInterval(function(){
-			$.ajax({
-				url: "getOngoingGame.php",
-				method:"POST",
-				data:{"gameId":gameId}
-			}).done(function(data){
-				//console.log(data);
-				if(data == true){ // (1)
-					gameInProgress=true;
-					displayActiveGame();
-				} else if(data == false){ // might remove (1) and this one.
-					gameInProgress=false;
-				} else {
-							//gameObject = JSON.parse(data);
-				}
-			});
-		}, 1000);
-
-    }
 });
 
 function uploadGameData(gamedata) {
@@ -158,7 +142,7 @@ function uploadGameData(gamedata) {
         method: "POST",
         data: {"gameObject": gamedata}
     }).done(function (data) {
-        console.log(data);
+        console.log(JSON.parse(data));
     });
 }
 
@@ -365,6 +349,7 @@ function displayActiveGame() {
 
 function startGame() {
     gameInProgress = true; // same variable as used in create game/room though?
+    realGameInProgress = true;
     $("#startGame").css("display", "none");
     gameObject['gameInProgress'] = true;
     $.ajax({
@@ -376,15 +361,20 @@ function startGame() {
         console.log(data);
         gameObject["players"]["1"] = hostName;
         for (var i = 0; i < guests.length; i++) {
-            gameObject["players"][String(i + 2)] = guests[i];
+            gameObject["players"][String(i + 2)] = guests[i]; // will a new key value pair be created like this?
         }
     });
-    displayActiveGame();
-    gameObject['deck'] = randomDeck(createDeck1());
-    gameObject.currentPlayer = 1;
     gameObject['playerAmount'] = (guests.length) + 1;
-    
+    cardsDeal = dealCards(randomDeck(createDeck1()), gameObject['playerAmount']);
+    gameObject['deck'] = cardsDeal[1];
+    for(var i = 0; i < gameObject['playerAmount']; i++){
+        gameObject['hands'][String(i+1)] = cardsDeal[0][i];
+    }
+    gameObject.currentPlayer = 1; // This one needs to be taken out of gameObject but what's the deal with currentplayer?
+    userPlayerNumber = 1; 
     uploadGameData(gameObject);
+    displayActiveGame();
+    console.log(gameObject);
 }
 
 $(function () {
