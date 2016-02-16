@@ -14,5 +14,7 @@ if(isset($_SESSION['gameInProgress'])){
     }
 } else {
     $result = $db->get("SELECT * FROM gamedata WHERE gameId=:gameId", array(":gameId" => $_POST['gameId']));
-    echo $result[0]['gamedata'];
+	if(isset($result[0])){
+		echo $result[0]['gamedata'];
+	}
 }

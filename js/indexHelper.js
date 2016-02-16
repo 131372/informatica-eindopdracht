@@ -1,16 +1,6 @@
-/*
- gameInProgress=false;
- gameObject={
- currentPlayer:2,
- playerAmount:3,
- combinations:{},
- players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
- hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
- points:{1:10,2:15,3:13}
- };*/
 gameInProgress = false; //iedereen moet een nummer krijgen voor turnorder, deck aanmaken, kaarten uitdelen, playerAmount
 realGameInProgress = false;
-userPlayerNumber = 2;
+userPlayerNumber = 1;
 gameObject = {
     playerNumberSet: false,
     currentPlayer: 2,
@@ -24,42 +14,19 @@ gameObject = {
     currentlyShowingCombinationKey:{1:-1,2:-1,3:-1},
     deck: []  
 };
-/*gameInProgress=false;
-gameObject={
-	currentPlayer:2,
-	playerAmount:3,
-	combinations:{},
-	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
-	hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
-	points:{1:10,2:15,3:13}
-};
-//gameInProgress=false;
-gameObject={
-	userPlayerNumber:2,
-	currentPlayer:2,
-	playerAmount:3,
-	combinations:{1:[],2:[],3:[]},
-	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
-	hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
-	points:{1:10,2:15,3:13},
-	currentCombinationCards:[],
-	currentlyShowingCombinationsOf:{1:2,2:1,3:1},
-	currentlyShowingCombinationKey:{1:-1,2:-1,3:-1},
-    gameInProgress: false
-};*/
 
 
 $(function () {
     storage = setInterval(function () {
         if (gameInProgress) {
-            //if(gameObject['turn']==gameObject['player']){
-            $.ajax({
-                url: "getGameState.php"
-            }).done(function (data) {
-                console.log(data);
-                //gameObject=JSON.parse(data);
-            });
-            //}
+            if(gameObject['currentPlayer']!=userPlayerNumber){
+				$.ajax({
+					url: "getGameState.php"
+				}).done(function (data) {
+					console.log(data);
+					//gameObject=JSON.parse(data);
+				});
+            }
         }
     }, 1000);
 });
@@ -114,7 +81,7 @@ $(function () {
                 } else if (data == 0) { // might remove (1) and this one.
                     realGameInProgress = false;
                 } else {
-                    console.log('gameojbjejekej');
+                    //console.log('gameojbjejekej');
                     realGameInProgress = true;
                     gameObject = JSON.parse(data);
                     if(gameObject['gameInProgress']){
@@ -451,19 +418,19 @@ function dropInCards(ev){
 		console.log(gameObject);
 		console.log(stealMemory);
 		var data = ev.dataTransfer.getData("text");
-		gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]][data]);
-		$.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]],function(index, value){
+		gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][gameObject['currentlyShowingCombinationKey'][userPlayerNumber]][data]);
+		$.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][gameObject['currentlyShowingCombinationKey'][userPlayerNumber]],function(index, value){
 			if(index!=data){
 				gameObject['hands'][gameObject['currentPlayer']].push(value);
 			}
 		});
-		gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]].splice(gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']],1);
+		gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]].splice(gameObject['currentlyShowingCombinationKey'][userPlayerNumber],1);
 		scoreEachTurn();
 		updateTurnOrder();
 		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
 		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
 		updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]],true,"#Combination",100,100,"Your combinations:");
-		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']] + "'s combinations:");
+		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
 	}
 }
 
@@ -516,7 +483,7 @@ function toggleShowOwnCombination(i) {
     if (showingOwnCombination===false || showingOwnCombination!==i && showingOwnCombination!==false) {
 		console.log("?");
 		showingOwnCombination = i;
-        updateUIAppendCards(gameObject['combinations'][gameObject['userPlayerNumber']][i], false, "#Cards2", 100, 100, "Combination:");
+        updateUIAppendCards(gameObject['combinations'][userPlayerNumber][i], false, "#Cards2", 100, 100, "Combination:");
     }
     else{
         showingOwnCombination = false;
@@ -526,7 +493,7 @@ function toggleShowOwnCombination(i) {
 
 function showCombinations(player) {
     updateUIAppendCards(gameObject['combinations'][player], true, "#OtherCombinations", 100, 100, "Player " + player + "'s combinations:");
-    gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']] = player;
+    gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] = player;
 }
 
 
@@ -542,20 +509,20 @@ function toggleShowCombination(combination) {
 
 function toggleShowCombination(combination){
 	if(showingCombination){
-		if(gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]==combination){
+		if(gameObject['currentlyShowingCombinationKey'][userPlayerNumber]==combination){
 			showingCombination=false;
 			updateUIAppendCards(gameObject['combinations'][gameObject["userPlayerNumber"]],true,"#Combination",100,100,"Your combinations:");
-			gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=-1;
+			gameObject['currentlyShowingCombinationKey'][userPlayerNumber]=-1;
 		}
 		else{
-			gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=combination;
-			updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][combination],false,"#Combination2",100,100,"Combination:");
+			gameObject['currentlyShowingCombinationKey'][userPlayerNumber]=combination;
+			updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][combination],false,"#Combination2",100,100,"Combination:");
 		}
 	}
 	else{
 		showingCombination=true;
-		gameObject['currentlyShowingCombinationKey'][gameObject['userPlayerNumber']]=combination;
-		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]][combination],false,"#Combination2",100,100,"Combination:");
+		gameObject['currentlyShowingCombinationKey'][userPlayerNumber]=combination;
+		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][combination],false,"#Combination2",100,100,"Combination:");
 	}
 }
 
@@ -568,6 +535,6 @@ function undoSteal(){
 		updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']],false,"#Hand",100,100,"");
 		updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
 		updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]],true,"#Combination",100,100,"Your combinations:");
-		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']] + "'s combinations:");
+		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
 	}
 }
