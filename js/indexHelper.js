@@ -540,22 +540,9 @@ function undoSteal(){
 }
 
 
-<<<<<<< HEAD
 function getCard(score) {
     gameObject["points"][gameObject.currentplayer] -= 1;
     gameObject["hand"][gameObject.currentplayer].push(drawCard(gameObject["deck"]));
     updateUIAppendCards(gameObject["hand"][gameObject.currentplayer], false, "#Hand", 100, 100, "");
-    updateDeck(gameObject["deck"], 100, 100, deck)
+    updateDeck(gameObject["deck"], 100, 100, deck);
 };
-=======
-	
-	
-
-function getacard(score) {
-	gameObject["points"][gameObject.currentplayer] -= 1; 
-	gameObject["hand"][gameObject.currentplayer].push(drawCard(gameObject["deck"]));
-	updateUIAppendCards(gameObject["hand"][gameObject.currentplayer],false,"#Hand",100,100,"");
-	updateDeck(gameObject["deck"],100,100, deck);
-}
-
->>>>>>> bdd48884521021209d7294dc89c80ac575148975
