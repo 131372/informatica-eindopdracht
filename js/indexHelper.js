@@ -14,7 +14,7 @@ gameObject = {
     currentlyShowingCombinationKey: {1: -1, 2: -1, 3: -1},
     deck: []
 };
-<<<<<<< HEAD
+
 /*gameInProgress=false;
  gameObject={
  currentPlayer:2,
@@ -38,8 +38,6 @@ gameObject = {
  currentlyShowingCombinationKey:{1:-1,2:-1,3:-1},
  gameInProgress: false
  };*/
-=======
->>>>>>> 2537c84959ab804977ff3603eb1762a45e4661be
 
 
 $(function () {
@@ -420,7 +418,7 @@ function dragStartCards(ev, cardNumber) {
     fromHand = false;
 }
 
-<<<<<<< HEAD
+
 fromCards = false;
 fromHand = false;
 fromCombination = false;
@@ -463,7 +461,7 @@ function dropInCards(ev) {
         updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]], true, "#Combination", 100, 100, "Your combinations:");
         updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']] + "'s combinations:");
     }
-=======
+
 fromCards=false;
 fromHand=false;
 fromCombination=false;
@@ -506,7 +504,7 @@ function dropInCards(ev){
 		updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]],true,"#Combination",100,100,"Your combinations:");
 		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
 	}
->>>>>>> 2537c84959ab804977ff3603eb1762a45e4661be
+
 }
 
 function dropInHand(ev) {
@@ -552,7 +550,7 @@ showingOwnCombination = false;
 showingCombination = false;
 
 function toggleShowOwnCombination(i) {
-<<<<<<< HEAD
+
     console.log(showingOwnCombination);
     console.log(i);
     console.log(showingOwnCombination != i);
@@ -560,7 +558,7 @@ function toggleShowOwnCombination(i) {
         console.log("?");
         showingOwnCombination = i;
         updateUIAppendCards(gameObject['combinations'][gameObject['userPlayerNumber']][i], false, "#Cards2", 100, 100, "Combination:");
-=======
+
 	console.log(showingOwnCombination);
 	console.log(i);
 	console.log(showingOwnCombination!=i);
@@ -568,7 +566,7 @@ function toggleShowOwnCombination(i) {
 		console.log("?");
 		showingOwnCombination = i;
         updateUIAppendCards(gameObject['combinations'][userPlayerNumber][i], false, "#Cards2", 100, 100, "Combination:");
->>>>>>> 2537c84959ab804977ff3603eb1762a45e4661be
+
     }
     else {
         showingOwnCombination = false;
@@ -590,7 +588,7 @@ function toggleShowCombination(combination) {
     else {
         showingCombination = true;
         //updateUIAppendCards(gameObject['combinations'][gameObject["userPlayerNumber"]],true,"#Combination",100,100,"Your combinations:");
-<<<<<<< HEAD
+
     }
 }
 
@@ -625,7 +623,7 @@ function undoSteal() {
         updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']] + "'s combinations:");
     }
 }
-=======
+
     }}
 
 function toggleShowCombination(combination){
@@ -667,4 +665,4 @@ function getCard(score) {
     updateUIAppendCards(gameObject["hand"][gameObject.currentplayer], false, "#Hand", 100, 100, "");
     updateDeck(gameObject["deck"], 100, 100, deck);
 };
->>>>>>> 2537c84959ab804977ff3603eb1762a45e4661be
+
