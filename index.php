@@ -143,5 +143,6 @@ session_start();
                         
             
         </div>
+		<button id="Buycard" onclick="Getacard()"<p>Buy an extra card<p>
 </body>
 </html>
