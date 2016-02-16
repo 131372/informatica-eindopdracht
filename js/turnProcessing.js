@@ -54,22 +54,23 @@ function checkForProtonNeutronGameEnd(currentPlayerCombinations) {
  * creates a new deck and shuffles it. Deals the cards to the players
  * @returns {undefined}
  */
-function newGameStart() {
-    // remove stuff
-    var deck1 = createDeck1();
-    var randomDeck1 = randomDeck(deck1);
-    gameObject.deck = randomDeck1;
-    dealCards(deck, gameObject.playerAmount);
-    // reset turnorder
-    for (i=1; i < playerAmount + 1; i++){
-    gameObject.hands["i"]= [];
-}
 
-function count(object) {
-combinations = gameObject.combinations;
-if (Object.keys) { 
-        return Object.keys(object).length;
+function removeCombinations() {
+    for(var i = 1; i <= Object.keys(gameObject.combinations).length; i++){
+        gameObject["combinations"][String(i)] = [];
     }
+}
+        
+function newGameStart() {
+    // reset turnorder!!!
+    for (i=1; i < playerAmount + 1; i++){
+        gameObject.hands["i"]= [];
     }
- return count(combinations);
+    removeCombinations();    
+    cardsDeal = dealCards(randomDeck(createDeck1()), gameObject['playerAmount']);
+    gameObject['deck'] = cardsDeal[1];
+    for(var i = 0; i < gameObject['playerAmount']; i++){
+        gameObject['hands'][String(i+1)] = cardsDeal[0][i];
+    }
+    //stuur naar database!!
 }
