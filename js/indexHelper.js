@@ -29,6 +29,8 @@ gameObject={
 	currentPlayer:2,
 	playerAmount:3,
 	combinations:{},
+	
+	
 	players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
 	hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
 	points:{1:10,2:15,3:13}
@@ -571,3 +573,18 @@ function undoSteal(){
 		updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][gameObject['userPlayerNumber']] + "'s combinations:");
 	}
 }
+
+<div id="Buycard" >
+	
+	<button id="Buycard" onclick="Getacard()"<p>Buy an extra card<p>
+	
+	<script>
+	function getacard(score) {
+	gameObject["points"][gameObject.currentplayer] -= 1; 
+	gameObject["hand"][gameObject.currentplayer].push(drawCard(gameObject["deck"]));
+	updateUIAppendCards(gameObject["hand"][gameObject.currentplayer],false,"#Hand",100,100,"");
+	updateDeck((gameObject["deck"],100,100, deck)
+	}
+	</script>
+	
+	</div>
