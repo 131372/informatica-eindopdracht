@@ -5,7 +5,6 @@
  */
 
 describe('isTurn', function () {
-   
     it('checks if it is the players turn', function () {
         var username = "guest1";
         var hostName = "host";

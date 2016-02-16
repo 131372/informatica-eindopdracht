@@ -158,5 +158,6 @@ function scoreEachTurn(){
     $.each(score, function(player, points){
 		console.log(player+"/"+points);
         gameObject.points[player] = points;
+                console.log(player+"/"+gameObject.points[player]);
     });
 };
