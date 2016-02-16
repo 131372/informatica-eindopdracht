@@ -12,7 +12,7 @@ session_start();
         <script src="js/updateUI.js"></script>
         <script src="js/indexHelper.js"></script>
         <script src="js/listofcombination.js"></script>
-		<script src="js/scoreEachTurn.js"></script>
+        <script src="js/scoreEachTurn.js"></script>
     </head>
     <body>
         <?php
@@ -63,79 +63,79 @@ session_start();
         </div>
         <div id="mainGame" style="display:none">
             <div id="Leave" >
-
-                <button id="Leave" onclick="myFunction()">Leave</p>
-
-                    <script>
-                        //function myFunction() {
-                        //document.getElementById("Leave").innerHTML = "LEAVE!";
-                        //}
-                    </script>
-
-            </div> 
-
-            <div id="Help" >
-                <p><b>Help</b></p>
-            </div> 
-
-            <div id="TurnOrder" >
-                <p><b>Turn order</b></p>
-            </div> 
-
-            <div id="Deck" >
-                <p><b>Deck</b></p>
-            </div> 
-
-            <div id="Combination" >
-                <p><b>Your combinations:</b></p>
-            </div> 
-
-            <div id="Cards" ondragover="allowDrop(event)" ondrop="dropInCards(event)">
-                <p><b>Current cards played for combination</b></p> </br>
-            </div> 
-
-            <div id="Hand" ondragover="allowDrop(event)" ondrop="dropInHand(event)"></div> 
-
-            <div id="Hint" >
-                <p><b>Hint?</b></p>
-            </div> 
-
-            <div id="Combinationsoff" >
-                <button onclick="showCombinations(1)">show combination of player 1</button>
-                <button onclick="showCombinations(2)">show combination of player 2</button>
-                <button onclick="showCombinations(3)">show combination of player 3</button>
-            </div> 
-
-            <div id="OtherCombinations"></div>
-
-            <div id="Clear" >
-                <p><b>Clear field</b></p>
-            </div> 
-
-            <div id="Play" >
-            <!--<p>Play combination</p>-->
-                <button onclick="playCombination()"><b>speel combinatie</b></button>
-            </div> 
-
-            <div id="Undo" >
-                <button onclick="undoSteal()"><b>undo steal</b></button>
-            </div> 
-
-            <div id="End" >
-                <p><b>End turn</b></p>
+                <button id="Leavebutton" onclick="myFunction()"><b>Leave</b></p>
             </div>
-            
-            <div id="divlist">
-                <button style="position:absolute" onclick="listOfCombinations()" id="listclick"><b>List of possible combinations</b></button>
-                <div id="list" style="display:none">
-                    The seen baryons and mesons have a symbol. The list of anti-baryons is symmetric to the list of seen baryons. <br>
-                    Then, each quark is replaced with it's anti-version and the charge is reversed. 
-                    <br>
-                    <img src="images/Lijst met waargenomen baryonen goed.png" alt=""/>
-                    <img src="images/Lijst met waargenomen mesonen goed.png" alt=""/>
-            </div>
+            <!--<script>
+                function myFunction() {
+                document.getElementById("Leave").innerHTML = "LEAVE!";
+                }
+            </script>
+            -->
 
-            </div>
+        </div> 
+
+        <div id="Help" >
+            <p><b>Help</b></p>
+        </div> 
+
+        <div id="TurnOrder" >
+            <p><b>Turn order</b></p>
+        </div> 
+
+        <div id="Deck" >
+            <p><b>Deck</b></p>
+        </div> 
+
+        <div id="Combination" >
+            <p><b>Your combinations:</b></p>
+        </div> 
+
+        <div id="Cards" ondragover="allowDrop(event)" ondrop="dropInCards(event)">
+            <p><b>Current cards played for combination</b></p> </br>
+        </div> 
+
+        <div id="Hand" ondragover="allowDrop(event)" ondrop="dropInHand(event)"></div> 
+
+        <div id="Hint" >
+            <p><b>Hint?</b></p>
+        </div> 
+
+        <div id="Combinationsoff" >
+            <button onclick="showCombinations(1)">show combination of player 1</button>
+            <button onclick="showCombinations(2)">show combination of player 2</button>
+            <button onclick="showCombinations(3)">show combination of player 3</button>
+        </div> 
+
+        <div id="OtherCombinations"></div>
+
+        <div id="Clear" >
+            <p><b>Clear field</b></p>
+        </div> 
+
+        <div id="Play" >
+        <!--<p>Play combination</p>-->
+            <button onclick="playCombination()"><b>speel combinatie</b></button>
+        </div> 
+
+        <div id="Undo" >
+            <button onclick="undoSteal()"><b>undo steal</b></button>
+        </div> 
+
+        <div id="End" >
+            <p><b>End turn</b></p>
         </div>
+
+        <div id="divlist">
+            <button style="position:absolute" onclick="listOfCombinations()" id="listclick"><b>List of possible combinations</b></button>
+            <div id="list" style="display:none">
+                The seen baryons and mesons have a symbol. The list of anti-baryons is symmetric to the list of seen baryons. <br>
+                Then, each quark is replaced with it's anti-version and the charge is reversed. 
+                <br>
+                <img src="images/Lijst met waargenomen baryonen goed.png" alt=""/>
+                <img src="images/Lijst met waargenomen mesonen goed.png" alt=""/>
+            </div>
+
+        </div>
+    </div>
 </body>
 </html>
