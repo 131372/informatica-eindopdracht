@@ -122,7 +122,7 @@ session_start();
         </div> 
 
         <div id="End" >
-            <p><b>End turn</b></p>
+            <button onclick="endTurn()">end turn</button>
         </div>
 
         <div id="divlist">

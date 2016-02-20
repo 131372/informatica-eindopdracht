@@ -363,6 +363,7 @@ function endTurn() {
         gameObject['currentPlayer'] = 1;
     }
     updateTurnOrder();
+	uploadGameData();
 }
 
 function displayActiveGame() {
