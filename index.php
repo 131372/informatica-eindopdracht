@@ -121,7 +121,7 @@ session_start();
             <button onclick="undoSteal()"><b>undo steal</b></button>
         </div> 
 
-        <div id="End" >
+        <div id="End">
             <p><b>End turn</b></p>
         </div>
 

@@ -56,21 +56,40 @@ function checkForProtonNeutronGameEnd(currentPlayerCombinations) {
  */
 
 function removeCombinations() {
-    for(var i = 1; i <= Object.keys(gameObject.combinations).length; i++){
+    for(var i = 1; i <= Object.keys(gameObject.combinations).length; i++){ //works right?
         gameObject["combinations"][String(i)] = [];
     }
 }
-        
+
+function gameEnd(deck, hands, currentPlayerCombinations){
+    if(checkForGameEnd(deck, hands) || checkForProtonNeutronGameEnd(currentPlayerCombinations)){
+        return true;
+    }
+}
+
+function canStartNewRound(){
+    if(gameObject.round != playerAmount){
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function newGameStart() {
-    // reset turnorder!!!
-    for (i=1; i < playerAmount + 1; i++){
+    gameObject.round++
+    gameObject.currentPlayer = gameObject.round;
+    for (i=1; i < gameObject.playerAmount; i++){
         gameObject.hands["i"]= [];
     }
     removeCombinations();    
+    console.log(gameObject);
     cardsDeal = dealCards(randomDeck(createDeck1()), gameObject['playerAmount']);
     gameObject['deck'] = cardsDeal[1];
     for(var i = 0; i < gameObject['playerAmount']; i++){
         gameObject['hands'][String(i+1)] = cardsDeal[0][i];
     }
-    //stuur naar database!!
+    console.log(gameObject);
+    uploadGameData();
+    alert("JIJ hebt de ronde beeindigt. Een nieuwe ronde is begonnen!");
+    // change ui accordingly, but how? Or is that not necessary? doesn't seem necessary.
 }
