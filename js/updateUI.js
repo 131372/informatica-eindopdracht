@@ -23,7 +23,7 @@ function updateUIAppendCards(cards, combination, element, height, width, message
 	}
     for(var i = 0; i < cards.length; i++){
         if(combination){
-            var cardGraphic = cardGraphic2(cards[i][0]); 
+            var cardGraphic = cardGraphic2(cards[i][0]); // read combinationGraphic // should becojme: combinationGraphic(cards[i]);
             cardGraphic["id"] = ""; // recognize the combination by id.
             for(var j = 0; j < cards[i].length; j++){
                 if(j === 0){
@@ -155,6 +155,46 @@ function updateDeck(cards, height, width, deck){
     updateUIAppendCards(cards, false, "#Deck", height, width, message);
 }
 
-function showCombination(combination){
+function combinationGraphic(combination){
+    seenParticles = [[{u:3, d:0, c:0, s:0, b:0, t:0}, "uuu"], [{u:2, d:0, c:1, s:0, b:0, t:0}, "uuc"], [{u:1, d:0, c:2, s:0, b:0, t:0}, "ucc"], 
+    [{u:0, d:0, c:3, s:0, b:0, t:0}, "ccc"], [{u:2, d:1, c:0, s:0, b:0, t:0}, "uud"], [{u:2, d:0, c:0, s:1, b:0, t:0}, "uus"], [{u:1, d:1, c:1, s:0, b:0, t:0}, "ucd"],
+    [{u:1, d:0, c:1, s:1, b:0, t:0}, "ucs"], [{u:0, d:1, c:2, s:0, b:0, t:0}, "ccd"], [{u:0, d:0, c:2, s:1, b:0, t:0}, "ccs"], [{u:1, d:2, c:0, s:0, b:0, t:0}, "udd"],
+    [{u:1, d:1, c:0, s:1, b:0, t:0}, "uds"], [{u:1, d:1, c:0, s:0, b:1, t:0}, "udb"], [{u:1, d:0, c:0, s:2, b:0, t:0}, "uss"],
+    [{u:1, d:0, c:0, s:1, b:1, t:0}, "usb"], [{u:0, d:2, c:1, s:0, b:0, t:0}, "cdd"], [{u:0, d:1, c:1, s:1, b:0, t:0}, "cds"], [{u:0, d:0, c:1, s:2, b:0, t:0}, "css"],
+    [{u:0, d:3, c:0, s:0, b:0, t:0}, "ddd"], [{u:0, d:2, c:0, s:1, b:0, t:0}, "dds"], [{u:0, d:1, c:0, s:2, b:0, t:0}, "dss"], [{u:0, d:1, c:0, s:1, b:1, t:0}, "dsb"],
+    [{u:0, d:0, c:0, s:3, b:0, t:0}, "sss"]]; // add more particles
+    currentParticle = {u:0, d:0, c:0, s:0, b:0, t:0};
+    for(var i = 0; i < combination.length; i++){
+        switch(combination[i][0].name){
+            case "u": currentParticle["u"]++;
+                break;
+            case "d": currentParticle["d"]++;
+                break;
+            case "c": currentParticle["c"]++;
+                break;
+            case "s": currentParticle["s"]++;
+                break;
+            case "b": currentParticle["b"]++;
+                break;
+            case "t": currentParticle["t"]++;
+                break;
+            default: 
+        }
+    }
     
+    indexOfParticle = null;
+    
+    for(i = 0; i < seenParticles.length; i++){
+        if(jQuery.inArray(currentParticle, seenParticles[i]) == -1){
+            continue;
+        } else {
+            indexOfParticle = i;
+            break;
+        }
+    }
+    if(indexOfParticle == null){
+        // hoe gaan we het doen met alle namen?
+    } else {
+        return {graphic: seenParticles[indexOfParticle][1] + ".svg", id: seenParticles[indexOfParticle][1]}; // deze naam gebruiken?
+    }
 }
