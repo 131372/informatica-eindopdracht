@@ -42,14 +42,16 @@ gameObject = {
 
 $(function () {
     storage = setInterval(function () {
+		//console.log(gameInProgress);
+		//console.log(gameObject['currentPlayer']!=userPlayerNumber);
         if (gameInProgress) {
             if(gameObject['currentPlayer']!=userPlayerNumber){
 				$.ajax({
 					url: "getGameState.php"
 				}).done(function (data) {
-					console.log(data);
+					//console.log(data);
 					gameObject=JSON.parse(data);
-					console.log(gameObject);
+					//console.log(gameObject);
 					updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
 					updateUIAppendCards(gameObject['combinations'][userPlayerNumber],true,"#Combination",100,100,"Your combinations:");
 					updateUIAppendCards(gameObject['hands'][userPlayerNumber],false,"#Hand",100,100,"");
@@ -65,7 +67,7 @@ function getGame(){
 	}).done(function (data) {
 		//console.log(data);
 		gameObject=JSON.parse(data);
-		console.log(gameObject);
+		//console.log(gameObject);
 		//updateUIAppendCards(gameObject['currentCombinationCards'],false,"#Cards",100,100,"Current cards played for combination");
 		//updateUIAppendCards(gameObject['combinations'][userPlayerNumber],true,"#Combination",100,100,"Your combinations:");
 		//updateUIAppendCards(gameObject['hands'][userPlayerNumber],false,"#Hand",100,100,"");
@@ -123,7 +125,7 @@ $(function () {
                 method: "POST",
                 data: {"gameId": gameId}
             }).done(function (data) {
-               console.log(data);
+                //console.log(data);
                 if (data == 1) { // (1)
 					gameInProgress=true;
                     realGameInProgress = true;
@@ -133,17 +135,19 @@ $(function () {
                 } else {
                     //console.log('gameojbjejekej');
                     realGameInProgress = true;
+					gameInProgress=true;
                     gameObject = JSON.parse(data);
                     if (gameObject['gameInProgress']) {
                         displayActiveGame();
                         userPlayerNumber = getKeyByValueInObject(username, gameObject.players);
-                        console.log(userPlayerNumber);
+                        //console.log(userPlayerNumber);
                     }
                 }
             });
             }
         }, 1000);
 })
+
 $(function () {
     hostName = $("#hostName").html();
     username = $("#username").html();			//get the host or username (can be empty if none exist)
@@ -157,14 +161,14 @@ $(function () {
 });
 
 function uploadGameData() {
-    console.log("upload");
-	console.log(gameObject);
+    //console.log("upload");
+	//console.log(gameObject);
 	$.ajax({
         url: "uploadGameState.php",
         method: "POST",
         data: {"gameObject": JSON.stringify(gameObject)}
     }).done(function (data) {
-        console.log(data);
+        //console.log(data);
     });
 }
 
@@ -341,13 +345,13 @@ function join(id) {
 }
 
 function kick(player) {
-    console.log(gameId);
+    //console.log(gameId);
     $.ajax({
         url: "kickPlayer.php",
         method: "POST",
         data: {"player": player, "gameId": gameId}
     }).done(function (data) {
-        console.log(data);
+        //console.log(data);
     });
 }
 
@@ -380,7 +384,7 @@ function startGame() {
         method: "POST",
         data: {"gameObject": gameObject, "gameId": gameId} // parse necesary?
     }).done(function (data) {
-        console.log(data);
+        //console.log(data);
         gameObject["players"]["1"] = hostName;
         for (var i = 0; i < guests.length; i++) {
             gameObject["players"][String(i + 2)] = guests[i]; // will a new key value pair be created like this?
@@ -393,10 +397,10 @@ function startGame() {
         }
         gameObject.currentPlayer = 1; // This one needs to be taken out of gameObject but what's the deal with currentplayer?
         userPlayerNumber = 1;
-        console.log(gameObject)
+        //console.log(gameObject)
         uploadGameData();
         displayActiveGame();
-        console.log(gameObject);
+        //console.log(gameObject);
     });
 
 }
@@ -473,8 +477,8 @@ function dropInCards(ev) {
         fromCombination = false;
         stealMemory = {};
         $.extend(true, stealMemory, gameObject);
-        console.log(gameObject);
-        console.log(stealMemory);
+        //console.log(gameObject);
+        //console.log(stealMemory);
         var data = ev.dataTransfer.getData("text");
         gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][gameObject['currentlyShowingCombinationKey'][userPlayerNumber]][data]);
         $.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][gameObject['currentlyShowingCombinationKey'][userPlayerNumber]], function (index, value) {
@@ -517,8 +521,8 @@ function dropInCards(ev){
 		fromCombination=false;
 		stealMemory={};
 		$.extend(true,stealMemory,gameObject);
-		console.log(gameObject);
-		console.log(stealMemory);
+		//console.log(gameObject);
+		//console.log(stealMemory);
 		var data = ev.dataTransfer.getData("text");
 		gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][gameObject['currentlyShowingCombinationKey'][userPlayerNumber]][data]);
 		$.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][gameObject['currentlyShowingCombinationKey'][userPlayerNumber]],function(index, value){
@@ -580,20 +584,19 @@ showingOwnCombination = false;
 showingCombination = false;
 
 function toggleShowOwnCombination(i) {
-
-    console.log(showingOwnCombination);
-    console.log(i);
-    console.log(showingOwnCombination != i);
+    //console.log(showingOwnCombination);
+    //console.log(i);
+    //console.log(showingOwnCombination != i);
     if (showingOwnCombination === false || showingOwnCombination !== i && showingOwnCombination !== false) {
-        console.log("?");
+        //console.log("?");
         showingOwnCombination = i;
         updateUIAppendCards(gameObject['combinations'][userPlayerNumber][i], false, "#Cards2", 100, 100, "Combination:");
-		console.log(showingOwnCombination);
-		console.log(i);
-		console.log(showingOwnCombination!=i);
+		//console.log(showingOwnCombination);
+		//console.log(i);
+		//console.log(showingOwnCombination!=i);
 	}
-    if (showingOwnCombination===false || showingOwnCombination!==i && showingOwnCombination!==false) {
-		console.log("?");
+    else if (showingOwnCombination===false || showingOwnCombination!==i && showingOwnCombination!==false) {
+		//console.log("?");
 		showingOwnCombination = i;
         updateUIAppendCards(gameObject['combinations'][userPlayerNumber][i], false, "#Cards2", 100, 100, "Combination:");
 
@@ -642,7 +645,7 @@ function toggleShowCombination(combination) {
 }
 
 function undoSteal() {
-    console.log(stealMemory);
+    //console.log(stealMemory);
     if (stealMemory != "") {
         stealAllowed = true;
         gameObject = stealMemory;
@@ -657,7 +660,7 @@ function undoSteal() {
 
 
 function toggleShowCombination(combination){
-	console.log(userPlayerNumber);
+	//console.log(userPlayerNumber);
 	if(showingCombination){
 		if(gameObject['currentlyShowingCombinationKey'][userPlayerNumber]==combination){
 			showingCombination=false;
@@ -677,7 +680,7 @@ function toggleShowCombination(combination){
 }
 
 function undoSteal(){
-	console.log(stealMemory);
+	//console.log(stealMemory);
 	if(stealMemory!=""){
 		stealAllowed=true;
 		gameObject=stealMemory;
