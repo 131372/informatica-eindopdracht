@@ -79,6 +79,15 @@ $(function () {
     }, 1000);
 });
 
+function getKeyByValueInObject(value, object) {
+    for (var prop in object){
+        if(object.hasOwnProperty(prop)){
+            if(object[prop] == value){
+                return prop;
+            }
+        }
+    }
+}
 
 $(function () {
     hostName = $("#hostName").html();
@@ -90,9 +99,9 @@ $(function () {
         $("#games").css("display", "none");
         $("#wait").css("display", "block");
     } //if the user is currently a host or a guest show the proper interface
-    if (!realGameInProgress && gameId != "") {
         findStart = setInterval(function () {
-            $.ajax({
+            if(!realGameInProgress && gameId != ""){
+                $.ajax({
                 url: "getOngoingGame.php",
                 method: "POST",
                 data: {"gameId": gameId}
@@ -110,12 +119,13 @@ $(function () {
                     gameObject = JSON.parse(data);
                     if (gameObject['gameInProgress']) {
                         displayActiveGame();
-                        userPlayerNumber; // gasten en nummer geven
+                        userPlayerNumber = getKeyByValueInObject("username", gameObject.players);
+                        console.log(userPlayerNumber);
                     }
                 }
             });
+            }
         }, 1000);
-    }
 })
 $(function () {
     hostName = $("#hostName").html();
@@ -289,7 +299,7 @@ function join(id) {
             $("#wait").css("display", "block");
         }
     });
-    findStart = setInterval(function () {
+    /*findStart = setInterval(function () {
         $.ajax({
             url: "getOngoingGame.php",
             method: "POST",
@@ -308,7 +318,7 @@ function join(id) {
                 }
             }
         });
-    }, 1000);
+    }, 1000);*/
 }
 
 function kick(player) {
