@@ -366,7 +366,8 @@ function endTurn() {
         if (canStartNewRound()) {
             newGameStart();
         } else {
-            // game ends
+            //gameObject.gameOver = true; // doesn't exist yet.
+            //alert("The game is over 'this guy won w'");
         }
     } else {
         if (gameObject['currentPlayer'] != gameObject['playerAmount']) {
