@@ -128,7 +128,6 @@ function scoreEachTurn(){
 				}
 			});
 			counts={countU:Ucount,countD:Dcount,countC:Ccount,countS:Scount,countB:Bcount, countAntiU:antiUcount, countAntiC:antiCcount, countAntiB:antiBcount, countAntiD:antiDcount, countAntiS:antiScount};
-			console.log(counts);
 			$.each(waargenomenHadronen,function(unused, waargenomenHadron){
 				equal = true; 
 				$.each(keys, function(unused, key){
@@ -156,8 +155,6 @@ function scoreEachTurn(){
         });
     });
     $.each(score, function(player, points){
-		console.log(player+"/"+points);
         gameObject.points[player] = points;
-                console.log(player+"/"+gameObject.points[player]);
     });
 };

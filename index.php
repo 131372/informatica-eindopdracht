@@ -72,7 +72,7 @@ session_start();
             </script>
             -->
 
-        </div> 
+
 
         <div id="Help" >
             <p><b>Help</b></p>
@@ -135,19 +135,13 @@ session_start();
                 <img src="images/Lijst met waargenomen mesonen goed.png" alt=""/>
             </div>
 
-<<<<<<< HEAD
-        </div>
-    </div>
-=======
+
+
             </div>
             
             <div id="Buycard" >
                 <button id="Buycard" onclick="getCard()"<p>Buy an extra card<p></button>
             </div>    
-                        
-            
-        </div>
-		<button id="Buycard" onclick="Getacard()"<p>Buy an extra card<p>
->>>>>>> f83bf53fadfeae292e8f80aa35e72d9c308cbcec
+		</div>
 </body>
 </html>
