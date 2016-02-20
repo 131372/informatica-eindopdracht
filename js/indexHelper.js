@@ -123,7 +123,7 @@ $(function () {
                 method: "POST",
                 data: {"gameId": gameId}
             }).done(function (data) {
-                //console.log(data);
+               console.log(data);
                 if (data == 1) { // (1)
 					gameInProgress=true;
                     realGameInProgress = true;
@@ -136,7 +136,7 @@ $(function () {
                     gameObject = JSON.parse(data);
                     if (gameObject['gameInProgress']) {
                         displayActiveGame();
-                        userPlayerNumber = getKeyByValueInObject("username", gameObject.players);
+                        userPlayerNumber = getKeyByValueInObject(username, gameObject.players);
                         console.log(userPlayerNumber);
                     }
                 }
