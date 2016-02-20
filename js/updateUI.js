@@ -154,3 +154,7 @@ function updateDeck(cards, height, width, deck){
                    Cards remaining: " + deckCount;
     updateUIAppendCards(cards, false, "#Deck", height, width, message);
 }
+
+function showCombination(combination){
+    
+}
