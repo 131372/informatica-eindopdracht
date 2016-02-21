@@ -1,8 +1,9 @@
 gameInProgress = false; //iedereen moet een nummer krijgen voor turnorder, deck aanmaken, kaarten uitdelen, playerAmount
 realGameInProgress = false;
-delay=false;
+delay = false;
 userPlayerNumber = 1;
 gameObject = {
+    gameEnd: false,
     round: 1,
     playerNumberSet: false,
     currentPlayer: 2,
@@ -54,23 +55,36 @@ $(function () {
                     console.log(data);
                     console.log(JSON.parse(data)['round']);
                     if ((JSON.parse(data))['round'] != gameObject['round'] && delay) {
-                        alert("De vorige ronde is afgelopen. Een nieuwe ronde is begonnen!")
+                        alert("De vorige ronde is afgelopen. Een nieuwe ronde is begonnen!");
                     }
-					else if((JSON.parse(data))['round'] != gameObject['round']){
-						delay=true;
-					}
+                    else if ((JSON.parse(data))['round'] != gameObject['round']) {
+                        delay = true;
+                    } else if((JSON.parse(data))['gameEnd']){
+                        loserEndGameNotif();
+                    }
                     //console.log(data);
                     gameObject = JSON.parse(data);
                     console.log(gameObject);
                     updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
                     updateUIAppendCards(gameObject['combinations'][userPlayerNumber], true, "#Combination", 100, 100, "Your combinations:");
                     updateUIAppendCards(gameObject['hands'][userPlayerNumber], false, "#Hand", 100, 100, "");
-					updateTurnOrder();
+                    updateTurnOrder();
                 });
             }
         }
     }, 1000);
 });
+
+function loserEndGameNotif(){
+    pointsArray = Object.keys(gameObject.points).map(function(key){
+        return gameObject.point[key];
+    });
+    maxPoints = Math.max.apply( null, pointsArray );
+    winnerPlayerNr = getKeyByValueInObject(maxPoints, gameObject.points);
+    winnerPlayer = gameObject.players[winnerPlayerNr];
+    realGameInProgress = false;
+    alert("Het spel is voorbij, " + winnerPlayer + "heeft gewonnen met" + maxPoints + " punten" + "!");
+}
 
 function getGame() {
     $.ajax({
@@ -367,26 +381,28 @@ function kick(player) {
 }
 
 function endTurn() {
-	if(gameObject['currentPlayer']==userPlayerNumber){
-		if (gameEnd(gameObject.deck, gameObject.hands, gameObject.currentCombinationCards)) {//last param wing.
-        if (canStartNewRound()) {
-            newGameStart();
+    if (gameObject['currentPlayer'] == userPlayerNumber) {
+        if (gameEnd(gameObject.deck, gameObject.hands, gameObject.currentCombinationCards)) {//last param wing.
+            if (canStartNewRound()) {
+                newGameStart();
+            } else {
+                gameObject.gameEnd = true;
+                realGameInProgress = false;
+                alert("Gefeliciteerd, je hebt gewonnen!");
+                // remove game from db and return the players to the lobby.
+            }
         } else {
-            //gameObject.gameOver = true; // doesn't exist yet.
-            //alert("The game is over 'this guy won w'");
+            if (gameObject['currentPlayer'] != gameObject['playerAmount']) {
+                gameObject['currentPlayer']++;
+            }
+            else {
+                gameObject['currentPlayer'] = 1;
+            }
         }
-		} else {
-			if (gameObject['currentPlayer'] != gameObject['playerAmount']) {
-				gameObject['currentPlayer']++;
-			}
-			else {
-				gameObject['currentPlayer'] = 1;
-			}
-		}
-		updateTurnOrder();
-		uploadGameData();
-	}
-    
+        updateTurnOrder();
+        uploadGameData();
+    }
+
 }
 
 function displayActiveGame() {
@@ -426,7 +442,7 @@ function startGame() {
         uploadGameData();
         displayActiveGame();
         //console.log(gameObject);
-        // UIveld van de host wordt niet aangepast zoals die van de guest, waardoor gebeurt het bij de guest wel?
+        updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
     });
 
 }
