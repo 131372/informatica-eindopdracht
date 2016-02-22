@@ -1,3 +1,12 @@
+//indien merge probleem revert this change
+function getCard(score) {
+    gameObject["points"][gameObject.currentplayer] -= 1;
+    gameObject["hand"][gameObject.currentplayer].push(drawCard(gameObject["deck"]));
+    updateUIAppendCards(gameObject["hand"][gameObject.currentplayer], false, "#Hand", 100, 100, "");
+    updateDeck(gameObject["deck"], 100, 100, deck);
+};
+
+
 gameInProgress = false; //iedereen moet een nummer krijgen voor turnorder, deck aanmaken, kaarten uitdelen, playerAmount
 realGameInProgress = false;
 delay = false;
