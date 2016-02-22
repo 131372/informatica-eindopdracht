@@ -381,7 +381,7 @@ function kick(player) {
 }
 
 function endTurn() {
-    if (gameObject['currentPlayer'] == userPlayerNumber && gameObject['currentCombinationCards']===[]) {
+    if (gameObject['currentPlayer'] == userPlayerNumber && gameObject['currentCombinationCards'].length==0) {
         if (gameEnd(gameObject.deck, gameObject.hands, gameObject.currentCombinationCards)) {//last param wing.
             if (canStartNewRound()) {
                 newGameStart();
@@ -456,93 +456,6 @@ $(function () {
     updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
 });
 
-
-fromCards = false;
-fromHand = false;
-
-function dropInCards(ev) {
-    if (fromHand) {
-        fromCards = false;
-        fromHand = false;
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        gameObject['currentCombinationCards'].push(gameObject['hands'][gameObject['currentPlayer']][data]);
-        gameObject['hands'][gameObject['currentPlayer']].splice(data, 1);
-        updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
-        updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-    }
-}
-
-function dropInHand(ev) {
-    if (fromCards) {
-        fromCards = false;
-        fromHand = false;
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        gameObject['hands'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards'][data]);
-        gameObject['currentCombinationCards'].splice(data, 1);
-        updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
-        updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-    }
-}
-
-function dragStartHand(ev, cardNumber) {
-    ev.dataTransfer.setData("text", cardNumber);
-    fromHand = true;
-    fromCards = false;
-}
-
-function dragStartCards(ev, cardNumber) {
-    ev.dataTransfer.setData("text", cardNumber);
-    fromCards = true;
-    fromHand = false;
-}
-
-
-fromCards = false;
-fromHand = false;
-fromCombination = false;
-stealAllowed = true;
-
-function dropInCards(ev) {
-    if (fromHand) {
-        fromCards = false;
-        fromHand = false;
-        fromCombination = false;
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        gameObject['currentCombinationCards'].push(gameObject['hands'][gameObject['currentPlayer']][data]);
-        gameObject['hands'][gameObject['currentPlayer']].splice(data, 1);
-        updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
-        updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-    }
-    else if (fromCombination && stealAllowed) {
-        ev.preventDefault();
-        stealAllowed = false;
-        fromCards = false;
-        fromHand = false;
-        fromCombination = false;
-        stealMemory = {};
-        $.extend(true, stealMemory, gameObject);
-        //console.log(gameObject);
-        //console.log(stealMemory);
-        var data = ev.dataTransfer.getData("text");
-        gameObject['currentCombinationCards'].push(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][gameObject['currentlyShowingCombinationKey'][userPlayerNumber]][data]);
-        $.each(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][gameObject['currentlyShowingCombinationKey'][userPlayerNumber]], function (index, value) {
-            if (index != data) {
-                gameObject['hands'][gameObject['currentPlayer']].push(value);
-            }
-        });
-        gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]].splice(gameObject['currentlyShowingCombinationKey'][userPlayerNumber], 1);
-        scoreEachTurn();
-        updateTurnOrder();
-        updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
-        updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-        updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]], true, "#Combination", 100, 100, "Your combinations:");
-        updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
-    }
-}
-
 fromCards = false;
 fromHand = false;
 fromCombination = false;
@@ -586,6 +499,12 @@ function dropInCards(ev) {
 			updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]], true, "#Combination", 100, 100, "Your combinations:");
 			updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
 		}
+		uploadGameData();
+	}
+	else{
+		fromCards = false;
+		fromHand = false;
+		fromCombination = false;
 	}
 }
 
@@ -600,6 +519,7 @@ function dropInHand(ev) {
         gameObject['currentCombinationCards'].splice(data, 1);
         updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
         updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
+		uploadGameData();
     }
 	else{
 		fromCards = false;
