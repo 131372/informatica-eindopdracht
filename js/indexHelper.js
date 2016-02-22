@@ -369,12 +369,12 @@ function kick(player) {
 function endTurn() {
 	if(gameObject['currentPlayer']==userPlayerNumber){
 		if (gameEnd(gameObject.deck, gameObject.hands, gameObject.currentCombinationCards)) {//last param wing.
-        if (canStartNewRound()) {
-            newGameStart();
-        } else {
-            //gameObject.gameOver = true; // doesn't exist yet.
-            //alert("The game is over 'this guy won w'");
-        }
+			if (canStartNewRound()) {
+				newGameStart();
+			} else {
+				//gameObject.gameOver = true; // doesn't exist yet.
+				//alert("The game is over 'this guy won w'");
+			}
 		} else {
 			if (gameObject['currentPlayer'] != gameObject['playerAmount']) {
 				gameObject['currentPlayer']++;
@@ -383,6 +383,9 @@ function endTurn() {
 				gameObject['currentPlayer'] = 1;
 			}
 		}
+		temp=drawCard(gameObject['deck']);
+		gameObject['deck']=temp[1];
+		gameObject['hands'][gameObject['currentPlayer']].push(temp[0]);
 		updateTurnOrder();
 		uploadGameData();
 	}
