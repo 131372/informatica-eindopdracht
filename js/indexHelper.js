@@ -398,11 +398,14 @@ function endTurn() {
             else {
                 gameObject['currentPlayer'] = 1;
             }
+			temp=drawCard(gameObject['deck']);
+			gameObject['deck']=temp[1];
+			gameObject['hands'][gameObject['currentPlayer']].push(temp[0]);
         }
         updateTurnOrder();
         uploadGameData();
     }
-	//console.log(gameObject['deck'].length);
+	console.log(gameObject['deck'].length);
 }
 
 function displayActiveGame() {

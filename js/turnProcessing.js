@@ -68,7 +68,7 @@ function gameEnd(deck, hands, currentPlayerCombinations){
 }
 
 function canStartNewRound(){
-    if(gameObject.round != playerAmount){
+    if(gameObject.round != gameObject['playerAmount']){
         return true;
     } else {
         return false;
