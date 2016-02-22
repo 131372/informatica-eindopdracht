@@ -39,14 +39,14 @@ function checkForProtonNeutronGameEnd(currentPlayerCombinations) {
                 dCount++;
             }
         });
-    });
-    if (uCount == 2 && dCount == 1) {
-        return true;
-    }
+		if (uCount == 2 && dCount == 1) {
+			return true;
+		}
 
-    if (uCount == 1 && dCount == 2) {
-        return true;
-    }
+		if (uCount == 1 && dCount == 2) {
+			return true;
+		}
+    });
     return false;
 }
 
