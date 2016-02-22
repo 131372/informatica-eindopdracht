@@ -46,8 +46,9 @@ function updateUIAppendCards(cards, combination, element, height, width, message
             $(element).append("<img id='" + idPrefix + cardGraphic['graphic'] + "' " +
                     "class='" + htmlclass + "' " +
                     "src='" + path + cardGraphic['graphic'] + "' " +
-                    "height='" + height + "' " +
-                    "width='" + width + "' " +
+                    //"height='" + height + "' " +
+                    //"width='" + width + "' " +
+					"style='height:30%;width:30%'" +
                     ">"
                     );
             element = "#Cards2";
@@ -60,8 +61,9 @@ function updateUIAppendCards(cards, combination, element, height, width, message
             $(element).append("<img id='" + idPrefix + cardGraphic['graphic'] + "' " +
                     "class='" + htmlclass + "' " +
                     "src='" + path + cardGraphic['graphic'] + "' " +
-                    "height='" + height + "' " +
-                    "width='" + width + "' " +
+                    //"height='" + height + "' " +
+                    //"width='" + width + "' " +
+					"style='height:30%;width:30%'" +
                     "draggable='true'" +
                     "ondragstart='dragStartCombination(event," + i + ")'" +
                     ">"
@@ -75,8 +77,9 @@ function updateUIAppendCards(cards, combination, element, height, width, message
             $(element).append("<img id='" + idPrefix + cardGraphic['graphic'] + "' " +
                     "class='" + htmlclass + "' " +
                     "src='" + path + cardGraphic['graphic'] + "' " +
-                    "height='" + height + "' " +
-                    "width='" + width + "' " +
+                    //"height='" + height + "' " +
+                    //"width='" + width + "' " +
+					"style='height:30%;width:30%'" +
                     ">"
                     );
         }							//not finished yet, need an if statement for each specific element I believe
@@ -87,8 +90,9 @@ function handCardAppend(idPrefix, cardGraphic, htmlclass, path, height, width, i
     $("#Hand").append("<img id='" + idPrefix + cardGraphic['graphic'] + "' " +
             "class='" + htmlclass + "' " +
             "src='" + path + cardGraphic['graphic'] + "' " +
-            "height='" + height + "' " +
-            "width='" + width + "' " +
+            //"height='" + height + "' " +
+            //"width='" + width + "' " +
+			"style='height:30%;width:30%'" +
             "draggable='true' ondragstart='dragStartHand(event," + i + ")'" +
             ">"
             );
@@ -99,8 +103,9 @@ function cardsCardAppend(idPrefix, cardGraphic, htmlclass, path, height, width, 
     $("#Cards").append("<img id='" + idPrefix + cardGraphic['graphic'] + "' " +
             "class='" + htmlclass + "' " +
             "src='" + path + cardGraphic['graphic'] + "' " +
-            "height='" + height + "' " +
-            "width='" + width + "' " +
+            //"height='" + height + "' " +
+            //"width='" + width + "' " +
+			"style='height:30%;width:30%'" +
             "draggable='true' ondragstart='dragStartCards(event," + i + ")'" +
             ">"
             );
@@ -111,8 +116,9 @@ function combinationCardAppend(idPrefix, cardGraphic, htmlclass, path, height, w
     $("#Combination").append("<img id='" + idPrefix + cardGraphic['graphic'] + "' " +
             "class='" + htmlclass + "' " +
             "src='" + path + cardGraphic['graphic'] + "' " +
-            "height='" + height + "' " +
-            "width='" + width + "' " +
+            //"height='" + height + "' " +
+            //"width='" + width + "' " +
+			"style='height:30%;width:30%'" +
             "onclick='toggleShowOwnCombination(" + i + ")'" +
             ">"
             );
@@ -122,8 +128,9 @@ function otherCombinationsCardAppend(idPrefix, cardGraphic, htmlclass, path, hei
     $("#OtherCombinations").append("<img id='" + idPrefix + cardGraphic['graphic'] + "' " +
             "class='" + htmlclass + "' " +
             "src='" + path + cardGraphic['graphic'] + "' " +
-            "height='" + height + "' " +
-            "width='" + width + "' " +
+            //"height='" + height + "' " +
+            //"width='" + width + "' " +
+			"style='height:30%;width:30%'" +
             "onclick='toggleShowCombination(" + i + ")'" +
             ">"
             );
