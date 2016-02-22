@@ -40,7 +40,11 @@ function playCombination() {
     switch (allowCombination(gameObject['currentCombinationCards'])) {
         case "allowed":
             gameObject['combinations'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards']);
+            console.log(checkForProtonNeutronGameEnd(gameObject['currentCombinationCards']));
+            console.log(gameObject['combinations'][gameObject['currentPlayer']]);
+            console.log(gameObject['currentCombinationCards']);
             if (checkForProtonNeutronGameEnd(gameObject['currentCombinationCards'])) {
+                console.log('hi');
                 if (canStartNewRound()) {
                     newGameStart();
                 } else {
@@ -49,9 +53,11 @@ function playCombination() {
                     alert("Gefeliciteerd, je hebt gewonnen!");
                     // remove game from db and return the players to the lobby.
                 }
+                uploadGameData();
             } else {
                 gameObject['currentCombinationCards'] = [];
                 //console.log(gameObject['currentCombinationCards']);
+                console.log("nohi");
                 uploadGameData();
                 scoreEachTurn();
                 updateTurnOrder();

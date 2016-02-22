@@ -67,6 +67,9 @@ $(function () {
                         alert("De vorige ronde is afgelopen. Een nieuwe ronde is begonnen!");
                     }
                     else if ((JSON.parse(data))['round'] != gameObject['round']) {
+                        alert("De vorige ronde is afgelopen. Een nieuwe ronde is begonnen!");
+                        //console.log((JSON.parse(data))['round']);
+                        //console.log(gameObject['round']);
                         delay = true;
                     } else if((JSON.parse(data))['gameEnd']){
                         loserEndGameNotif();
@@ -391,7 +394,7 @@ function kick(player) {
 
 function endTurn() {
     if (gameObject['currentPlayer'] == userPlayerNumber && gameObject['currentCombinationCards'].length==0) {
-        if (gameEnd(gameObject.deck, gameObject.hands, gameObject.currentCombinationCards)) {//last param wing.
+        if (gameEnd(gameObject.deck, gameObject.hands)) {//last param wing.
             if (canStartNewRound()) {
                 newGameStart();
             } else {

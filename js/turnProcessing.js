@@ -27,27 +27,38 @@ function checkForGameEnd(deck, hands) {
     return false;
 }
 
-function checkForProtonNeutronGameEnd(currentPlayerCombinations) {
-    uCount = 0;
-    dCount = 0;
-    $.each(currentPlayerCombinations, function (index, value) {
-        $.each(value, function (index, value) {
-            if (value['name'] == "u" && !value['anti']) {
-                uCount++;
-            }
-            if (value['name'] == "d" && !value['anti']) {
-                dCount++;
-            }
-        });
-		if (uCount == 2 && dCount == 1) {
-			return true;
-		}
-
-		if (uCount == 1 && dCount == 2) {
-			return true;
-		}
-    });
-    return false;
+function checkForProtonNeutronGameEnd(combination) {
+    var currentParticle = {u: 0, d: 0, c: 0, s: 0, b: 0, t: 0};
+    for (var i = 0; i < combination.length; i++) {
+        switch (combination[i].name) {
+            case "u":
+                currentParticle["u"]++;
+                break;
+            case "d":
+                currentParticle["d"]++;
+                break;
+            case "c":
+                currentParticle["c"]++;
+                break;
+            case "s":
+                currentParticle["s"]++;
+                break;
+            case "b":
+                currentParticle["b"]++;
+                break;
+            case "t":
+                currentParticle["t"]++;
+                break;
+            default:
+        }
+    }
+    //console.log(currentParticle);
+    //console.log(currentParticle.u + currentParticle.d);
+    if((currentParticle.u == 2 && currentParticle.d)|| (currentParticle.d == 2 && currentParticle.u)){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -56,19 +67,19 @@ function checkForProtonNeutronGameEnd(currentPlayerCombinations) {
  */
 
 function removeCombinations() {
-    for(var i = 1; i <= Object.keys(gameObject.combinations).length; i++){ //works right?
+    for (var i = 1; i <= Object.keys(gameObject.combinations).length; i++) { //works right?
         gameObject["combinations"][String(i)] = [];
     }
 }
 
-function gameEnd(deck, hands, currentPlayerCombinations){
-    if(checkForGameEnd(deck, hands) || checkForProtonNeutronGameEnd(currentPlayerCombinations)){
+function gameEnd(deck, hands) {
+    if (checkForGameEnd(deck, hands)) {
         return true;
     }
 }
 
-function canStartNewRound(){
-    if(gameObject.round != gameObject['playerAmount']){
+function canStartNewRound() {
+    if (gameObject.round != gameObject['playerAmount']) {
         return true;
     } else {
         return false;
@@ -78,15 +89,16 @@ function canStartNewRound(){
 function newGameStart() {
     gameObject.round++
     gameObject.currentPlayer = gameObject.round;
-    for (i=1; i < gameObject.playerAmount; i++){
-        gameObject.hands["i"]= [];
+    for (i = 1; i < gameObject.playerAmount; i++) {
+        gameObject.hands["i"] = [];
     }
-    removeCombinations();    
+    removeCombinations();
+    gameObject['currentCombinationCards'] = [];
     console.log(gameObject);
     cardsDeal = dealCards(randomDeck(createDeck1()), gameObject['playerAmount']);
     gameObject['deck'] = cardsDeal[1];
-    for(var i = 0; i < gameObject['playerAmount']; i++){
-        gameObject['hands'][String(i+1)] = cardsDeal[0][i];
+    for (var i = 0; i < gameObject['playerAmount']; i++) {
+        gameObject['hands'][String(i + 1)] = cardsDeal[0][i];
     }
     console.log(gameObject);
     uploadGameData();
