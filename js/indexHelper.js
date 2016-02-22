@@ -52,8 +52,8 @@ $(function () {
                 $.ajax({
                     url: "getGameState.php"
                 }).done(function (data) {
-                    console.log(data);
-                    console.log(JSON.parse(data)['round']);
+                    //console.log(data);
+                    //console.log(JSON.parse(data)['round']);
                     if ((JSON.parse(data))['round'] != gameObject['round'] && delay) {
                         alert("De vorige ronde is afgelopen. Een nieuwe ronde is begonnen!");
                     }
@@ -64,7 +64,7 @@ $(function () {
                     }
                     //console.log(data);
                     gameObject = JSON.parse(data);
-                    console.log(gameObject);
+                    //console.log(gameObject);
                     updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
                     updateUIAppendCards(gameObject['combinations'][userPlayerNumber], true, "#Combination", 100, 100, "Your combinations:");
                     updateUIAppendCards(gameObject['hands'][userPlayerNumber], false, "#Hand", 100, 100, "");
@@ -381,31 +381,6 @@ function kick(player) {
 }
 
 function endTurn() {
-<<<<<<< HEAD
-	if(gameObject['currentPlayer']==userPlayerNumber){
-		if (gameEnd(gameObject.deck, gameObject.hands, gameObject.currentCombinationCards)) {//last param wing.
-			if (canStartNewRound()) {
-				newGameStart();
-			} else {
-				//gameObject.gameOver = true; // doesn't exist yet.
-				//alert("The game is over 'this guy won w'");
-			}
-		} else {
-			if (gameObject['currentPlayer'] != gameObject['playerAmount']) {
-				gameObject['currentPlayer']++;
-			}
-			else {
-				gameObject['currentPlayer'] = 1;
-			}
-		}
-		temp=drawCard(gameObject['deck']);
-		gameObject['deck']=temp[1];
-		gameObject['hands'][gameObject['currentPlayer']].push(temp[0]);
-		updateTurnOrder();
-		uploadGameData();
-	}
-    
-=======
     if (gameObject['currentPlayer'] == userPlayerNumber) {
         if (gameEnd(gameObject.deck, gameObject.hands, gameObject.currentCombinationCards)) {//last param wing.
             if (canStartNewRound()) {
@@ -427,8 +402,7 @@ function endTurn() {
         updateTurnOrder();
         uploadGameData();
     }
-
->>>>>>> 30cc5b86f50e6e9f7b6e0e4747721c0e612dbcdc
+	//console.log(gameObject['deck'].length);
 }
 
 function displayActiveGame() {
