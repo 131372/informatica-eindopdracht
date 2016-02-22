@@ -40,7 +40,7 @@ function playCombination() {
     switch (allowCombination(gameObject['currentCombinationCards'])) {
         case "allowed":
             gameObject['combinations'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards']);
-            if (checkForProtonNeutronGameEnd(gameObject['combinations'][gameObject['currentPlayer']])) {
+            if (checkForProtonNeutronGameEnd(gameObject['currentCombinationCards'])) {
                 if (canStartNewRound()) {
                     newGameStart();
                 } else {
