@@ -52,7 +52,7 @@ function updateUIAppendCards(cards, combination, element, height, width, message
                     "src='" + path + cardGraphic['graphic'] + "' " +
                     //"height='" + height + "' " +
                     //"width='" + width + "' " +
-					"style='height:30%;width:30%'" +
+					"style='height:35%;width:12%'" +
                     ">"
                     );
             element = "#Cards2";
@@ -67,7 +67,7 @@ function updateUIAppendCards(cards, combination, element, height, width, message
                     "src='" + path + cardGraphic['graphic'] + "' " +
                     //"height='" + height + "' " +
                     //"width='" + width + "' " +
-					"style='height:30%;width:30%'" +
+					"style='height:35%;width:12%'" +
                     "draggable='true'" +
                     "ondragstart='dragStartCombination(event," + i + ")'" +
                     ">"
@@ -83,7 +83,7 @@ function updateUIAppendCards(cards, combination, element, height, width, message
                     "src='" + path + cardGraphic['graphic'] + "' " +
                     //"height='" + height + "' " +
                     //"width='" + width + "' " +
-					"style='height:30%;width:30%'" +
+					"style='height:35%;width:12%'" +
                     ">"
                     );
         }							//not finished yet, need an if statement for each specific element I believe
@@ -96,7 +96,7 @@ function handCardAppend(idPrefix, cardGraphic, htmlclass, path, height, width, i
             "src='" + path + cardGraphic['graphic'] + "' " +
             //"height='" + height + "' " +
             //"width='" + width + "' " +
-			"style='height:30%;width:30%'" +
+			"style='height:35%;width:12%'" +
             "draggable='true' ondragstart='dragStartHand(event," + i + ")'" +
             ">"
             );
@@ -109,7 +109,7 @@ function cardsCardAppend(idPrefix, cardGraphic, htmlclass, path, height, width, 
             "src='" + path + cardGraphic['graphic'] + "' " +
             //"height='" + height + "' " +
             //"width='" + width + "' " +
-			"style='height:30%;width:30%'" +
+			"style='height:35%;width:12%'" +
             "draggable='true' ondragstart='dragStartCards(event," + i + ")'" +
             ">"
             );
@@ -122,7 +122,7 @@ function combinationCardAppend(idPrefix, cardGraphic, htmlclass, path, height, w
             "src='" + path + cardGraphic['graphic'] + "' " +
             //"height='" + height + "' " +
             //"width='" + width + "' " +
-			"style='height:30%;width:30%'" +
+			"style='height:35%;width:12%'" +
             "onclick='toggleShowOwnCombination(" + i + ")'" +
             ">"
             );
@@ -134,7 +134,7 @@ function otherCombinationsCardAppend(idPrefix, cardGraphic, htmlclass, path, hei
             "src='" + path + cardGraphic['graphic'] + "' " +
             //"height='" + height + "' " +
             //"width='" + width + "' " +
-			"style='height:30%;width:30%'" +
+			"style='height:35%;width:12%'" +
             "onclick='toggleShowCombination(" + i + ")'" +
             ">"
             );
