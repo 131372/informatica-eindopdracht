@@ -326,26 +326,6 @@ function join(id) {
             $("#wait").css("display", "block");
         }
     });
-    /*findStart = setInterval(function () {
-     $.ajax({
-     url: "getOngoingGame.php",
-     method: "POST",
-     data: {"gameId": gameId}
-     }).done(function (data) {
-     console.log(data);
-     if (data == 1) { // (1)
-     gameInProgress = true;
-     displayActiveGame();
-     } else if (data == 0) { // might remove (1) and this one.
-     gameInProgress = false;
-     } else {
-     gameObject = JSON.parse(data);
-     if (gameObject['gameInProgress']) {
-     displayActiveGame();
-     }
-     }
-     });
-     }, 1000);*/
 }
 
 function kick(player) {
@@ -386,7 +366,7 @@ function endTurn() {
         uploadGameData();
     }
 	console.log(gameObject['deck'].length);
-}
+}				//end your turn, which means the current player changes and the new current player draws a card and is allowed to steal again. Also if the game round is supposed to end it does
 
 function displayActiveGame() {
     $("#wait").css("display", "none");
@@ -428,7 +408,6 @@ function startGame() {
         updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
 		updateTurnOrder();
     });
-
 }
 
 $(function () {
@@ -505,7 +484,7 @@ function dropInHand(ev) {
 		fromHand = false;
         fromCombination = false;
 	}
-}
+}					//drop a card in your hand, meaning it gets moved from the currentCombinationCards into your hand if the card you started dragging came from currentCombinationCards
 
 function dragStartHand(ev, cardNumber) {
     ev.dataTransfer.setData("text", cardNumber);
@@ -556,58 +535,13 @@ function toggleShowOwnCombination(i) {
     else {
         showingOwnCombination = false;
         updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-    }
-}
+    }	
+}					//toggle the showing of one of your own combinations
 
 function showCombinations(player) {
     updateUIAppendCards(gameObject['combinations'][player], true, "#OtherCombinations", 100, 100, "Player " + player + "'s combinations:");
     gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] = player;
-}
-
-
-function toggleShowCombination(combination) {
-    if (showingCombination) {
-        showingCombination = false;
-        //updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf']['userPlayerNumber']][combination],false,"#Combination",100,100,"Combination");
-    }
-    else {
-        showingCombination = true;
-        //updateUIAppendCards(gameObject['combinations'][userPlayerNumber],true,"#Combination",100,100,"Your combinations:");
-
-    }
-}
-
-function toggleShowCombination(combination) {
-    if (showingCombination) {
-        if (gameObject['currentlyShowingCombinationKey'][userPlayerNumber] == combination) {
-            showingCombination = false;
-            updateUIAppendCards(gameObject['combinations'][userPlayerNumber], true, "#Combination", 100, 100, "Your combinations:");
-            gameObject['currentlyShowingCombinationKey'][userPlayerNumber] = -1;
-        }
-        else {
-            gameObject['currentlyShowingCombinationKey'][userPlayerNumber] = combination;
-            updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][combination], false, "#Combination2", 100, 100, "Combination:");
-        }
-    }
-    else {
-        showingCombination = true;
-        gameObject['currentlyShowingCombinationKey'][userPlayerNumber] = combination;
-        updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][combination], false, "#Combination2", 100, 100, "Combination:");
-    }
-}
-
-function undoSteal() {
-    //console.log(stealMemory);
-    if (stealMemory != "") {
-        stealAllowed = true;
-        gameObject = stealMemory;
-        stealMemory = "";
-        updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
-        updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-        updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]], true, "#Combination", 100, 100, "Your combinations:");
-        updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
-    }
-}
+}				//show the combinations of a specific player
 
 
 
@@ -629,7 +563,7 @@ function toggleShowCombination(combination) {
         gameObject['currentlyShowingCombinationKey'][userPlayerNumber] = combination;
         updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][combination], false, "#Combination2", 100, 100, "Combination:");
     }
-}
+}					//toggle showing a combination of another player
 
 function undoSteal() {
     //console.log(stealMemory);
@@ -642,5 +576,5 @@ function undoSteal() {
         updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]], true, "#Combination", 100, 100, "Your combinations:");
         updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
     }
-}
+}				//undo a steal you made, meaning that the entire gameObject is reverted back to the state it was in just before the steal
 

@@ -37,6 +37,7 @@ function allowCombination(cards) {
 }
 
 function playCombination() {
+	console.log("play");
     switch (allowCombination(gameObject['currentCombinationCards'])) {
         case "allowed":
             gameObject['combinations'][gameObject['currentPlayer']].push(gameObject['currentCombinationCards']);
