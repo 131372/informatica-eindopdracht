@@ -23,7 +23,7 @@ function updateUIAppendCards(cards, combination, element, height, width, message
     }
     for (var i = 0; i < cards.length; i++) {
         if (combination) {
-            var cardGraphic = cardGraphic2(cards[i][0]); // read combinationGraphic // should becojme: combinationGraphic(cards[i]);
+            var cardGraphic = combinationGraphic(cards[i]); //cardGraphic2(cards[i][0]); // read combinationGraphic // should becojme: combinationGraphic(cards[i]);
             cardGraphic["id"] = ""; // recognize the combination by id.
             for (var j = 0; j < cards[i].length; j++) {
                 if (j === 0) {
