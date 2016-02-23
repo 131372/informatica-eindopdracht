@@ -677,11 +677,3 @@ function undoSteal() {
     }
 }
 
-
-function getCard() {
-    gameObject["points"][gameObject.currentplayer] -= 1;
-    gameObject["hands"][gameObject.currentplayer].push(drawCard(gameObject["deck"]));
-    updateUIAppendCards(gameObject["hand"][gameObject.currentplayer], false, "#Hand", 100, 100, "");
-    updateDeck(gameObject["deck"], 100, 100, deck);
-}
-
