@@ -4,79 +4,46 @@ function getCard(score) {
     gameObject["hand"][gameObject.currentplayer].push(drawCard(gameObject["deck"]));
     updateUIAppendCards(gameObject["hand"][gameObject.currentplayer], false, "#Hand", 100, 100, "");
     updateDeck(gameObject["deck"], 100, 100, deck);
-};
+};				//supposed to be able to let you buy a card in exchange for a point
 
 
 gameInProgress = false; //iedereen moet een nummer krijgen voor turnorder, deck aanmaken, kaarten uitdelen, playerAmount
-realGameInProgress = false;
-delay = false;
-userPlayerNumber = 1;
+realGameInProgress = false;				//set to true when the host presses start game
+delay = false;							//used to delay something which would cause errors if it were executed immediately
+userPlayerNumber = 1;					//the player number of the client
 gameObject = {
-    gameEnd: false,
-    round: 1,
-    playerNumberSet: false,
-    currentPlayer: 2,
-    playerAmount: 3,
-    combinations: {1: [], 2: [], 3: []},
+    gameEnd: false,						//whether the game has ended
+    round: 1,							//the current round
+    playerNumberSet: false,				//whether each player has received their respective player number
+    currentPlayer: 2,					//the player whose turn it is
+    playerAmount: 3,					//the amount of players in the game
+    combinations: {1: [], 2: [], 3: []},				//the combinations per player
     players: {1: "host", 2: "guest1", 3: "guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
-    hands: {1: {1: 1, 2: 2}, 2: [{name: "d", anti: false, colour: "g"}, {name: "u", anti: false, colour: "r"}, {name: "c", anti: false, colour: "b"}, {name: "d", anti: true, colour: "g"}, {name: "u", anti: true, colour: "r"}, {name: "c", anti: true, colour: "b"}], 3: {1: 1, 2: 2}},
-    points: {1: 0, 2: 0, 3: 0},
-    currentCombinationCards: [],
-    currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1},
-    currentlyShowingCombinationKey: {1: -1, 2: -1, 3: -1},
-    deck: []
-};
-
-/*gameInProgress=false;
- gameObject={
- currentPlayer:2,
- playerAmount:3,
- combinations:{},
- players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
- hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
- points:{1:10,2:15,3:13}
- };
- //gameInProgress=false;
- gameObject={
- userPlayerNumber:2,
- currentPlayer:2,
- playerAmount:3,
- combinations:{1:[],2:[],3:[]},
- players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
- hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
- points:{1:10,2:15,3:13},
- currentCombinationCards:[],
- currentlyShowingCombinationsOf:{1:2,2:1,3:1},
- currentlyShowingCombinationKey:{1:-1,2:-1,3:-1},
- gameInProgress: false
- };*/
-
+    hands: {1: {1: 1, 2: 2}, 2: [{name: "d", anti: false, colour: "g"}, {name: "u", anti: false, colour: "r"}, {name: "c", anti: false, colour: "b"}, {name: "d", anti: true, colour: "g"}, {name: "u", anti: true, colour: "r"}, {name: "c", anti: true, colour: "b"}], 3: {1: 1, 2: 2}},				//the hand of cards per player
+    points: {1: 0, 2: 0, 3: 0},								//points per player
+    currentCombinationCards: [],									//the cards that are being played for the current combination
+    currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1},				//the player whose combination is currently shown per player
+    currentlyShowingCombinationKey: {1: -1, 2: -1, 3: -1},			//the key of the combination that is currently being shown per player
+    deck: []				//the deck of cards from which cards will be drawn, will be created upon the start of a game
+};							//gameObject is where all information is stored that is available to all players and is the only information that will be uploaded to the database (it is currently full of testing information which could theoretically be removed since it will be overwritten upon the start of the game)
 
 $(function () {
     storage = setInterval(function () {
-        //console.log(gameInProgress);
-        //console.log(gameObject['currentPlayer']!=userPlayerNumber);
         if (gameInProgress) {
             if (gameObject['currentPlayer'] != userPlayerNumber) {
                 $.ajax({
                     url: "getGameState.php"
                 }).done(function (data) {
-                    //console.log(data);
-                    //console.log(JSON.parse(data)['round']);
                     if ((JSON.parse(data))['round'] != gameObject['round'] && delay) {
                         alert("De vorige ronde is afgelopen. Een nieuwe ronde is begonnen!");
                     }
                     else if ((JSON.parse(data))['round'] != gameObject['round']) {
                         alert("De vorige ronde is afgelopen. Een nieuwe ronde is begonnen!");
-                        //console.log((JSON.parse(data))['round']);
-                        //console.log(gameObject['round']);
                         delay = true;
                     } else if((JSON.parse(data))['gameEnd']){
                         loserEndGameNotif();
                     }
-                    //console.log(data);
                     gameObject = JSON.parse(data);
-                    //console.log(gameObject);
                     updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
                     updateUIAppendCards(gameObject['combinations'][userPlayerNumber], true, "#Combination", 100, 100, "Your combinations:");
                     updateUIAppendCards(gameObject['hands'][userPlayerNumber], false, "#Hand", 100, 100, "");
