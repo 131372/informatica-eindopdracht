@@ -1,10 +1,5 @@
 //indien merge probleem revert this change
-function getCard(score) {
-    gameObject["points"][gameObject.currentplayer] -= 1;
-    gameObject["hand"][gameObject.currentplayer].push(drawCard(gameObject["deck"]));
-    updateUIAppendCards(gameObject["hand"][gameObject.currentplayer], false, "#Hand", 100, 100, "");
-    updateDeck(gameObject["deck"], 100, 100, deck);
-};
+
 
 
 gameInProgress = false; //iedereen moet een nummer krijgen voor turnorder, deck aanmaken, kaarten uitdelen, playerAmount
@@ -25,6 +20,13 @@ gameObject = {
     currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1},
     currentlyShowingCombinationKey: {1: -1, 2: -1, 3: -1},
     deck: []
+};
+
+function getCard(score) {
+    gameObject["points"][gameObject.currentPlayer] -= 1;
+    gameObject["hands"][gameObject.currentPlayer].push(drawCard(gameObject["deck"]));
+    updateUIAppendCards(gameObject["hands"][gameObject.currentPlayer], false, "#Hand", 100, 100, "");
+    updateDeck(gameObject["deck"]);
 };
 
 /*gameInProgress=false;
@@ -676,12 +678,3 @@ function undoSteal() {
         updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
     }
 }
-
-
-function getCard() {
-    gameObject["points"][gameObject.currentplayer] -= 1;
-    gameObject["hands"][gameObject.currentplayer].push(drawCard(gameObject["deck"]));
-    updateUIAppendCards(gameObject["hand"][gameObject.currentplayer], false, "#Hand", 100, 100, "");
-    updateDeck(gameObject["deck"], 100, 100, deck);
-}
-

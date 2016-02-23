@@ -24,6 +24,10 @@ function updateUIAppendCards(cards, combination, element, height, width, message
     for (var i = 0; i < cards.length; i++) {
         if (combination) {
             var cardGraphic = combinationGraphic(cards[i]); //cardGraphic2(cards[i][0]); // read combinationGraphic // should becojme: combinationGraphic(cards[i]);
+            console.log(cardGraphic["id"]);
+            if(cardGraphic["id"] == "rip"){
+                cardGraphic = cardGraphic2(cards[i][0]);
+            }
             cardGraphic["id"] = ""; // recognize the combination by id.
             for (var j = 0; j < cards[i].length; j++) {
                 if (j === 0) {
@@ -157,11 +161,12 @@ function cardGraphic2(card) {
     return {graphic: graphicName + ".svg", id: graphicName};
 }
 
-function updateDeck(cards, height, width, deck) {
+function updateDeck(deck) {
     var deckCount = deck.length;
-    var message = "Deck</br> \n\
-                   Cards remaining: " + deckCount;
-    updateUIAppendCards(cards, false, "#Deck", height, width, message);
+    var message = "<p>Deck</br> \n\
+                   Cards remaining: " + deckCount + "</p>";
+    $("Deck").empty();
+    $("#Deck").append(message);
 }
 
 function combinationGraphic(combination) {
@@ -175,7 +180,7 @@ function combinationGraphic(combination) {
     currentParticle = {u: 0, d: 0, c: 0, s: 0, b: 0, t: 0};
     if (combination.length == 3) {
         for (var i = 0; i < combination.length; i++) {
-            switch (combination[i][0].name) {
+            switch (combination[i].name) {
                 case "u":
                     currentParticle["u"]++;
                     break;
@@ -209,9 +214,9 @@ function combinationGraphic(combination) {
             }
         }
         if (indexOfParticle == null) {
-            return {}; // hoe gaan we het doen met alle namen?
+            return {graphic: null + combination[0]['anti'] + ".svg", id: "rip"}; // hoe gaan we het doen met alle namen?
         } else {
-                return {graphic: seenParticles[indexOfParticle][1] + combination[0]['anti'] + ".svg", id: seenParticles[indexOfParticle][1]}; // deze naam gebruiken?
+                return {graphic: seenParticles[indexOfParticle][1] + ".svg", id: seenParticles[indexOfParticle][1]}; // deze naam gebruiken?
         }
     } else if (combination.length == 2) {
         seenMes = ["ud", "us", "ub", "cd", "cs", "cb", "uu", "uc", "uc", "cu", "cc", "dd", "ds", "db", "sd", "ss", "sb", "bd", "bs", "bb", "du", "su", "bu", "dc", "sc", "bc"];
@@ -226,7 +231,7 @@ function combinationGraphic(combination) {
             }
         }
         if (jQuery.inArray(currentMes, seenMes) == -1){
-            return {}; // hoe gaan we het doen met alle namen?
+            return {graphic: currentMes + ".svg", id: currentMes}; // hoe gaan we het doen met alle namen?
         } else {
             return {graphic: currentMes + ".svg", id: currentMes};
         }
