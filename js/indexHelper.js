@@ -1,85 +1,49 @@
 //indien merge probleem revert this change
-
+function getCard(score) {
+    gameObject["points"][gameObject.currentplayer] -= 1;
+    gameObject["hand"][gameObject.currentplayer].push(drawCard(gameObject["deck"]));
+    updateUIAppendCards(gameObject["hand"][gameObject.currentplayer], false, "#Hand", 100, 100, "");
+    updateDeck(gameObject["deck"], 100, 100, deck);
+};				//supposed to be able to let you buy a card in exchange for a point
 
 
 gameInProgress = false; //iedereen moet een nummer krijgen voor turnorder, deck aanmaken, kaarten uitdelen, playerAmount
-realGameInProgress = false;
-delay = false;
-userPlayerNumber = 1;
+realGameInProgress = false;				//set to true when the host presses start game
+delay = false;							//used to delay something which would cause errors if it were executed immediately
+userPlayerNumber = 1;					//the player number of the client
 gameObject = {
-    gameEnd: false,
-    round: 1,
-    playerNumberSet: false,
-    currentPlayer: 2,
-    playerAmount: 3,
-    combinations: {1: [], 2: [], 3: []},
+    gameEnd: false,						//whether the game has ended
+    round: 1,							//the current round
+    playerNumberSet: false,				//whether each player has received their respective player number
+    currentPlayer: 2,					//the player whose turn it is
+    playerAmount: 3,					//the amount of players in the game
+    combinations: {1: [], 2: [], 3: []},				//the combinations per player
     players: {1: "host", 2: "guest1", 3: "guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
-    hands: {1: {1: 1, 2: 2}, 2: [{name: "d", anti: false, colour: "g"}, {name: "u", anti: false, colour: "r"}, {name: "c", anti: false, colour: "b"}, {name: "d", anti: true, colour: "g"}, {name: "u", anti: true, colour: "r"}, {name: "c", anti: true, colour: "b"}], 3: {1: 1, 2: 2}},
-    points: {1: 0, 2: 0, 3: 0},
-    currentCombinationCards: [],
-    currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1},
-    currentlyShowingCombinationKey: {1: -1, 2: -1, 3: -1},
-    deck: []
-};
-
-function getCard(score) {
-    gameObject["points"][gameObject.currentPlayer] -= 1;
-    temp=drawCard(gameObject["deck"]);
-    gameObject["hands"][gameObject.currentPlayer].push(temp[0]);
-    gameObject['deck']=temp[1];
-    updateUIAppendCards(gameObject["hands"][gameObject.currentPlayer], false, "#Hand", 100, 100, "");
-};
-
-/*gameInProgress=false;
- gameObject={
- currentPlayer:2,
- playerAmount:3,
- combinations:{},
- players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
- hands:{1:{1:1,2:2},2:{1:1,2:2},3:{1:1,2:2}},
- points:{1:10,2:15,3:13}
- };
- //gameInProgress=false;
- gameObject={
- userPlayerNumber:2,
- currentPlayer:2,
- playerAmount:3,
- combinations:{1:[],2:[],3:[]},
- players:{1:"host",2:"guest1",3:"guest2"}, // moet dit geen array zijn, want er kunnen meer dan 3 mensen meedoen OF meerdere velden tot het maximum aantal spelers.
- hands:{1:{1:1,2:2},2:[{name:"d",anti:false,colour:"g"},{name:"u",anti:false,colour:"r"},{name:"c",anti:false,colour:"b"},{name:"d",anti:true,colour:"g"},{name:"u",anti:true,colour:"r"},{name:"c",anti:true,colour:"b"}],3:{1:1,2:2}},
- points:{1:10,2:15,3:13},
- currentCombinationCards:[],
- currentlyShowingCombinationsOf:{1:2,2:1,3:1},
- currentlyShowingCombinationKey:{1:-1,2:-1,3:-1},
- gameInProgress: false
- };*/
-
+    hands: {1: {1: 1, 2: 2}, 2: [{name: "d", anti: false, colour: "g"}, {name: "u", anti: false, colour: "r"}, {name: "c", anti: false, colour: "b"}, {name: "d", anti: true, colour: "g"}, {name: "u", anti: true, colour: "r"}, {name: "c", anti: true, colour: "b"}], 3: {1: 1, 2: 2}},				//the hand of cards per player
+    points: {1: 0, 2: 0, 3: 0},								//points per player
+    currentCombinationCards: [],									//the cards that are being played for the current combination
+    currentlyShowingCombinationsOf: {1: 2, 2: 1, 3: 1},				//the player whose combination is currently shown per player
+    currentlyShowingCombinationKey: {1: -1, 2: -1, 3: -1},			//the key of the combination that is currently being shown per player
+    deck: []				//the deck of cards from which cards will be drawn, will be created upon the start of a game
+};							//gameObject is where all information is stored that is available to all players and is the only information that will be uploaded to the database (it is currently full of testing information which could theoretically be removed since it will be overwritten upon the start of the game)
 
 $(function () {
     storage = setInterval(function () {
-        //console.log(gameInProgress);
-        //console.log(gameObject['currentPlayer']!=userPlayerNumber);
         if (gameInProgress) {
             if (gameObject['currentPlayer'] != userPlayerNumber) {
                 $.ajax({
                     url: "getGameState.php"
                 }).done(function (data) {
-                    //console.log(data);
-                    //console.log(JSON.parse(data)['round']);
                     if ((JSON.parse(data))['round'] != gameObject['round'] && delay) {
                         alert("De vorige ronde is afgelopen. Een nieuwe ronde is begonnen!");
                     }
                     else if ((JSON.parse(data))['round'] != gameObject['round']) {
                         alert("De vorige ronde is afgelopen. Een nieuwe ronde is begonnen!");
-                        //console.log((JSON.parse(data))['round']);
-                        //console.log(gameObject['round']);
                         delay = true;
                     } else if((JSON.parse(data))['gameEnd']){
                         loserEndGameNotif();
                     }
-                    //console.log(data);
                     gameObject = JSON.parse(data);
-                    //console.log(gameObject);
                     updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
                     updateUIAppendCards(gameObject['combinations'][userPlayerNumber], true, "#Combination", 100, 100, "Your combinations:");
                     updateUIAppendCards(gameObject['hands'][userPlayerNumber], false, "#Hand", 100, 100, "");
@@ -330,9 +294,9 @@ storage = setInterval(function () {
                 $("#playerCount" + item["id"]).html(playerCount);
             }					//update the game information     , why no item['id'] in the update?             
             if (item['hostName'] == hostName) {
-                //if (playerCount >= 3) {
-                $("#startGame").css("display", "block");
-                //}
+                if (playerCount >= 3) {
+					$("#startGame").css("display", "block");
+                }
             }				//display start game button if enough players are present
         });
         $.each(gameList, function (key, value) {
@@ -362,26 +326,6 @@ function join(id) {
             $("#wait").css("display", "block");
         }
     });
-    /*findStart = setInterval(function () {
-     $.ajax({
-     url: "getOngoingGame.php",
-     method: "POST",
-     data: {"gameId": gameId}
-     }).done(function (data) {
-     console.log(data);
-     if (data == 1) { // (1)
-     gameInProgress = true;
-     displayActiveGame();
-     } else if (data == 0) { // might remove (1) and this one.
-     gameInProgress = false;
-     } else {
-     gameObject = JSON.parse(data);
-     if (gameObject['gameInProgress']) {
-     displayActiveGame();
-     }
-     }
-     });
-     }, 1000);*/
 }
 
 function kick(player) {
@@ -422,7 +366,7 @@ function endTurn() {
         uploadGameData();
     }
 	console.log(gameObject['deck'].length);
-}
+}				//end your turn, which means the current player changes and the new current player draws a card and is allowed to steal again. Also if the game round is supposed to end it does
 
 function displayActiveGame() {
     $("#wait").css("display", "none");
@@ -464,7 +408,6 @@ function startGame() {
         updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
 		updateTurnOrder();
     });
-
 }
 
 $(function () {
@@ -541,7 +484,7 @@ function dropInHand(ev) {
 		fromHand = false;
         fromCombination = false;
 	}
-}
+}					//drop a card in your hand, meaning it gets moved from the currentCombinationCards into your hand if the card you started dragging came from currentCombinationCards
 
 function dragStartHand(ev, cardNumber) {
     ev.dataTransfer.setData("text", cardNumber);
@@ -592,58 +535,13 @@ function toggleShowOwnCombination(i) {
     else {
         showingOwnCombination = false;
         updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-    }
-}
+    }	
+}					//toggle the showing of one of your own combinations
 
 function showCombinations(player) {
     updateUIAppendCards(gameObject['combinations'][player], true, "#OtherCombinations", 100, 100, "Player " + player + "'s combinations:");
     gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] = player;
-}
-
-
-function toggleShowCombination(combination) {
-    if (showingCombination) {
-        showingCombination = false;
-        //updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf']['userPlayerNumber']][combination],false,"#Combination",100,100,"Combination");
-    }
-    else {
-        showingCombination = true;
-        //updateUIAppendCards(gameObject['combinations'][userPlayerNumber],true,"#Combination",100,100,"Your combinations:");
-
-    }
-}
-
-function toggleShowCombination(combination) {
-    if (showingCombination) {
-        if (gameObject['currentlyShowingCombinationKey'][userPlayerNumber] == combination) {
-            showingCombination = false;
-            updateUIAppendCards(gameObject['combinations'][userPlayerNumber], true, "#Combination", 100, 100, "Your combinations:");
-            gameObject['currentlyShowingCombinationKey'][userPlayerNumber] = -1;
-        }
-        else {
-            gameObject['currentlyShowingCombinationKey'][userPlayerNumber] = combination;
-            updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][combination], false, "#Combination2", 100, 100, "Combination:");
-        }
-    }
-    else {
-        showingCombination = true;
-        gameObject['currentlyShowingCombinationKey'][userPlayerNumber] = combination;
-        updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][combination], false, "#Combination2", 100, 100, "Combination:");
-    }
-}
-
-function undoSteal() {
-    //console.log(stealMemory);
-    if (stealMemory != "") {
-        stealAllowed = true;
-        gameObject = stealMemory;
-        stealMemory = "";
-        updateUIAppendCards(gameObject['hands'][gameObject['currentPlayer']], false, "#Hand", 100, 100, "");
-        updateUIAppendCards(gameObject['currentCombinationCards'], false, "#Cards", 100, 100, "Current cards played for combination");
-        updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]], true, "#Combination", 100, 100, "Your combinations:");
-        updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
-    }
-}
+}				//show the combinations of a specific player
 
 
 
@@ -665,7 +563,7 @@ function toggleShowCombination(combination) {
         gameObject['currentlyShowingCombinationKey'][userPlayerNumber] = combination;
         updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]][combination], false, "#Combination2", 100, 100, "Combination:");
     }
-}
+}					//toggle showing a combination of another player
 
 function undoSteal() {
     //console.log(stealMemory);
@@ -678,4 +576,5 @@ function undoSteal() {
         updateUIAppendCards(gameObject['combinations'][gameObject["currentPlayer"]], true, "#Combination", 100, 100, "Your combinations:");
         updateUIAppendCards(gameObject['combinations'][gameObject['currentlyShowingCombinationsOf'][userPlayerNumber]], true, "#OtherCombinations", 100, 100, "Player " + gameObject['currentlyShowingCombinationsOf'][userPlayerNumber] + "'s combinations:");
     }
-}
+}				//undo a steal you made, meaning that the entire gameObject is reverted back to the state it was in just before the steal
+
