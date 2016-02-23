@@ -294,9 +294,9 @@ storage = setInterval(function () {
                 $("#playerCount" + item["id"]).html(playerCount);
             }					//update the game information     , why no item['id'] in the update?             
             if (item['hostName'] == hostName) {
-                //if (playerCount >= 3) {
-                $("#startGame").css("display", "block");
-                //}
+                if (playerCount >= 3) {
+					$("#startGame").css("display", "block");
+                }
             }				//display start game button if enough players are present
         });
         $.each(gameList, function (key, value) {
