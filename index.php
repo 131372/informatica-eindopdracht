@@ -141,7 +141,7 @@ session_start();
             </div>
             
             <div id="Buycard" >
-                <button id="Buycard" onclick="getCard()"<p>Buy an extra card<p></button>
+                <button id="buyCard" onclick="getCard()"<p>Buy an extra card<p></button>
             </div>    
 		</div>
 </body>
