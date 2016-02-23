@@ -140,9 +140,9 @@ session_start();
 
             </div>
             
-            <div id="Buycard" >
-                <button id="buyCard" onclick="getCard()"<p>Buy an extra card<p></button>
-            </div>    
+           
+                <button id="buyCard" onclick="getCard()"><p>Buy an extra card<p></button>
+             
 		</div>
 </body>
 </html>
