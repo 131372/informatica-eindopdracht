@@ -24,9 +24,10 @@ gameObject = {
 
 function getCard(score) {
     gameObject["points"][gameObject.currentPlayer] -= 1;
-    gameObject["hands"][gameObject.currentPlayer].push(drawCard(gameObject["deck"]));
+    temp=drawCard(gameObject["deck"]);
+    gameObject["hands"][gameObject.currentPlayer].push(temp[0]);
+    gameObject['deck']=temp[1];
     updateUIAppendCards(gameObject["hands"][gameObject.currentPlayer], false, "#Hand", 100, 100, "");
-    updateDeck(gameObject["deck"]);
 };
 
 /*gameInProgress=false;

@@ -38,6 +38,7 @@ function updateUIAppendCards(cards, combination, element, height, width, message
             }
         } else {
             var cardGraphic = cardGraphic2(cards[i]);
+            console.log(cardGraphic);
         }
         if (element == "#Hand") {
             handCardAppend(idPrefix, cardGraphic, htmlclass, path, height, width, i);
